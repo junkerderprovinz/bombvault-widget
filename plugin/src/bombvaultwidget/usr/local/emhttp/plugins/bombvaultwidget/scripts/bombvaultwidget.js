@@ -21,7 +21,7 @@
   // many px of the bottom counts as "following", so a user who scrolled up to
   // read history is never yanked back down.
   var FOLLOW_SLACK = 24;
-  var PROXY = "/plugins/bombvaultdash/server/status.php";
+  var PROXY = "/plugins/bombvaultwidget/server/status.php";
 
   var logEl = null;
   var lastData = null;   // last good feed — kept on outages so history stays

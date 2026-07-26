@@ -1,13 +1,13 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-  <!ENTITY name      "bombvaultdash">
-  <!ENTITY slug      "bombvaultdash">
+  <!ENTITY name      "bombvaultwidget">
+  <!ENTITY slug      "bombvaultwidget">
   <!ENTITY author    "Junker der Provinz">
   <!ENTITY version   "1.0.0">
-  <!ENTITY launch    "Settings/bombvaultdash">
-  <!ENTITY gitURL    "https://raw.githubusercontent.com/junkerderprovinz/bombvault-dashboard/main/plugin">
+  <!ENTITY launch    "Settings/bombvaultwidget">
+  <!ENTITY gitURL    "https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/plugin">
   <!ENTITY pluginURL "&gitURL;/&slug;.plg">
-  <!ENTITY pkgURL    "https://github.com/junkerderprovinz/bombvault-dashboard/releases/download/v&version;">
+  <!ENTITY pkgURL    "https://github.com/junkerderprovinz/bombvault-widget/releases/download/v&version;">
   <!ENTITY emhttp    "/usr/local/emhttp/plugins/&slug;">
   <!ENTITY plgPath   "/boot/config/plugins/&slug;">
   <!ENTITY txz       "&slug;-&version;-x86_64-1.txz">
@@ -19,11 +19,11 @@
         launch="&launch;"
         pluginURL="&pluginURL;"
         min="6.12.0"
-        support="https://github.com/junkerderprovinz/bombvault-dashboard/issues">
+        support="https://github.com/junkerderprovinz/bombvault-widget/issues">
 
 <!-- FanCtrlPlus convention: name is the lowercase slug so Unraid resolves the
      logo (plugins/<slug>/images/<slug>.png) AND the Plugins-tab description
-     (plugins/<slug>/README.md). The pretty "BombVault Dashboard" name comes
+     (plugins/<slug>/README.md). The pretty "BombVault Widget" name comes
      from README.md.
      TODO before publishing: replace the support link with the real forum topic. -->
 <ICON>
@@ -63,7 +63,7 @@ rm -f &plgPath;/*.txz
 -->
 <FILE Name="&plgPath;/&txz;" Run="/sbin/upgradepkg --install-new --reinstall">
   <URL>&pkgURL;/&txz;</URL>
-  <SHA256>70bde5cd89bb9b577999de65ca0bca8512f22fcb8216e4fce860792e27c3e6a3</SHA256>
+  <SHA256>0000000000000000000000000000000000000000000000000000000000000000</SHA256>
 </FILE>
 
 <!-- Post-install: sane read perms (a Windows/CI build can bake odd modes; the
@@ -75,7 +75,7 @@ chmod -R u+rwX,go+rX &emhttp; 2>/dev/null
 echo ""
 cat &emhttp;/banner.txt 2>/dev/null
 echo ""
-echo "BOMBVAULT DASHBOARD IS READY"
+echo "BOMBVAULT WIDGET IS READY"
 </INLINE>
 </FILE>
 
@@ -96,7 +96,7 @@ pkg=$(ls /var/log/packages/ 2>/dev/null | grep -E "^&slug;(-[^-]+-[^-]+-[^-]+)?$
 if [ -n "$pkg" ]; then removepkg "$pkg" 2>/dev/null; fi
 rm -rf &emhttp;
 rm -f &plgPath;/*.txz
-echo "BombVault Dashboard removed. Settings (flash .cfg) were kept — delete"
+echo "BombVault Widget removed. Settings (flash .cfg) were kept — delete"
 echo "&plgPath; manually if you don't plan to reinstall."
 exit 0
 </INLINE>

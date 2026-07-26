@@ -1,18 +1,18 @@
 name: Release
 
-# Cuts a BombVault Dashboard plugin release from a v* tag. CI is the single
+# Cuts a BombVault Widget plugin release from a v* tag. CI is the single
 # source of truth for the package AND for what main advertises, so a release
 # never depends on a local (Windows) build and main never points at a version
 # whose asset/SHA are not live yet.
 #
 # Order (the important part): build -> publish the GitHub release (asset goes
 # live) -> confirm the asset is reachable -> ONLY THEN flip <!ENTITY version> +
-# <SHA256> in plugin/bombvaultdash.plg on main. Unraid reads that .plg from raw
+# <SHA256> in plugin/bombvaultwidget.plg on main. Unraid reads that .plg from raw
 # main and verifies the .txz against <SHA256>, so main must flip last. If any
 # step before the flip fails, main still advertises the previous version ->
 # zero user impact, re-running the tag heals it.
 #
-# MAINTAINER FLOW: add a "### X.Y.Z" block to plugin/bombvaultdash.plg
+# MAINTAINER FLOW: add a "### X.Y.Z" block to plugin/bombvaultwidget.plg
 # <CHANGES> and `git tag vX.Y.Z` on main. You do NOT need to bump
 # <!ENTITY version> by hand — CI flips it (bumping it early is harmless but
 # reopens the advertise-before-live window, so prefer to leave it).
@@ -29,7 +29,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: bombvaultdash-release
+  group: bombvaultwidget-release
   cancel-in-progress: false
 
 env:
@@ -59,7 +59,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
         with:
-          name: bombvaultdash-txz
+          name: bombvaultwidget-txz
           path: plugin/out/*
 
       # ---- tag-only from here ----
@@ -68,9 +68,9 @@ jobs:
         run: |
           ver="${{ steps.v.outputs.version }}"
           awk -v v="### $ver" '$0==v{grab=1;next} grab&&/^### /{exit} grab{print}' \
-            plugin/bombvaultdash.plg > release-notes.md
+            plugin/bombvaultwidget.plg > release-notes.md
           if [ ! -s release-notes.md ]; then
-            echo "::error::no '### $ver' block in plugin/bombvaultdash.plg <CHANGES> — add it before tagging"
+            echo "::error::no '### $ver' block in plugin/bombvaultwidget.plg <CHANGES> — add it before tagging"
             exit 1
           fi
           echo "---- release notes ----"; cat release-notes.md
@@ -82,14 +82,14 @@ jobs:
           name: ${{ github.ref_name }}
           body_path: release-notes.md
           files: |
-            plugin/out/bombvaultdash-*-x86_64-1.txz
-            plugin/out/bombvaultdash-*-x86_64-1.txz.sha256
+            plugin/out/bombvaultwidget-*-x86_64-1.txz
+            plugin/out/bombvaultwidget-*-x86_64-1.txz.sha256
 
       - name: Confirm the release asset is reachable
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           ver="${{ steps.v.outputs.version }}"
-          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/v${ver}/bombvaultdash-${ver}-x86_64-1.txz"
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/v${ver}/bombvaultwidget-${ver}-x86_64-1.txz"
           for i in $(seq 1 10); do
             code=$(curl -fsSL -o /dev/null -w '%{http_code}' -I "$url" || true)
             [ "$code" = "200" ] && { echo "asset live: $url"; exit 0; }
@@ -97,25 +97,25 @@ jobs:
           done
           echo "::error::release asset not reachable: $url"; exit 1
 
-      - name: Flip version + SHA256 in bombvaultdash.plg on main (final step)
+      - name: Flip version + SHA256 in bombvaultwidget.plg on main (final step)
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           ver="${{ steps.v.outputs.version }}"
-          txz="plugin/out/bombvaultdash-${ver}-x86_64-1.txz"
+          txz="plugin/out/bombvaultwidget-${ver}-x86_64-1.txz"
           sha="$(sha256sum "$txz" | awk '{print $1}')"
           echo "package sha256 = $sha"
-          sed -i -E "s#(<!ENTITY version[[:space:]]+\")[^\"]*(\">)#\1${ver}\2#" plugin/bombvaultdash.plg
-          sed -i -E "s#<SHA256>[0-9a-fA-F]{64}</SHA256>#<SHA256>${sha}</SHA256>#" plugin/bombvaultdash.plg
-          grep -q "<SHA256>${sha}</SHA256>" plugin/bombvaultdash.plg \
-            || { echo "::error::SHA256 not written into bombvaultdash.plg"; exit 1; }
-          grep -qE "<!ENTITY version[[:space:]]+\"${ver}\">" plugin/bombvaultdash.plg \
-            || { echo "::error::version not written into bombvaultdash.plg"; exit 1; }
+          sed -i -E "s#(<!ENTITY version[[:space:]]+\")[^\"]*(\">)#\1${ver}\2#" plugin/bombvaultwidget.plg
+          sed -i -E "s#<SHA256>[0-9a-fA-F]{64}</SHA256>#<SHA256>${sha}</SHA256>#" plugin/bombvaultwidget.plg
+          grep -q "<SHA256>${sha}</SHA256>" plugin/bombvaultwidget.plg \
+            || { echo "::error::SHA256 not written into bombvaultwidget.plg"; exit 1; }
+          grep -qE "<!ENTITY version[[:space:]]+\"${ver}\">" plugin/bombvaultwidget.plg \
+            || { echo "::error::version not written into bombvaultwidget.plg"; exit 1; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- plugin/bombvaultdash.plg; then
-            echo "bombvaultdash.plg already current — nothing to commit"
+          if git diff --quiet -- plugin/bombvaultwidget.plg; then
+            echo "bombvaultwidget.plg already current — nothing to commit"
           else
-            git add plugin/bombvaultdash.plg
+            git add plugin/bombvaultwidget.plg
             git commit -m "ci: release v${ver} — pin version + package SHA256 [skip ci]"
             git pull --rebase origin main
             git push origin HEAD:main

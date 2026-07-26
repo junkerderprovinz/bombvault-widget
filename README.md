@@ -1,16 +1,9 @@
-<!-- TODO (logo rollout): generate .github/assets/bombvaultdash-banner.png +
-     bombvaultdash-banner-dark.png (white 1600x500, logo + name + claim,
-     text-as-paths) from the BombVault masters, then this picture block goes
-     live. Until then the banner is a placeholder. -->
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/junkerderprovinz/bombvault-dashboard/main/.github/assets/bombvaultdash-banner-dark.png">
-    <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-dashboard/main/.github/assets/bombvaultdash-banner.png" alt="BombVault Dashboard" width="100%">
-  </picture>
+  <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/bombvault-widget-banner.png" alt="BombVault Widget" width="100%">
 </p>
 
 <p align="center">
-  <a href="https://github.com/junkerderprovinz/bombvault-dashboard/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/junkerderprovinz/bombvault-dashboard/release.yml?label=Release&style=for-the-badge&logo=githubactions&logoColor=white" alt="Release" height="36"></a>&nbsp;
+  <a href="https://github.com/junkerderprovinz/bombvault-widget/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/junkerderprovinz/bombvault-widget/release.yml?label=Release&style=for-the-badge&logo=githubactions&logoColor=white" alt="Release" height="36"></a>&nbsp;
   <a href="https://unraid.net"><img src="https://img.shields.io/badge/Unraid-Plugin-f15a2c?style=for-the-badge&logo=unraid&logoColor=white" alt="Unraid" height="36"></a>&nbsp;
   <a href="https://github.com/junkerderprovinz/bombvault"><img src="https://img.shields.io/badge/Requires-BombVault%20%E2%89%A5%206.9.0-161616?style=for-the-badge" alt="Requires BombVault 6.9.0+" height="36"></a>&nbsp;
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="License" height="36"></a>
@@ -19,7 +12,7 @@
 <br>
 
 <p align="center">
-💣 <b>BombVault Dashboard</b> puts <a href="https://github.com/junkerderprovinz/bombvault">BombVault</a>'s activity log where you already look: a <b>real, native tile</b> on the Unraid&nbsp;7 <b>dashboard</b>. Every backup, restore, verify, prune, off-site replication and drill scrolls by as it happens — plus the <b>next scheduled run</b> — in the same dark terminal-style log as BombVault's own widget.<br>
+💣 <b>BombVault Widget</b> puts <a href="https://github.com/junkerderprovinz/bombvault">BombVault</a>'s activity log where you already look: a <b>real, native tile</b> on the Unraid&nbsp;7 <b>dashboard</b>. Every backup, restore, verify, prune, off-site replication and drill scrolls by as it happens — plus the <b>next scheduled run</b> — in the same dark terminal-style log as BombVault's own widget.<br>
 <br>
 <b>Read-only</b> — the tile is fed through a same-origin proxy; the widget token never reaches the browser.
 </p>
@@ -28,7 +21,7 @@
 
 <p align="center">
   <a href="https://buymeacoffee.com/junkerderprovinz">
-    <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-dashboard/main/.github/assets/button-buy-me-a-coffee.svg" alt="Buy me a coffee" width="220">
+    <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/button-buy-me-a-coffee.svg" alt="Buy me a coffee" width="220">
   </a>
 </p>
 
@@ -66,21 +59,21 @@ A small Unraid plugin (no daemon, no container) that registers a native dashboar
 *Community Applications listing: TODO — until the CA entry in [unraid-apps](https://github.com/junkerderprovinz/unraid-apps) is live, install via* **Plugins → Install Plugin** *with the raw `.plg` URL:*
 
 ```
-https://raw.githubusercontent.com/junkerderprovinz/bombvault-dashboard/main/plugin/bombvaultdash.plg
+https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/plugin/bombvaultwidget.plg
 ```
 
 ## 5. Setup
 
 1. In **BombVault** open *Settings → System → Dashboard widget* and generate a widget token (copy it right away — it is shown only once).
-2. In **Unraid** open *Settings → Utilities → BombVault Dashboard*, enter the BombVault URL (e.g. `https://192.168.20.51:3443`) and the token, hit **Apply**.
+2. In **Unraid** open *Settings → Utilities → BombVault Widget*, enter the BombVault URL (e.g. `https://192.168.20.51:3443`) and the token, hit **Apply**.
 3. Click **Test connection** — it answers with the BombVault version when everything is wired.
 4. Open the **Dashboard**: the *BombVault Activity* tile is live in the middle column.
 
 ## 6. How it works
 
-- `bombvaultdash.Dashboard.page` registers the tile (`Menu="Dashboard:0"` + `$mytiles`), a static scaffold with the native Unraid 7 tile header (chevron, cog to the settings page).
-- `scripts/bombvaultdash.js` polls `server/status.php` every 10 seconds and renders the log rows via `textContent` (no HTML from feed data ever runs).
-- `server/status.php` is a same-origin proxy: it reads the URL + token from `/boot/config/plugins/bombvaultdash/bombvaultdash.cfg` and calls exactly one endpoint — BombVault's `GET /api/widget/data` — with the `X-Widget-Token` header, 5 s timeout, self-signed LAN TLS accepted. Unreachable or misconfigured = a clean JSON 503, which the tile shows as a pulsing red status line while keeping the history on screen.
+- `bombvaultwidget.Dashboard.page` registers the tile (`Menu="Dashboard:0"` + `$mytiles`), a static scaffold with the native Unraid 7 tile header (chevron, cog to the settings page).
+- `scripts/bombvaultwidget.js` polls `server/status.php` every 10 seconds and renders the log rows via `textContent` (no HTML from feed data ever runs).
+- `server/status.php` is a same-origin proxy: it reads the URL + token from `/boot/config/plugins/bombvaultwidget/bombvaultwidget.cfg` and calls exactly one endpoint — BombVault's `GET /api/widget/data` — with the `X-Widget-Token` header, 5 s timeout, self-signed LAN TLS accepted. Unreachable or misconfigured = a clean JSON 503, which the tile shows as a pulsing red status line while keeping the history on screen.
 
 ## 7. Security
 

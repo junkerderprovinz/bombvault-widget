@@ -14,19 +14,19 @@ Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9',
  *   visibility + position persisted in /boot/config/dashboard_settings.json.
  *   Keep it a STABLE, untranslated English string — renaming it orphans the
  *   user's saved layout.
- * - $mytiles key 'bombvaultdash' must be unique across all installed plugins;
+ * - $mytiles key 'bombvaultwidget' must be unique across all installed plugins;
  *   'column2' is the default column (the user can move it, see above).
  * - This page is evaluated on EVERY dashboard load: keep the PHP minimal (no
- *   curl here — the tile body is a static scaffold, scripts/bombvaultdash.js
+ *   curl here — the tile body is a static scaffold, scripts/bombvaultwidget.js
  *   fills it from the same-origin proxy) and define NO functions (a .page can
  *   be included more than once -> "Cannot redeclare" -> blank dashboard).
  * - First row mirrors DashStats' native header structure (tile-header /
  *   tile-header-left / -right), which is what Unraid 7's dashboard JS hooks
  *   the collapse chevron and drag handling onto.
  */
-$mytiles['bombvaultdash']['column2'] = <<<EOT
+$mytiles['bombvaultwidget']['column2'] = <<<EOT
 <tbody title="BombVault Activity">
-<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>BombVault Activity</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'><a href='/Settings/bombvaultdash' title="Go to BombVault Dashboard settings"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
+<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>BombVault Activity</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'><a href='/Settings/bombvaultwidget' title="Go to BombVault Widget settings"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
 <tr><td><div id='bvd-log' class='bvd-log'></div></td></tr>
 </tbody>
 EOT;
@@ -52,4 +52,4 @@ EOT;
 @keyframes bvd-pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .bvd-live .bvd-g{animation:bvd-pulse 2s ease-in-out infinite}
 </style>
-<script src="<?autov('/plugins/bombvaultdash/scripts/bombvaultdash.js')?>"></script>
+<script src="<?autov('/plugins/bombvaultwidget/scripts/bombvaultwidget.js')?>"></script>

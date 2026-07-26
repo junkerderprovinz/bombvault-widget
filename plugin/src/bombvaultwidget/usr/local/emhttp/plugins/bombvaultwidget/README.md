@@ -1,4 +1,4 @@
-**BombVault Dashboard**
+**BombVault Widget**
 
 Shows BombVault's activity log as a real, native tile on the Unraid 7 dashboard: every backup, restore, verify, prune, off-site replication and drill as it happens, plus the next scheduled run &mdash; in the same dark terminal-style log as BombVault's own widget.
 

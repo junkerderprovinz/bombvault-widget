@@ -1,5 +1,5 @@
 <?php
-/* BombVault Dashboard same-origin proxy: the browser on the Dashboard calls
+/* BombVault Widget same-origin proxy: the browser on the Dashboard calls
  * this PHP, and this PHP calls BombVault's widget feed — so the browser never
  * makes a cross-origin request (no CORS) and the widget token stays strictly
  * server-side (it is never sent to, or readable by, the browser).
@@ -19,7 +19,7 @@ header('Content-Type: application/json');
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 
-$cfg   = parse_plugin_cfg('bombvaultdash');
+$cfg   = parse_plugin_cfg('bombvaultwidget');
 $url   = isset($cfg['BV_URL'])       ? trim($cfg['BV_URL'])       : '';
 $token = isset($cfg['WIDGET_TOKEN']) ? trim($cfg['WIDGET_TOKEN']) : '';
 

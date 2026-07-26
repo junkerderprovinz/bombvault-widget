@@ -1,19 +1,19 @@
 #!/bin/bash
-# Build the BombVault Dashboard Unraid plugin package (.txz) — webgui files
+# Build the BombVault Widget Unraid plugin package (.txz) — webgui files
 # only, no binary. Portable (uses tar, not Slackware makepkg) so it runs
 # identically on GitHub CI and locally (git-bash included).
 #
 #   plugin/pkg_build.sh [VERSION]      # VERSION defaults to today (YYYY.MM.DD)
 #
-# Output: plugin/out/bombvaultdash-<version>-x86_64-1.txz (+ .sha256). The
+# Output: plugin/out/bombvaultwidget-<version>-x86_64-1.txz (+ .sha256). The
 # release workflow attaches the .txz and injects the SHA256 into
-# bombvaultdash.plg.
+# bombvaultwidget.plg.
 set -euo pipefail
 
 VERSION="${1:-$(date +%Y.%m.%d)}"
 ARCH="x86_64"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PLUGIN_SRC="$ROOT/plugin/src/bombvaultdash"
+PLUGIN_SRC="$ROOT/plugin/src/bombvaultwidget"
 OUT="$ROOT/plugin/out"
 PKGROOT="$(mktemp -d)"
 trap 'rm -rf "$PKGROOT"' EXIT
@@ -30,7 +30,7 @@ find "$PKGROOT" -type f ! -name '*.png' -print0 \
   | while IFS= read -r -d '' f; do perl -i -pe 's/\r\n/\n/g; s/\r$//' "$f"; done
 
 mkdir -p "$OUT"
-TXZ="$OUT/bombvaultdash-$VERSION-$ARCH-1.txz"
+TXZ="$OUT/bombvaultwidget-$VERSION-$ARCH-1.txz"
 echo "==> packaging → $TXZ"
 # --force-local: a Windows output path like "D:/..." has a colon that GNU tar
 # would otherwise read as a remote host[:path]. Harmless on Linux/CI.

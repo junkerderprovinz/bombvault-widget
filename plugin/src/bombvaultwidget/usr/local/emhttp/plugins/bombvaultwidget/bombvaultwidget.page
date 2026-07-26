@@ -1,20 +1,20 @@
 Menu="Utilities"
-Title="BombVault Dashboard"
-Icon="bombvaultdash.png"
+Title="BombVault Widget"
+Icon="bombvaultwidget.png"
 ---
 <?php
-/* BombVault Dashboard settings → writes /boot/config/plugins/bombvaultdash/
-   bombvaultdash.cfg via Unraid's /update.php. NB: no functions defined in a
+/* BombVault Widget settings → writes /boot/config/plugins/bombvaultwidget/
+   bombvaultwidget.cfg via Unraid's /update.php. NB: no functions defined in a
    .page (Unraid may include it more than once → "Cannot redeclare" → blank
    page). */
-$cfg   = parse_plugin_cfg("bombvaultdash");
+$cfg   = parse_plugin_cfg("bombvaultwidget");
 $bvurl = isset($cfg['BV_URL'])       ? $cfg['BV_URL']       : '';
 $wtok  = isset($cfg['WIDGET_TOKEN']) ? $cfg['WIDGET_TOKEN'] : '';
 
 /* UI text follows Unraid's language — load this plugin's locale file (English
    base, then overlay the active language; missing keys fall back to English). */
 $lang = strtolower(substr((string)(isset($_SESSION['locale']) ? $_SESSION['locale'] : ''), 0, 2));
-$langdir = '/usr/local/emhttp/plugins/bombvaultdash/lang';
+$langdir = '/usr/local/emhttp/plugins/bombvaultwidget/lang';
 $L = json_decode(@file_get_contents("$langdir/en.json"), true) ?: array();
 if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
   $tr = json_decode(@file_get_contents("$langdir/$lang.json"), true);
@@ -88,15 +88,15 @@ if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
 <div class="bvd-cfg">
 
   <div class="bvd-hd">
-    <img class="bvd-logo" src="<?autov('/plugins/bombvaultdash/images/bombvaultdash.png')?>" alt="BombVault Dashboard">
+    <img class="bvd-logo" src="<?autov('/plugins/bombvaultwidget/images/bombvaultwidget.png')?>" alt="BombVault Widget">
     <div>
-      <div class="bvd-ttl"><b>BombVault</b> Dashboard</div>
+      <div class="bvd-ttl"><b>BombVault</b> Widget</div>
       <div class="bvd-sub"><?=$L['s_sub']?></div>
     </div>
   </div>
 
-  <form name="bombvaultdash_settings" method="POST" action="/update.php" target="progressFrame">
-    <input type="hidden" name="#file" value="bombvaultdash/bombvaultdash.cfg">
+  <form name="bombvaultwidget_settings" method="POST" action="/update.php" target="progressFrame">
+    <input type="hidden" name="#file" value="bombvaultwidget/bombvaultwidget.cfg">
 
     <div class="bvd-card">
       <h3><?=$L['s_conn']?> <small><?=$L['s_conn_sub']?></small></h3>
@@ -137,7 +137,7 @@ function bvdToggle(id, btn) {
 function bvdTest() {
   var out = document.getElementById('bvd-test-result');
   out.className = 'bvd-res run'; out.textContent = BVDT.s_testing;
-  fetch('/plugins/bombvaultdash/server/status.php', { cache: 'no-store', headers: { Accept: 'application/json' } })
+  fetch('/plugins/bombvaultwidget/server/status.php', { cache: 'no-store', headers: { Accept: 'application/json' } })
     .then(function (res) { return res.json(); })
     .then(function (d) {
       if (d && d.ok) {
