@@ -1,17 +1,23 @@
 /**
- * Generates the BombVault Widget README banner (white 1600x500):
+ * Generates the BombVault Widget README banner pair (1600x500):
  *
- *   bombvault-widget-banner.svg / .png : logo (embedded VERBATIM from icon.svg,
- *   the BombVault logo 2.0 master) on the left, "BombVault Widget" in Bree
- *   Serif + the claim in Lato to the right. Text is converted to SVG paths
- *   (opentype.js) so the SVG needs NO font and renders identically with resvg
- *   or a browser.
+ *   bombvault-widget-banner.svg / .png       : light (white bg, dark text)
+ *   bombvault-widget-banner-dark.svg / .png  : dark (GitHub #0d1117 bg)
  *
- * Mechanics follow the ShipLog generator (viewBox-agnostic logo embed) with the
- * BombVault-specific optical-centre placement: the logo's OPTICAL centre —
- * marked by the designer in the source file — is NOT the geometric centre (the
- * sparks at the top right add ignorable visual weight), so vertical centring
- * uses that point, not the bounding box.
+ * Theme-adaptive pair (house rule, ShipLog/BombVault reference): the README
+ * serves the dark variant via <picture> prefers-color-scheme. The BombVault
+ * logo 2.0 master reads on both backgrounds by itself, so both themes embed
+ * the SAME logo (exactly like bombvault's own generator).
+ *
+ * Layout follows the CannonadeCommand precedent for long names: the name stays
+ * on ONE line at a reduced size, with generous side margins (~120px) instead
+ * of letting the text fill the full canvas — the logo must never sit crammed
+ * against the edge. Text is converted to SVG paths (opentype.js) so the SVG
+ * needs NO font and renders identically with resvg or a browser.
+ *
+ * The logo's OPTICAL centre — marked by the designer in the source file — is
+ * NOT the geometric centre (the sparks at the top right add ignorable visual
+ * weight), so vertical centring uses that point, not the bounding box.
  *
  * NaN guard (house lesson): opentype.js emits NaN points for SOME size/glyph
  * combinations at the REAL pen position — a truncated glyph mid-word. Every
@@ -40,7 +46,10 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 const NAME = "BombVault Widget";
 const CLAIM = "Watch it tick.";
 const W = 1600, H = 500;
-const BG = "#ffffff", NAME_FILL = "#242626", CLAIM_FILL = "#5a5d5e";
+const THEMES = [
+  { suffix: "",      bg: "#ffffff", name: "#242626", claim: "#5a5d5e" },
+  { suffix: "-dark", bg: "#0d1117", name: "#e6edf3", claim: "#9aa4ad" },
+];
 const LH = 410;                    // logo height
 // BombVault logo 2.0 geometry (viewBox 898.34 x 865.1) + designer-marked
 // optical centre (see bombvault/.github/assets/gen-banner.mjs).
@@ -49,7 +58,7 @@ const OPT_CY = 461.2;
 const LW = LH * (LOGO_W / LOGO_H); // keep logo aspect
 const gap = 64, lineGap = 22;
 const MAX_NAME_SIZE = 148, MAX_CLAIM_SIZE = 42;
-const margin = 56;                 // min space left of logo / right of text
+const margin = 120;                // min space left of logo / right of text
 // ---------------------------------------------------------------------------
 
 async function font(file, url) {
@@ -115,17 +124,19 @@ function embedLogo(logoFile, x, y, w, h) {
     `<svg x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h}" viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">`,
   );
 }
+const logo = embedLogo("icon.svg", LX, LY, LW, LH);
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="BombVault Widget">
-  <rect width="${W}" height="${H}" fill="${BG}"/>
-  ${embedLogo("icon.svg", LX, LY, LW, LH)}
-  <path d="${namePath}" fill="${NAME_FILL}"/>
-  <path d="${claimPath}" fill="${CLAIM_FILL}"/>
+for (const t of THEMES) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="BombVault Widget">
+  <rect width="${W}" height="${H}" fill="${t.bg}"/>
+  ${logo}
+  <path d="${namePath}" fill="${t.name}"/>
+  <path d="${claimPath}" fill="${t.claim}"/>
 </svg>
 `;
-if (svg.includes("NaN")) throw new Error("banner SVG contains NaN — aborting");
-
-writeFileSync(join(__dir, "bombvault-widget-banner.svg"), svg);
-const png = new Resvg(svg, { background: BG, fitTo: { mode: "width", value: W } }).render().asPng();
-writeFileSync(join(__dir, "bombvault-widget-banner.png"), png);
-console.log(`banner ok: ${W}x${H}, name ${nameSize}px, claim ${claimSize}px, png ${png.length} bytes`);
+  if (svg.includes("NaN")) throw new Error("banner SVG contains NaN — aborting");
+  writeFileSync(join(__dir, `bombvault-widget-banner${t.suffix}.svg`), svg);
+  const png = new Resvg(svg, { background: t.bg, fitTo: { mode: "width", value: W } }).render().asPng();
+  writeFileSync(join(__dir, `bombvault-widget-banner${t.suffix}.png`), png);
+  console.log(`banner${t.suffix} ok: ${W}x${H}, name ${nameSize}px, claim ${claimSize}px, png ${png.length} bytes`);
+}

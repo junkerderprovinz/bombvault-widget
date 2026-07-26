@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/bombvault-widget-banner.png" alt="BombVault Widget" width="100%">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/bombvault-widget-banner-dark.png">
+    <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/bombvault-widget-banner.png" alt="BombVault Widget" width="100%">
+  </picture>
 </p>
 
 <p align="center">
