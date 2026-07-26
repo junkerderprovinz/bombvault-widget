@@ -37,6 +37,13 @@ drill as it happens, plus the next scheduled run — in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
+### 1.1.1
+#1 The tile survives a reboot with no network. The pre-install step used to
+   wipe the installed files and delete the cached package before downloading
+   the new one, so a boot that ran before the network came up left the widget
+   gone and unable to reinstall. It now keeps the current package cached on the
+   flash and reinstalls from it offline; only stale-version packages are pruned.
+
 ### 1.1.0
 #1 The tile can no longer widen its dashboard column: the log cell now defers
    to the column width (max-width:0 table trick) and the log box clips inside
@@ -59,20 +66,26 @@ requires BombVault &gt;= 6.9.0 and a widget token.
    Test-connection button, localised across the 26 supported languages.
 </CHANGES>
 
-<!-- Pre-install: wipe the plugin dir so files removed between versions can't
-     linger (installpkg overwrites same-path files but never deletes orphans);
-     drop old flash .txz. The .cfg on the flash is untouched. No daemon to stop
-     — this plugin is webgui-only (pages + a PHP proxy). -->
+<!-- Pre-install: prune ONLY stale-version packages, keep the CURRENT one cached.
+     Do NOT wipe the installed dir here and do NOT delete the current .txz: on a
+     reboot Unraid reinstalls each .plg, and if the boot happens before the
+     network is up, a re-download fails — leaving the plugin GONE if we already
+     removed the working files and the cached package (real incident 2026-07-26).
+     Keeping &txz; on the flash lets the boot reinstall from cache with no
+     network at all. The reinstalling upgradepkg step below already removes
+     files the old package had and the new one drops, so no manual orphan wipe
+     is needed. The .cfg on the flash is untouched. Webgui-only plugin: no daemon. -->
 <FILE Run="/bin/bash">
 <INLINE>
-rm -rf &emhttp;
-rm -f &plgPath;/*.txz
+find &plgPath; -maxdepth 1 -name '*.txz' ! -name '&txz;' -delete 2>/dev/null
 </INLINE>
 </FILE>
 
 <!--
   The package (webgui files only) is built by plugin/pkg_build.sh and attached
-  to the GitHub release "v&version;". SHA256 is injected at release.
+  to the GitHub release "v&version;". SHA256 is injected at release. upgradepkg
+  installs from the cached &plgPath;/&txz; if it is already present (boot with
+  no network), otherwise it downloads it from the URL first.
 -->
 <FILE Name="&plgPath;/&txz;" Run="/sbin/upgradepkg --install-new --reinstall">
   <URL>&pkgURL;/&txz;</URL>
