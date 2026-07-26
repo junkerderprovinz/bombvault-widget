@@ -37,7 +37,7 @@ drill as it happens, plus the next scheduled run — in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
-### 1.0.1
+### 1.1.0
 #1 The tile can no longer widen its dashboard column: the log cell now defers
    to the column width (max-width:0 table trick) and the log box clips inside
    it — long lines keep their single-row ellipsis, no horizontal scrollbar,
