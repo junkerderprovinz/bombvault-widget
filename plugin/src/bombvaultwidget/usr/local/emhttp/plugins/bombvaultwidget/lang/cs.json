@@ -5,7 +5,7 @@
   "s_url": "URL BombVaultu",
   "s_url_hint": "Adresa webového rozhraní BombVaultu, např. https://192.168.20.51:3443 — self-signed certifikát v LAN je v pořádku.",
   "s_token": "Token widgetu",
-  "s_token_hint": "Vytvořte jej v BombVault → Settings → System → Dashboard widget. Poskytuje pouze čtení logu aktivit; token nikdy neopustí server.",
+  "s_token_hint": "Vytvořte jej v BombVault → Settings → System → Dashboard widget. Poskytuje pouze čtení logu aktivit; token nikdy neopustí server. Vložit můžete samotný token nebo celou URL widgetu — token se extrahuje automaticky.",
   "s_show": "Zobrazit",
   "s_hide": "Skrýt",
   "s_test": "Otestovat připojení",

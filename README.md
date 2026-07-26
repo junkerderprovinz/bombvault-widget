@@ -73,13 +73,13 @@ https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/plugin/
 ## 5. Setup
 
 1. In **BombVault** open *Settings → System → Dashboard widget* and generate a widget token (copy it right away — it is shown only once).
-2. In **Unraid** open *Settings → Utilities → BombVault Widget*, enter the BombVault URL (e.g. `https://192.168.20.51:3443`) and the token, hit **Apply**.
+2. In **Unraid** open *Settings → Utilities → BombVault Widget*, enter the BombVault URL (e.g. `https://192.168.20.51:3443`) and the token, hit **Apply**. Pasting BombVault's full widget URL (`…/widget?token=…`) into the token field works too — the token part is extracted automatically.
 3. Click **Test connection** — it answers with the BombVault version when everything is wired.
 4. Open the **Dashboard**: the *BombVault Activity* tile is live in the middle column.
 
 ## 6. How it works
 
-- `bombvaultwidget.Dashboard.page` registers the tile (`Menu="Dashboard:0"` + `$mytiles`), a static scaffold with the native Unraid 7 tile header (chevron, cog to the settings page).
+- `bombvaultwidget.Dashboard.page` registers the tile (`Menu="Dashboard:0"` + `$mytiles`), a static scaffold with the native Unraid 7 tile header (chevron, an open-BombVault link once a URL is configured, cog to the settings page).
 - `scripts/bombvaultwidget.js` polls `server/status.php` every 10 seconds and renders the log rows via `textContent` (no HTML from feed data ever runs).
 - `server/status.php` is a same-origin proxy: it reads the URL + token from `/boot/config/plugins/bombvaultwidget/bombvaultwidget.cfg` and calls exactly one endpoint — BombVault's `GET /api/widget/data` — with the `X-Widget-Token` header, 5 s timeout, self-signed LAN TLS accepted. Unreachable or misconfigured = a clean JSON 503, which the tile shows as a pulsing red status line while keeping the history on screen.
 

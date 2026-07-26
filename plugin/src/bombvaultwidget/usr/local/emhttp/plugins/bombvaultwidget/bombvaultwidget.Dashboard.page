@@ -24,17 +24,34 @@ Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9',
  *   tile-header-left / -right), which is what Unraid 7's dashboard JS hooks
  *   the collapse chevron and drag handling onto.
  */
+/* "Open BombVault" header control: rendered server-side from the flash cfg
+ * (parse_plugin_cfg is a cheap ini read — no network). Omitted entirely while
+ * BV_URL is unset/invalid, so the tile never shows a dead link. Static markup
+ * order matches native tiles: action controls first, cog last — the dashboard
+ * JS appends its collapse chevron AFTER these. */
+$bvd_cfg  = parse_plugin_cfg('bombvaultwidget');
+$bvd_url  = isset($bvd_cfg['BV_URL']) ? trim($bvd_cfg['BV_URL']) : '';
+$bvd_open = '';
+if ($bvd_url !== '' && preg_match('#^https?://#i', $bvd_url)) {
+  $bvd_open = "<a href='" . htmlspecialchars($bvd_url, ENT_QUOTES) . "' target='_blank' rel='noopener' title='Open BombVault'><i class='fa fa-fw fa-external-link control'></i></a>";
+}
 $mytiles['bombvaultwidget']['column2'] = <<<EOT
 <tbody title="BombVault Activity">
-<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>BombVault Activity</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'><a href='/Settings/bombvaultwidget' title="Go to BombVault Widget settings"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
-<tr><td><div id='bvd-log' class='bvd-log'></div></td></tr>
+<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>BombVault Activity</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'>{$bvd_open}<a href='/Settings/bombvaultwidget' title="Go to BombVault Widget settings"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
+<tr><td class='bvd-td'><div id='bvd-log' class='bvd-log'></div></td></tr>
 </tbody>
 EOT;
 ?>
 <style>
+/* Width containment: every dashboard tile is a <tbody> in ONE shared table, so
+   a cell's min-content width (inflated here by the nowrap log lines) would
+   widen the whole COLUMN and blow up the dashboard layout. max-width:0 makes
+   this cell defer to the column width entirely; the log then fills the cell
+   and clips — rows keep their single-line nowrap+ellipsis. */
+.bvd-td{max-width:0}
 /* The log body brings its OWN dark background (like a terminal), so it reads
    identically on every Unraid theme — no theme-dependent colours inside. */
-.bvd-log{height:260px;overflow-y:auto;background:#161616;color:#e0e0e0;
+.bvd-log{width:100%;overflow-x:hidden;height:260px;overflow-y:auto;background:#161616;color:#e0e0e0;
   font-family:Consolas,'Cascadia Mono',Menlo,monospace;font-size:12px;line-height:1.75;
   padding:8px 12px 10px;border-radius:4px;text-align:left;
   scrollbar-width:thin;scrollbar-color:#393939 #161616}

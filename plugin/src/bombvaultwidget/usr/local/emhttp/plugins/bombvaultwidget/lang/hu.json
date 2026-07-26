@@ -5,7 +5,7 @@
   "s_url": "BombVault URL",
   "s_url_hint": "A BombVault WebUI címe, pl. https://192.168.20.51:3443 — önaláírt tanúsítvány a LAN-on rendben van.",
   "s_token": "Widget-token",
-  "s_token_hint": "Hozd létre itt: BombVault → Settings → System → Dashboard widget. Csak olvasási hozzáférést ad a tevékenységnaplóhoz; a token soha nem hagyja el a szervert.",
+  "s_token_hint": "Hozd létre itt: BombVault → Settings → System → Dashboard widget. Csak olvasási hozzáférést ad a tevékenységnaplóhoz; a token soha nem hagyja el a szervert. Beillesztheted magát a tokent vagy a widget teljes URL-jét — a token automatikusan kinyerésre kerül.",
   "s_show": "Mutat",
   "s_hide": "Elrejt",
   "s_test": "Kapcsolat tesztelése",

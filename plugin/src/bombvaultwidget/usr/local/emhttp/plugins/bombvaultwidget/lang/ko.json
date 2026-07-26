@@ -5,7 +5,7 @@
   "s_url": "BombVault URL",
   "s_url_hint": "BombVault WebUI 주소(예: https://192.168.20.51:3443). LAN의 자체 서명 인증서도 괜찮습니다.",
   "s_token": "위젯 토큰",
-  "s_token_hint": "BombVault → Settings → System → Dashboard widget에서 생성하세요. 활동 로그에 대한 읽기 전용 접근만 허용하며, 토큰은 서버를 벗어나지 않습니다.",
+  "s_token_hint": "BombVault → Settings → System → Dashboard widget에서 생성하세요. 활동 로그에 대한 읽기 전용 접근만 허용하며, 토큰은 서버를 벗어나지 않습니다. 토큰 자체 또는 위젯 전체 URL 중 어느 것을 붙여넣어도 됩니다 — 토큰이 자동으로 추출됩니다.",
   "s_show": "표시",
   "s_hide": "숨기기",
   "s_test": "연결 테스트",

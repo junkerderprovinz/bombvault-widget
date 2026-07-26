@@ -37,6 +37,19 @@ drill as it happens, plus the next scheduled run — in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
+### 1.0.1
+#1 The tile can no longer widen its dashboard column: the log cell now defers
+   to the column width (max-width:0 table trick) and the log box clips inside
+   it — long lines keep their single-row ellipsis, no horizontal scrollbar,
+   the two-column layout stays intact on every theme.
+#2 The widget-token field now accepts BombVault's full widget URL: paste
+   http(s)://host:port/widget?token=... and the token part is extracted
+   automatically on Apply (and tolerated server-side for values saved
+   earlier). Field hint updated in all 26 languages.
+#3 New "Open BombVault" control on the tile header — an external-link icon
+   next to the settings cog that jumps straight to your BombVault WebUI in a
+   new tab; hidden while no URL is configured.
+
 ### 1.0.0
 #1 Initial build: a native dashboard tile "BombVault Activity" (it appears in
    the dashboard's tile-management list and supports hide/move/collapse like

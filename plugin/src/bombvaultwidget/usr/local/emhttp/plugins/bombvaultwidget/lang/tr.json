@@ -5,7 +5,7 @@
   "s_url": "BombVault URL'si",
   "s_url_hint": "BombVault WebUI adresi, örn. https://192.168.20.51:3443 — LAN'da kendinden imzalı sertifika sorun değildir.",
   "s_token": "Widget belirteci",
-  "s_token_hint": "BombVault → Settings → System → Dashboard widget bölümünde oluşturun. Etkinlik günlüğüne yalnızca okuma erişimi verir; belirteç sunucudan asla çıkmaz.",
+  "s_token_hint": "BombVault → Settings → System → Dashboard widget bölümünde oluşturun. Etkinlik günlüğüne yalnızca okuma erişimi verir; belirteç sunucudan asla çıkmaz. Belirtecin kendisini veya widget'ın tam URL'sini yapıştırabilirsiniz — belirteç otomatik olarak ayıklanır.",
   "s_show": "Göster",
   "s_hide": "Gizle",
   "s_test": "Bağlantıyı test et",

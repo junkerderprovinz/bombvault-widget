@@ -5,7 +5,7 @@
   "s_url": "BombVault-URL",
   "s_url_hint": "Adressen til BombVault-WebUI, f.eks. https://192.168.20.51:3443 — et selvsignert sertifikat på LAN er greit.",
   "s_token": "Widget-token",
-  "s_token_hint": "Opprett det i BombVault → Settings → System → Dashboard widget. Det gir kun lesetilgang til aktivitetsloggen; tokenet forlater aldri serveren.",
+  "s_token_hint": "Opprett det i BombVault → Settings → System → Dashboard widget. Det gir kun lesetilgang til aktivitetsloggen; tokenet forlater aldri serveren. Du kan lime inn selve tokenet eller hele widget-URL-en — tokenet hentes ut automatisk.",
   "s_show": "Vis",
   "s_hide": "Skjul",
   "s_test": "Test tilkobling",

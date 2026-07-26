@@ -5,7 +5,7 @@
   "s_url": "URL BombVault",
   "s_url_hint": "Adres WebUI BombVault, np. https://192.168.20.51:3443 — certyfikat self-signed w sieci LAN jest w porządku.",
   "s_token": "Token widżetu",
-  "s_token_hint": "Utwórz go w BombVault → Settings → System → Dashboard widget. Daje dostęp tylko do odczytu dziennika aktywności; token nigdy nie opuszcza serwera.",
+  "s_token_hint": "Utwórz go w BombVault → Settings → System → Dashboard widget. Daje dostęp tylko do odczytu dziennika aktywności; token nigdy nie opuszcza serwera. Możesz wkleić sam token lub pełny adres URL widżetu — token zostanie wyodrębniony automatycznie.",
   "s_show": "Pokaż",
   "s_hide": "Ukryj",
   "s_test": "Testuj połączenie",

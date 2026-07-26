@@ -137,6 +137,21 @@ function bvdToggle(id, btn) {
   if (i.type === 'password') { i.type = 'text'; btn.textContent = BVDT.s_hide; }
   else { i.type = 'password'; btn.textContent = BVDT.s_show; }
 }
+/* Token field UX: people paste BombVault's full widget URL
+   (http://host:port/widget?token=abc…) instead of the bare token — accept
+   both. Normalized at SAVE time, before the form POSTs to /update.php, so the
+   cfg only ever stores the token itself (status.php also strips defensively
+   for values saved before this existed or edited by hand on the flash). */
+function bvdNormalizeToken(v) {
+  v = (v || '').trim();
+  var m = /[?&#]token=([^&#\s]+)/i.exec(v);
+  if (m) { try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; } }
+  return v;
+}
+document.forms['bombvaultwidget_settings'].addEventListener('submit', function () {
+  var i = document.getElementById('bvd-WIDGET_TOKEN');
+  if (i) i.value = bvdNormalizeToken(i.value);
+});
 /* Test connection — calls the same proxy the tile uses, against the SAVED
    settings (Apply first, then Test). Shows the BombVault version on success,
    the proxy's error text on failure. */

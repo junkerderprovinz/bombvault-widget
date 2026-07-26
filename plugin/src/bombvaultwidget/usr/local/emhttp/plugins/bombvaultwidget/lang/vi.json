@@ -5,7 +5,7 @@
   "s_url": "URL BombVault",
   "s_url_hint": "Địa chỉ WebUI của BombVault, ví dụ https://192.168.20.51:3443 — chứng chỉ tự ký trong mạng LAN là ổn.",
   "s_token": "Mã token widget",
-  "s_token_hint": "Tạo nó trong BombVault → Settings → System → Dashboard widget. Nó chỉ cấp quyền đọc nhật ký hoạt động; token không bao giờ rời khỏi máy chủ.",
+  "s_token_hint": "Tạo nó trong BombVault → Settings → System → Dashboard widget. Nó chỉ cấp quyền đọc nhật ký hoạt động; token không bao giờ rời khỏi máy chủ. Bạn có thể dán chính token hoặc URL đầy đủ của widget — token sẽ được trích xuất tự động.",
   "s_show": "Hiện",
   "s_hide": "Ẩn",
   "s_test": "Kiểm tra kết nối",

@@ -23,6 +23,15 @@ $cfg   = parse_plugin_cfg('bombvaultwidget');
 $url   = isset($cfg['BV_URL'])       ? trim($cfg['BV_URL'])       : '';
 $token = isset($cfg['WIDGET_TOKEN']) ? trim($cfg['WIDGET_TOKEN']) : '';
 
+/* Defensive normalization: people paste BombVault's full widget URL
+ * (http://host:port/widget?token=abc…) into the token field. The settings page
+ * extracts the token at save time; this handles cfgs written before that
+ * existed (or edited by hand on the flash). Only URL-shaped values are
+ * touched — a bare token can never contain "://". */
+if (strpos($token, '://') !== false && preg_match('/[?&#]token=([^&#\s]+)/i', $token, $m)) {
+    $token = rawurldecode($m[1]);
+}
+
 if ($url === '' || $token === '') {
     http_response_code(503);
     echo json_encode(array(

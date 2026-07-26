@@ -5,7 +5,7 @@
   "s_url": "BombVaultin URL",
   "s_url_hint": "BombVault-WebUI:n osoite, esim. https://192.168.20.51:3443 — itse allekirjoitettu varmenne lähiverkossa on ok.",
   "s_token": "Widget-tunnus",
-  "s_token_hint": "Luo se kohdassa BombVault → Settings → System → Dashboard widget. Se antaa vain lukuoikeuden toimintalokiin; tunnus ei koskaan poistu palvelimelta.",
+  "s_token_hint": "Luo se kohdassa BombVault → Settings → System → Dashboard widget. Se antaa vain lukuoikeuden toimintalokiin; tunnus ei koskaan poistu palvelimelta. Voit liittää joko itse tunnuksen tai koko widgetin URL-osoitteen — tunnus poimitaan automaattisesti.",
   "s_show": "Näytä",
   "s_hide": "Piilota",
   "s_test": "Testaa yhteys",

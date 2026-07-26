@@ -5,7 +5,7 @@
   "s_url": "BombVault 地址",
   "s_url_hint": "BombVault WebUI 的地址,例如 https://192.168.20.51:3443 — 局域网内的自签名证书没有问题。",
   "s_token": "小组件令牌",
-  "s_token_hint": "在 BombVault → Settings → System → Dashboard widget 中创建。它仅授予活动日志的只读访问权限;令牌永远不会离开服务器。",
+  "s_token_hint": "在 BombVault → Settings → System → Dashboard widget 中创建。它仅授予活动日志的只读访问权限;令牌永远不会离开服务器。 可以粘贴令牌本身或完整的小组件 URL — 令牌会自动提取。",
   "s_show": "显示",
   "s_hide": "隐藏",
   "s_test": "测试连接",

@@ -5,7 +5,7 @@
   "s_url": "BombVault-URL",
   "s_url_hint": "Adres van je BombVault-WebUI, bijv. https://192.168.20.51:3443 — een zelfondertekend certificaat op het LAN is prima.",
   "s_token": "Widget-token",
-  "s_token_hint": "Maak hem aan in BombVault → Settings → System → Dashboard widget. Hij geeft alleen-lezen toegang tot het activiteitenlog; de token verlaat de server nooit.",
+  "s_token_hint": "Maak hem aan in BombVault → Settings → System → Dashboard widget. Hij geeft alleen-lezen toegang tot het activiteitenlog; de token verlaat de server nooit. Je kunt de token zelf of de volledige widget-URL plakken — de token wordt automatisch geëxtraheerd.",
   "s_show": "Tonen",
   "s_hide": "Verbergen",
   "s_test": "Verbinding testen",

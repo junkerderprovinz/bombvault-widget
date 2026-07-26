@@ -5,7 +5,7 @@
   "s_url": "URL de BombVault",
   "s_url_hint": "Adresse de la WebUI BombVault, p. ex. https://192.168.20.51:3443 — un certificat auto-signé sur le LAN convient.",
   "s_token": "Jeton du widget",
-  "s_token_hint": "Créez-le dans BombVault → Settings → System → Dashboard widget. Il donne un accès en lecture seule au journal d'activité ; le jeton ne quitte jamais le serveur.",
+  "s_token_hint": "Créez-le dans BombVault → Settings → System → Dashboard widget. Il donne un accès en lecture seule au journal d'activité ; le jeton ne quitte jamais le serveur. Vous pouvez coller le jeton lui-même ou l'URL complète du widget — le jeton est extrait automatiquement.",
   "s_show": "Afficher",
   "s_hide": "Masquer",
   "s_test": "Tester la connexion",

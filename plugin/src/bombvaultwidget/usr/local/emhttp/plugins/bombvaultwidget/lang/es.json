@@ -5,7 +5,7 @@
   "s_url": "URL de BombVault",
   "s_url_hint": "Dirección de la WebUI de BombVault, p. ej. https://192.168.20.51:3443 — un certificado autofirmado en la LAN es válido.",
   "s_token": "Token del widget",
-  "s_token_hint": "Créalo en BombVault → Settings → System → Dashboard widget. Concede acceso de solo lectura al registro de actividad; el token nunca sale del servidor.",
+  "s_token_hint": "Créalo en BombVault → Settings → System → Dashboard widget. Concede acceso de solo lectura al registro de actividad; el token nunca sale del servidor. Puedes pegar el token o la URL completa del widget — el token se extrae automáticamente.",
   "s_show": "Mostrar",
   "s_hide": "Ocultar",
   "s_test": "Probar conexión",

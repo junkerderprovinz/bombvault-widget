@@ -5,7 +5,7 @@
   "s_url": "URL BombVault",
   "s_url_hint": "Adresa WebUI-ului BombVault, de ex. https://192.168.20.51:3443 — un certificat self-signed în LAN este în regulă.",
   "s_token": "Token widget",
-  "s_token_hint": "Creează-l în BombVault → Settings → System → Dashboard widget. Oferă acces doar în citire la jurnalul de activitate; tokenul nu părăsește niciodată serverul.",
+  "s_token_hint": "Creează-l în BombVault → Settings → System → Dashboard widget. Oferă acces doar în citire la jurnalul de activitate; tokenul nu părăsește niciodată serverul. Poți lipi tokenul în sine sau URL-ul complet al widgetului — tokenul este extras automat.",
   "s_show": "Afișează",
   "s_hide": "Ascunde",
   "s_test": "Testează conexiunea",
