@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVault의 활동 로그를 Unraid 대시보드의 진짜 네이티브 타일로 표시합니다.",
+  "s_conn": "연결",
+  "s_conn_sub": "BombVault가 응답하는 위치",
+  "s_url": "BombVault URL",
+  "s_url_hint": "BombVault WebUI 주소(예: https://192.168.20.51:3443). LAN의 자체 서명 인증서도 괜찮습니다.",
+  "s_token": "위젯 토큰",
+  "s_token_hint": "BombVault → Settings → System → Dashboard widget에서 생성하세요. 활동 로그에 대한 읽기 전용 접근만 허용하며, 토큰은 서버를 벗어나지 않습니다.",
+  "s_show": "표시",
+  "s_hide": "숨기기",
+  "s_test": "연결 테스트",
+  "s_testing": "테스트 중…",
+  "s_ok": "연결됨 — BombVault %v",
+  "s_fail": "연결할 수 없음",
+  "s_tile": "대시보드 타일",
+  "s_tile_sub": "타일 동작 방식",
+  "s_tile_hint": "\"BombVault Activity\" 타일은 대시보드(가운데 열)에 자동으로 나타납니다. Unraid의 타일 컨트롤로 숨기거나 이동하거나 접을 수 있으며, 로그 영역은 어떤 테마에서도 터미널처럼 어둡게 유지됩니다.",
+  "s_apply": "적용",
+  "s_done": "완료"
+}

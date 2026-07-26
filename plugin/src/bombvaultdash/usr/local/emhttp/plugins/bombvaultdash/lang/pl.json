@@ -1,0 +1,20 @@
+{
+  "s_sub": "Dziennik aktywności BombVault jako prawdziwy, natywny kafelek na pulpicie Unraid.",
+  "s_conn": "Połączenie",
+  "s_conn_sub": "gdzie odpowiada twój BombVault",
+  "s_url": "URL BombVault",
+  "s_url_hint": "Adres WebUI BombVault, np. https://192.168.20.51:3443 — certyfikat self-signed w sieci LAN jest w porządku.",
+  "s_token": "Token widżetu",
+  "s_token_hint": "Utwórz go w BombVault → Settings → System → Dashboard widget. Daje dostęp tylko do odczytu dziennika aktywności; token nigdy nie opuszcza serwera.",
+  "s_show": "Pokaż",
+  "s_hide": "Ukryj",
+  "s_test": "Testuj połączenie",
+  "s_testing": "Testowanie…",
+  "s_ok": "połączono — BombVault %v",
+  "s_fail": "niedostępny",
+  "s_tile": "Kafelek pulpitu",
+  "s_tile_sub": "jak zachowuje się kafelek",
+  "s_tile_hint": "Kafelek \"BombVault Activity\" pojawia się na pulpicie automatycznie (środkowa kolumna). Ukryj, przenieś lub zwiń go własnymi kontrolkami kafelków Unraida — dziennik pozostaje ciemny w każdym motywie, jak terminal.",
+  "s_apply": "Zastosuj",
+  "s_done": "Gotowe"
+}

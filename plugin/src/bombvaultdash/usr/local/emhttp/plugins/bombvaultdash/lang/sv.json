@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVaults aktivitetslogg som en äkta, nativ ruta på Unraid-instrumentpanelen.",
+  "s_conn": "Anslutning",
+  "s_conn_sub": "där din BombVault svarar",
+  "s_url": "BombVault-URL",
+  "s_url_hint": "Adressen till BombVaults WebUI, t.ex. https://192.168.20.51:3443 — ett självsignerat certifikat på LAN är okej.",
+  "s_token": "Widget-token",
+  "s_token_hint": "Skapa den i BombVault → Settings → System → Dashboard widget. Den ger endast läsåtkomst till aktivitetsloggen; token lämnar aldrig servern.",
+  "s_show": "Visa",
+  "s_hide": "Dölj",
+  "s_test": "Testa anslutning",
+  "s_testing": "Testar…",
+  "s_ok": "ansluten — BombVault %v",
+  "s_fail": "onåbar",
+  "s_tile": "Dashboard-ruta",
+  "s_tile_sub": "hur rutan beter sig",
+  "s_tile_hint": "Rutan \"BombVault Activity\" dyker upp automatiskt på instrumentpanelen (mittkolumnen). Dölj, flytta eller fäll ihop den med Unraids egna rutkontroller — loggen förblir mörk i alla teman, som en terminal.",
+  "s_apply": "Verkställ",
+  "s_done": "Klar"
+}

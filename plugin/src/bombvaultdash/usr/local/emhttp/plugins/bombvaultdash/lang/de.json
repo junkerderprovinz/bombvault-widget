@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVaults Aktivitätslog als echte, native Kachel auf dem Unraid-Dashboard.",
+  "s_conn": "Verbindung",
+  "s_conn_sub": "wo dein BombVault antwortet",
+  "s_url": "BombVault-URL",
+  "s_url_hint": "Adresse deiner BombVault-WebUI, z. B. https://192.168.20.51:3443 — ein selbstsigniertes Zertifikat im LAN ist in Ordnung.",
+  "s_token": "Widget-Token",
+  "s_token_hint": "Erstelle ihn in BombVault → Settings → System → Dashboard widget. Er gewährt nur Lesezugriff auf das Aktivitätslog; der Token verlässt den Server nie.",
+  "s_show": "Zeigen",
+  "s_hide": "Verbergen",
+  "s_test": "Verbindung testen",
+  "s_testing": "Teste…",
+  "s_ok": "verbunden — BombVault %v",
+  "s_fail": "nicht erreichbar",
+  "s_tile": "Dashboard-Kachel",
+  "s_tile_sub": "wie sich die Kachel verhält",
+  "s_tile_hint": "Die Kachel \"BombVault Activity\" erscheint automatisch auf dem Dashboard (mittlere Spalte). Ausblenden, verschieben oder einklappen geht mit Unraids eigenen Kachel-Bedienelementen — das Log bleibt auf jedem Theme dunkel, wie ein Terminal.",
+  "s_apply": "Anwenden",
+  "s_done": "Fertig"
+}

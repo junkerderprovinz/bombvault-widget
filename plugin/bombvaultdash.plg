@@ -1,0 +1,105 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+  <!ENTITY name      "bombvaultdash">
+  <!ENTITY slug      "bombvaultdash">
+  <!ENTITY author    "Junker der Provinz">
+  <!ENTITY version   "2026.07.26">
+  <!ENTITY launch    "Settings/bombvaultdash">
+  <!ENTITY gitURL    "https://raw.githubusercontent.com/junkerderprovinz/bombvault-dashboard/main/plugin">
+  <!ENTITY pluginURL "&gitURL;/&slug;.plg">
+  <!ENTITY pkgURL    "https://github.com/junkerderprovinz/bombvault-dashboard/releases/download/v&version;">
+  <!ENTITY emhttp    "/usr/local/emhttp/plugins/&slug;">
+  <!ENTITY plgPath   "/boot/config/plugins/&slug;">
+  <!ENTITY txz       "&slug;-&version;-x86_64-1.txz">
+]>
+
+<PLUGIN name="&name;"
+        author="&author;"
+        version="&version;"
+        launch="&launch;"
+        pluginURL="&pluginURL;"
+        min="6.12.0"
+        support="https://github.com/junkerderprovinz/bombvault-dashboard/issues">
+
+<!-- FanCtrlPlus convention: name is the lowercase slug so Unraid resolves the
+     logo (plugins/<slug>/images/<slug>.png) AND the Plugins-tab description
+     (plugins/<slug>/README.md). The pretty "BombVault Dashboard" name comes
+     from README.md.
+     TODO before publishing: replace the support link with the real forum topic. -->
+<ICON>
+/usr/local/emhttp/plugins/&slug;/images/&slug;.png
+</ICON>
+
+<CHANGES>
+Shows BombVault's activity log as a real, native tile on the Unraid 7
+dashboard: every backup, restore, verify, prune, off-site replication and
+drill as it happens, plus the next scheduled run — in the same dark
+terminal-style log as BombVault's own widget. Read-only by construction;
+requires BombVault &gt;= 6.9.0 and a widget token.
+
+### 1.0.0
+#1 Initial build: a native dashboard tile "BombVault Activity" (it appears in
+   the dashboard's tile-management list and supports hide/move/collapse like
+   the built-in tiles), fed via a same-origin PHP proxy — the widget token
+   never reaches the browser. Line composition mirrors BombVault's own
+   embeddable widget one-to-one. Settings under Settings -&gt; Utilities with a
+   Test-connection button, localised across the 26 supported languages.
+</CHANGES>
+
+<!-- Pre-install: wipe the plugin dir so files removed between versions can't
+     linger (installpkg overwrites same-path files but never deletes orphans);
+     drop old flash .txz. The .cfg on the flash is untouched. No daemon to stop
+     — this plugin is webgui-only (pages + a PHP proxy). -->
+<FILE Run="/bin/bash">
+<INLINE>
+rm -rf &emhttp;
+rm -f &plgPath;/*.txz
+</INLINE>
+</FILE>
+
+<!--
+  The package (webgui files only) is built by plugin/pkg_build.sh and attached
+  to the GitHub release "v&version;". SHA256 is injected at release.
+-->
+<FILE Name="&plgPath;/&txz;" Run="/sbin/upgradepkg --install-new --reinstall">
+  <URL>&pkgURL;/&txz;</URL>
+  <SHA256>0000000000000000000000000000000000000000000000000000000000000000</SHA256>
+</FILE>
+
+<!-- Post-install: sane read perms (a Windows/CI build can bake odd modes; the
+     webgui must be able to read every page/script), then the house ceremony.
+     Nothing needs restarting — the dashboard picks the tile up on next load. -->
+<FILE Run="/bin/bash">
+<INLINE>
+chmod -R u+rwX,go+rX &emhttp; 2>/dev/null
+echo ""
+cat &emhttp;/banner.txt 2>/dev/null
+echo ""
+echo "BOMBVAULT DASHBOARD IS READY"
+</INLINE>
+</FILE>
+
+<!-- Remove. MUST be a <FILE ... Method="remove"> block: Unraid's plugin manager
+     only runs <FILE> elements, so a bare <REMOVE> tag is silently IGNORED and
+     the cleanup never runs. MUST end with exit 0, or Unraid leaves the .plg on
+     the flash and it reinstalls on boot. Webgui-only plugin: no daemon to stop
+     — drop the exact package + files + cached .txz; keep the flash .cfg so a
+     reinstall keeps the URL + token. -->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+# goodbye ceremony FIRST, while the files still exist
+cat &emhttp;/banner.txt 2>/dev/null
+echo ""
+echo "Bye!"
+echo ""
+pkg=$(ls /var/log/packages/ 2>/dev/null | grep -E "^&slug;(-[^-]+-[^-]+-[^-]+)?$" | head -n1)
+if [ -n "$pkg" ]; then removepkg "$pkg" 2>/dev/null; fi
+rm -rf &emhttp;
+rm -f &plgPath;/*.txz
+echo "BombVault Dashboard removed. Settings (flash .cfg) were kept — delete"
+echo "&plgPath; manually if you don't plan to reinstall."
+exit 0
+</INLINE>
+</FILE>
+
+</PLUGIN>

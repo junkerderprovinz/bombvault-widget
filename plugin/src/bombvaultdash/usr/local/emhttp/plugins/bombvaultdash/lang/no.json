@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVaults aktivitetslogg som en ekte, nativ flis på Unraid-dashbordet.",
+  "s_conn": "Tilkobling",
+  "s_conn_sub": "der BombVault svarer",
+  "s_url": "BombVault-URL",
+  "s_url_hint": "Adressen til BombVault-WebUI, f.eks. https://192.168.20.51:3443 — et selvsignert sertifikat på LAN er greit.",
+  "s_token": "Widget-token",
+  "s_token_hint": "Opprett det i BombVault → Settings → System → Dashboard widget. Det gir kun lesetilgang til aktivitetsloggen; tokenet forlater aldri serveren.",
+  "s_show": "Vis",
+  "s_hide": "Skjul",
+  "s_test": "Test tilkobling",
+  "s_testing": "Tester…",
+  "s_ok": "tilkoblet — BombVault %v",
+  "s_fail": "utilgjengelig",
+  "s_tile": "Dashbord-flis",
+  "s_tile_sub": "hvordan flisen oppfører seg",
+  "s_tile_hint": "Flisen \"BombVault Activity\" dukker automatisk opp på dashbordet (midtre kolonne). Skjul, flytt eller fold den sammen med Unraids egne fliskontroller — loggen forblir mørk på alle temaer, som en terminal.",
+  "s_apply": "Bruk",
+  "s_done": "Ferdig"
+}

@@ -1,0 +1,20 @@
+{
+  "s_sub": "Nhật ký hoạt động của BombVault dưới dạng ô gốc thực thụ trên bảng điều khiển Unraid.",
+  "s_conn": "Kết nối",
+  "s_conn_sub": "nơi BombVault của bạn phản hồi",
+  "s_url": "URL BombVault",
+  "s_url_hint": "Địa chỉ WebUI của BombVault, ví dụ https://192.168.20.51:3443 — chứng chỉ tự ký trong mạng LAN là ổn.",
+  "s_token": "Mã token widget",
+  "s_token_hint": "Tạo nó trong BombVault → Settings → System → Dashboard widget. Nó chỉ cấp quyền đọc nhật ký hoạt động; token không bao giờ rời khỏi máy chủ.",
+  "s_show": "Hiện",
+  "s_hide": "Ẩn",
+  "s_test": "Kiểm tra kết nối",
+  "s_testing": "Đang kiểm tra…",
+  "s_ok": "đã kết nối — BombVault %v",
+  "s_fail": "không thể truy cập",
+  "s_tile": "Ô bảng điều khiển",
+  "s_tile_sub": "cách ô hoạt động",
+  "s_tile_hint": "Ô \"BombVault Activity\" tự động xuất hiện trên bảng điều khiển (cột giữa). Ẩn, di chuyển hoặc thu gọn nó bằng chính các điều khiển ô của Unraid — phần nhật ký luôn tối trên mọi chủ đề, như một terminal.",
+  "s_apply": "Áp dụng",
+  "s_done": "Xong"
+}

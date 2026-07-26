@@ -1,0 +1,20 @@
+{
+  "s_sub": "O registo de atividade do BombVault como um mosaico nativo real no dashboard do Unraid.",
+  "s_conn": "Ligação",
+  "s_conn_sub": "onde o seu BombVault responde",
+  "s_url": "URL do BombVault",
+  "s_url_hint": "Endereço da WebUI do BombVault, p. ex. https://192.168.20.51:3443 — um certificado autoassinado na LAN é aceitável.",
+  "s_token": "Token do widget",
+  "s_token_hint": "Crie-o em BombVault → Settings → System → Dashboard widget. Concede acesso só de leitura ao registo de atividade; o token nunca sai do servidor.",
+  "s_show": "Mostrar",
+  "s_hide": "Ocultar",
+  "s_test": "Testar ligação",
+  "s_testing": "A testar…",
+  "s_ok": "ligado — BombVault %v",
+  "s_fail": "inacessível",
+  "s_tile": "Mosaico do dashboard",
+  "s_tile_sub": "como o mosaico se comporta",
+  "s_tile_hint": "O mosaico \"BombVault Activity\" aparece automaticamente no dashboard (coluna central). Oculte, mova ou recolha-o com os controlos de mosaicos do Unraid — o registo permanece escuro em todos os temas, como um terminal.",
+  "s_apply": "Aplicar",
+  "s_done": "Concluído"
+}

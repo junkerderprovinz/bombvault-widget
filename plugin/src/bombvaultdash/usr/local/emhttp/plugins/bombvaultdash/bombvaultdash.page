@@ -1,0 +1,200 @@
+Menu="Utilities"
+Title="BombVault Dashboard"
+Icon="bombvaultdash.png"
+---
+<?php
+/* BombVault Dashboard settings → writes /boot/config/plugins/bombvaultdash/
+   bombvaultdash.cfg via Unraid's /update.php. NB: no functions defined in a
+   .page (Unraid may include it more than once → "Cannot redeclare" → blank
+   page). */
+$cfg   = parse_plugin_cfg("bombvaultdash");
+$bvurl = isset($cfg['BV_URL'])       ? $cfg['BV_URL']       : '';
+$wtok  = isset($cfg['WIDGET_TOKEN']) ? $cfg['WIDGET_TOKEN'] : '';
+
+/* UI text follows Unraid's language — load this plugin's locale file (English
+   base, then overlay the active language; missing keys fall back to English). */
+$lang = strtolower(substr((string)(isset($_SESSION['locale']) ? $_SESSION['locale'] : ''), 0, 2));
+$langdir = '/usr/local/emhttp/plugins/bombvaultdash/lang';
+$L = json_decode(@file_get_contents("$langdir/en.json"), true) ?: array();
+if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
+  $tr = json_decode(@file_get_contents("$langdir/$lang.json"), true);
+  if (is_array($tr)) $L = array_merge($L, $tr);
+}
+?>
+
+<style>
+  /* House look (ShipLog/CC convention): no dark backing sheet — the content
+     sits on Unraid's own surface. Borderless flat header, borderless cards set
+     apart by a lighter fill + a soft shadow, not a frame. */
+  .bvd-cfg{--card:#242424;--txt:#e6e6e6;--dim:#b4b4b4;--dim2:#8a8a8a;
+    --line:#333;--line2:#3a3a3a;--inp:#1b1b1b;
+    max-width:820px;margin:6px auto 0;color:var(--txt);
+    font:14px/1.5 "Segoe UI",system-ui,-apple-system,sans-serif}
+  .bvd-cfg *{box-sizing:border-box}
+  .bvd-hd{display:flex;align-items:center;gap:15px;padding:0 2px 18px;margin-bottom:20px}
+  .bvd-hd .bvd-logo{width:46px;height:46px;flex:none}
+  .bvd-hd .bvd-ttl{font-size:21px;font-weight:600;letter-spacing:.2px}
+  .bvd-hd .bvd-ttl b{font-weight:700}
+  .bvd-hd .bvd-sub{margin-top:3px;color:var(--dim2);font-size:12.5px;max-width:660px}
+  /* Header text follows Unraid's theme for readability (the logo is a fixed-colour image). */
+  .Theme--white .bvd-hd .bvd-ttl,.Theme--azure .bvd-hd .bvd-ttl{color:#1c1c1c}
+  .Theme--white .bvd-hd .bvd-sub,.Theme--azure .bvd-hd .bvd-sub{color:#666}
+
+  .bvd-card{background:var(--card);border:none;border-radius:12px;
+    box-shadow:0 1px 3px rgba(0,0,0,.3);
+    padding:6px 18px 16px;margin-bottom:16px}
+  .bvd-card > h3{display:flex;align-items:baseline;gap:10px;margin:14px 2px 14px;
+    font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#cfcfcf;
+    border-bottom:1px solid var(--line);padding-bottom:10px}
+  .bvd-card > h3 small{text-transform:none;letter-spacing:0;font-weight:400;color:var(--dim2);font-size:12px}
+
+  .bvd-row{display:grid;grid-template-columns:170px 1fr;gap:6px 12px;align-items:center;padding:7px 2px}
+  .bvd-row > label{color:var(--dim);font-size:13px;display:inline-flex;align-items:center;gap:6px}
+  .bvd-row .bvd-in{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .bvd-cfg input[type=text],.bvd-cfg input[type=password]{
+    background:var(--inp);border:1px solid var(--line2);border-radius:7px;color:var(--txt);
+    padding:7px 10px;font:13px/1.2 inherit;min-width:280px;outline:none}
+  .bvd-cfg input:focus{border-color:#6e6e6e}
+  .bvd-hint{color:var(--dim2);font-size:12px}
+  .bvd-note{color:var(--dim2);font-size:12.5px;line-height:1.5;margin:4px 2px 8px;max-width:640px}
+
+  /* Info icon (house convention): each field's help text hides behind a small
+     ⓘ next to its label; the script at the end moves the help HTML into a
+     hover/focus bubble. If JS is off the original .bvd-help text stays visible. */
+  .bvd-info{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;
+    color:var(--dim2);opacity:.7;cursor:help;flex:none;padding:0;background:none;border:none}
+  .bvd-info:hover,.bvd-info:focus{opacity:1;outline:none;color:var(--dim)}
+  .bvd-info svg{width:15px;height:15px;display:block}
+  .Theme--white .bvd-info,.Theme--azure .bvd-info{color:#8a8a8a}
+  .bvd-info-pop{position:absolute;z-index:9999;max-width:300px;background:#1c1c1c;color:#eaeaea;
+    border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:9px 11px;
+    font:12px/1.5 "Segoe UI",system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .bvd-info-pop code{background:rgba(255,255,255,.08);padding:1px 4px;border-radius:4px;font-size:11.5px}
+
+  /* Match Unraid's native buttons via its theme vars so Apply + the helpers
+     look native + hover like the rest of the GUI. */
+  .bvd-btn{background:var(--button,#2a2a2a);border:1px solid var(--border,#3a3a3a);border-radius:6px;color:var(--text,#e6e6e6);
+    padding:7px 14px;font:13px/1.2 inherit;cursor:pointer}
+  .bvd-btn:hover{background:var(--button-hover,#333);border-color:var(--border,#5a5a5a)}
+  .bvd-btn.bvd-primary{font-weight:600}
+  .bvd-btn.bvd-eye{padding:7px 10px;min-width:58px}
+  .bvd-res{font-size:12.5px}
+  .bvd-res.ok{color:#3fae6a}
+  .bvd-res.err{color:#d9534f}
+  .bvd-res.run{color:var(--dim)}
+  .bvd-actions{display:flex;gap:10px;margin:4px 2px 4px}
+</style>
+
+<div class="bvd-cfg">
+
+  <div class="bvd-hd">
+    <img class="bvd-logo" src="<?autov('/plugins/bombvaultdash/images/bombvaultdash.png')?>" alt="BombVault Dashboard">
+    <div>
+      <div class="bvd-ttl"><b>BombVault</b> Dashboard</div>
+      <div class="bvd-sub"><?=$L['s_sub']?></div>
+    </div>
+  </div>
+
+  <form name="bombvaultdash_settings" method="POST" action="/update.php" target="progressFrame">
+    <input type="hidden" name="#file" value="bombvaultdash/bombvaultdash.cfg">
+
+    <div class="bvd-card">
+      <h3><?=$L['s_conn']?> <small><?=$L['s_conn_sub']?></small></h3>
+      <div class="bvd-row"><label><?=$L['s_url']?></label><div class="bvd-in">
+        <input type="text" name="BV_URL" value="<?=htmlspecialchars($bvurl)?>" placeholder="https://192.168.20.51:3443">
+        <span class="bvd-hint bvd-help"><?=$L['s_url_hint']?></span></div></div>
+      <div class="bvd-row"><label><?=$L['s_token']?></label><div class="bvd-in">
+        <input type="password" id="bvd-WIDGET_TOKEN" name="WIDGET_TOKEN" value="<?=htmlspecialchars($wtok)?>">
+        <button type="button" class="bvd-btn bvd-eye" onclick="bvdToggle('bvd-WIDGET_TOKEN',this)"><?=$L['s_show']?></button>
+        <button type="button" class="bvd-btn" onclick="bvdTest()"><?=$L['s_test']?></button>
+        <span id="bvd-test-result" class="bvd-res"></span>
+        <span class="bvd-hint bvd-help"><?=$L['s_token_hint']?></span></div></div>
+    </div>
+
+    <div class="bvd-card">
+      <h3><?=$L['s_tile']?> <small><?=$L['s_tile_sub']?></small></h3>
+      <div class="bvd-note"><?=$L['s_tile_hint']?></div>
+    </div>
+
+    <div class="bvd-actions">
+      <input type="submit" name="#apply" class="bvd-btn bvd-primary" value="<?=htmlspecialchars($L['s_apply'])?>">
+      <input type="button" class="bvd-btn" value="<?=htmlspecialchars($L['s_done'])?>" onclick="done()">
+    </div>
+  </form>
+</div>
+
+<script>
+var BVDT = <?=json_encode($L, JSON_UNESCAPED_UNICODE)?>;
+function bvdToggle(id, btn) {
+  var i = document.getElementById(id);
+  if (!i) return;
+  if (i.type === 'password') { i.type = 'text'; btn.textContent = BVDT.s_hide; }
+  else { i.type = 'password'; btn.textContent = BVDT.s_show; }
+}
+/* Test connection — calls the same proxy the tile uses, against the SAVED
+   settings (Apply first, then Test). Shows the BombVault version on success,
+   the proxy's error text on failure. */
+function bvdTest() {
+  var out = document.getElementById('bvd-test-result');
+  out.className = 'bvd-res run'; out.textContent = BVDT.s_testing;
+  fetch('/plugins/bombvaultdash/server/status.php', { cache: 'no-store', headers: { Accept: 'application/json' } })
+    .then(function (res) { return res.json(); })
+    .then(function (d) {
+      if (d && d.ok) {
+        out.className = 'bvd-res ok';
+        out.textContent = '✓ ' + BVDT.s_ok.replace('%v', d.version || '?');
+      } else {
+        out.className = 'bvd-res err';
+        out.textContent = '✗ ' + ((d && d.error) || BVDT.s_fail);
+      }
+    })
+    .catch(function () { out.className = 'bvd-res err'; out.textContent = '✗ ' + BVDT.s_fail; });
+}
+/* Info icons (house convention): move each field's help text (.bvd-help) into
+   a small ⓘ next to its label; the bubble renders the original HTML and stays
+   open while the pointer is over it. Graceful: if this never runs, the help
+   text remains visible. */
+(function () {
+  var ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.1" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="4.7" r="1.05" fill="currentColor"/><rect x="7.05" y="6.8" width="1.9" height="5" rx=".95" fill="currentColor"/></svg>';
+  var pop = null, hideT = null;
+  function bubble() {
+    if (pop) return pop;
+    pop = document.createElement('div'); pop.className = 'bvd-info-pop'; pop.style.display = 'none';
+    pop.addEventListener('mouseenter', function () { clearTimeout(hideT); });
+    pop.addEventListener('mouseleave', hideSoon);
+    document.body.appendChild(pop);
+    return pop;
+  }
+  function hideSoon() { clearTimeout(hideT); hideT = setTimeout(function () { if (pop) pop.style.display = 'none'; }, 150); }
+  function show(icon) {
+    clearTimeout(hideT);
+    var p = bubble(); p.innerHTML = icon.getAttribute('data-html') || '';
+    p.style.display = 'block'; p.style.visibility = 'hidden'; p.style.left = '0'; p.style.top = '0';
+    var r = icon.getBoundingClientRect(), pw = p.offsetWidth, ph = p.offsetHeight;
+    var vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+    var left = Math.max(8, Math.min(r.left + window.scrollX, window.scrollX + vw - pw - 8));
+    var top = (r.bottom + ph + 14 > vh) ? (r.top + window.scrollY - ph - 7) : (r.bottom + window.scrollY + 7);
+    p.style.left = left + 'px'; p.style.top = top + 'px'; p.style.visibility = 'visible';
+  }
+  try {
+    document.querySelectorAll('.bvd-help').forEach(function (h) {
+      var html = (h.innerHTML || '').trim(); if (!html) return;
+      var row = h.closest('.bvd-row'); if (!row) return;
+      var label = row.querySelector('label'); if (!label) return;
+      var icon = document.createElement('span');
+      icon.className = 'bvd-info'; icon.setAttribute('tabindex', '0'); icon.setAttribute('role', 'img');
+      icon.setAttribute('aria-label', (h.textContent || '').trim());
+      icon.setAttribute('data-html', html);
+      icon.innerHTML = ICON;
+      icon.addEventListener('mouseenter', function () { show(icon); });
+      icon.addEventListener('mouseleave', hideSoon);
+      icon.addEventListener('focus', function () { show(icon); });
+      icon.addEventListener('blur', hideSoon);
+      icon.addEventListener('click', function (e) { e.preventDefault(); show(icon); });
+      icon.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pop) { pop.style.display = 'none'; icon.blur(); } });
+      label.appendChild(icon);
+      if (h.parentNode) h.parentNode.removeChild(h);
+    });
+  } catch (e) { /* leave the help text visible on any failure */ }
+})();
+</script>

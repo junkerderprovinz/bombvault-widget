@@ -1,0 +1,20 @@
+{
+  "s_sub": "把 BombVault 的活动日志作为真正的原生磁贴显示在 Unraid 仪表板上。",
+  "s_conn": "连接",
+  "s_conn_sub": "你的 BombVault 所在的地址",
+  "s_url": "BombVault 地址",
+  "s_url_hint": "BombVault WebUI 的地址,例如 https://192.168.20.51:3443 — 局域网内的自签名证书没有问题。",
+  "s_token": "小组件令牌",
+  "s_token_hint": "在 BombVault → Settings → System → Dashboard widget 中创建。它仅授予活动日志的只读访问权限;令牌永远不会离开服务器。",
+  "s_show": "显示",
+  "s_hide": "隐藏",
+  "s_test": "测试连接",
+  "s_testing": "测试中…",
+  "s_ok": "已连接 — BombVault %v",
+  "s_fail": "无法访问",
+  "s_tile": "仪表板磁贴",
+  "s_tile_sub": "磁贴的行为",
+  "s_tile_hint": "\"BombVault Activity\" 磁贴会自动出现在仪表板上(中间一列)。可用 Unraid 自带的磁贴控件隐藏、移动或折叠它 — 日志区域在任何主题下都保持深色,就像终端一样。",
+  "s_apply": "应用",
+  "s_done": "完成"
+}

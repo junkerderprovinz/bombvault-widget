@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVault'un etkinlik günlüğü, Unraid panosunda gerçek, yerel bir kutucuk olarak.",
+  "s_conn": "Bağlantı",
+  "s_conn_sub": "BombVault'unuzun yanıt verdiği yer",
+  "s_url": "BombVault URL'si",
+  "s_url_hint": "BombVault WebUI adresi, örn. https://192.168.20.51:3443 — LAN'da kendinden imzalı sertifika sorun değildir.",
+  "s_token": "Widget belirteci",
+  "s_token_hint": "BombVault → Settings → System → Dashboard widget bölümünde oluşturun. Etkinlik günlüğüne yalnızca okuma erişimi verir; belirteç sunucudan asla çıkmaz.",
+  "s_show": "Göster",
+  "s_hide": "Gizle",
+  "s_test": "Bağlantıyı test et",
+  "s_testing": "Test ediliyor…",
+  "s_ok": "bağlandı — BombVault %v",
+  "s_fail": "ulaşılamıyor",
+  "s_tile": "Pano kutucuğu",
+  "s_tile_sub": "kutucuğun davranışı",
+  "s_tile_hint": "\"BombVault Activity\" kutucuğu panoda otomatik olarak görünür (orta sütun). Unraid'in kendi kutucuk denetimleriyle gizleyin, taşıyın veya daraltın — günlük her temada terminal gibi koyu kalır.",
+  "s_apply": "Uygula",
+  "s_done": "Bitti"
+}

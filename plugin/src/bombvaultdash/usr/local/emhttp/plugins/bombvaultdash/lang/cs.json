@@ -1,0 +1,20 @@
+{
+  "s_sub": "Log aktivit BombVaultu jako skutečná nativní dlaždice na dashboardu Unraidu.",
+  "s_conn": "Připojení",
+  "s_conn_sub": "kde váš BombVault odpovídá",
+  "s_url": "URL BombVaultu",
+  "s_url_hint": "Adresa webového rozhraní BombVaultu, např. https://192.168.20.51:3443 — self-signed certifikát v LAN je v pořádku.",
+  "s_token": "Token widgetu",
+  "s_token_hint": "Vytvořte jej v BombVault → Settings → System → Dashboard widget. Poskytuje pouze čtení logu aktivit; token nikdy neopustí server.",
+  "s_show": "Zobrazit",
+  "s_hide": "Skrýt",
+  "s_test": "Otestovat připojení",
+  "s_testing": "Testuji…",
+  "s_ok": "připojeno — BombVault %v",
+  "s_fail": "nedostupné",
+  "s_tile": "Dlaždice dashboardu",
+  "s_tile_sub": "jak se dlaždice chová",
+  "s_tile_hint": "Dlaždice \"BombVault Activity\" se na dashboardu objeví automaticky (prostřední sloupec). Skrýt, přesunout nebo sbalit ji lze vlastními ovládacími prvky Unraidu — log zůstává na každém motivu tmavý, jako terminál.",
+  "s_apply": "Použít",
+  "s_done": "Hotovo"
+}

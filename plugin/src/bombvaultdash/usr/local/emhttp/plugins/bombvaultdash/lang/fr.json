@@ -1,0 +1,20 @@
+{
+  "s_sub": "Le journal d'activité de BombVault en vraie tuile native sur le tableau de bord Unraid.",
+  "s_conn": "Connexion",
+  "s_conn_sub": "où répond votre BombVault",
+  "s_url": "URL de BombVault",
+  "s_url_hint": "Adresse de la WebUI BombVault, p. ex. https://192.168.20.51:3443 — un certificat auto-signé sur le LAN convient.",
+  "s_token": "Jeton du widget",
+  "s_token_hint": "Créez-le dans BombVault → Settings → System → Dashboard widget. Il donne un accès en lecture seule au journal d'activité ; le jeton ne quitte jamais le serveur.",
+  "s_show": "Afficher",
+  "s_hide": "Masquer",
+  "s_test": "Tester la connexion",
+  "s_testing": "Test…",
+  "s_ok": "connecté — BombVault %v",
+  "s_fail": "injoignable",
+  "s_tile": "Tuile du tableau de bord",
+  "s_tile_sub": "comportement de la tuile",
+  "s_tile_hint": "La tuile \"BombVault Activity\" apparaît automatiquement sur le tableau de bord (colonne centrale). Masquez-la, déplacez-la ou repliez-la avec les commandes de tuiles d'Unraid — le journal reste sombre sur tous les thèmes, comme un terminal.",
+  "s_apply": "Appliquer",
+  "s_done": "Terminé"
+}

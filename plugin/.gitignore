@@ -1,0 +1,2 @@
+# build artifacts produced by pkg_build.sh — never commit these
+out/

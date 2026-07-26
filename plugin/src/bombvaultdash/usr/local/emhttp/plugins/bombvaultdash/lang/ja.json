@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVault のアクティビティログを Unraid ダッシュボードの本物のネイティブタイルとして表示します。",
+  "s_conn": "接続",
+  "s_conn_sub": "BombVault が応答する場所",
+  "s_url": "BombVault の URL",
+  "s_url_hint": "BombVault WebUI のアドレス(例: https://192.168.20.51:3443)。LAN 内の自己署名証明書で問題ありません。",
+  "s_token": "ウィジェットトークン",
+  "s_token_hint": "BombVault → Settings → System → Dashboard widget で作成します。アクティビティログへの読み取り専用アクセスのみを許可し、トークンがサーバーの外に出ることはありません。",
+  "s_show": "表示",
+  "s_hide": "非表示",
+  "s_test": "接続テスト",
+  "s_testing": "テスト中…",
+  "s_ok": "接続済み — BombVault %v",
+  "s_fail": "到達できません",
+  "s_tile": "ダッシュボードタイル",
+  "s_tile_sub": "タイルの動作",
+  "s_tile_hint": "\"BombVault Activity\" タイルはダッシュボード(中央の列)に自動的に表示されます。Unraid 標準のタイル操作で非表示・移動・折りたたみができます。ログ部分はどのテーマでもターミナルのように暗いままです。",
+  "s_apply": "適用",
+  "s_done": "完了"
+}

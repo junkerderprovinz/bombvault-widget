@@ -1,0 +1,20 @@
+{
+  "s_sub": "Il registro attività di BombVault come vero riquadro nativo sulla dashboard di Unraid.",
+  "s_conn": "Connessione",
+  "s_conn_sub": "dove risponde il tuo BombVault",
+  "s_url": "URL di BombVault",
+  "s_url_hint": "Indirizzo della WebUI di BombVault, ad es. https://192.168.20.51:3443 — un certificato autofirmato in LAN va bene.",
+  "s_token": "Token del widget",
+  "s_token_hint": "Crealo in BombVault → Settings → System → Dashboard widget. Concede accesso in sola lettura al registro attività; il token non lascia mai il server.",
+  "s_show": "Mostra",
+  "s_hide": "Nascondi",
+  "s_test": "Prova connessione",
+  "s_testing": "Prova in corso…",
+  "s_ok": "connesso — BombVault %v",
+  "s_fail": "irraggiungibile",
+  "s_tile": "Riquadro dashboard",
+  "s_tile_sub": "come si comporta il riquadro",
+  "s_tile_hint": "Il riquadro \"BombVault Activity\" appare automaticamente sulla dashboard (colonna centrale). Nascondilo, spostalo o comprimilo con i controlli dei riquadri di Unraid — il registro resta scuro con ogni tema, come un terminale.",
+  "s_apply": "Applica",
+  "s_done": "Fatto"
+}

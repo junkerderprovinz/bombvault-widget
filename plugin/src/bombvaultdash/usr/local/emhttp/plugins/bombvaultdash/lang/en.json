@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVault's activity log as a real, native tile on the Unraid dashboard.",
+  "s_conn": "Connection",
+  "s_conn_sub": "where your BombVault answers",
+  "s_url": "BombVault URL",
+  "s_url_hint": "Address of your BombVault WebUI, e.g. https://192.168.20.51:3443 — a self-signed certificate on the LAN is fine.",
+  "s_token": "Widget token",
+  "s_token_hint": "Create it in BombVault → Settings → System → Dashboard widget. It grants read-only access to the activity log; the token never leaves the server.",
+  "s_show": "Show",
+  "s_hide": "Hide",
+  "s_test": "Test connection",
+  "s_testing": "Testing…",
+  "s_ok": "connected — BombVault %v",
+  "s_fail": "unreachable",
+  "s_tile": "Dashboard tile",
+  "s_tile_sub": "how the tile behaves",
+  "s_tile_hint": "The \"BombVault Activity\" tile appears on the Dashboard automatically (middle column). Hide, move or collapse it with Unraid's own tile controls — the log body stays dark on every theme, like a terminal.",
+  "s_apply": "Apply",
+  "s_done": "Done"
+}

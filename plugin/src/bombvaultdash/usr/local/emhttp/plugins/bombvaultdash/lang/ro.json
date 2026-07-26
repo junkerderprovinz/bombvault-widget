@@ -1,0 +1,20 @@
+{
+  "s_sub": "Jurnalul de activitate BombVault ca o plăcuță nativă reală pe dashboard-ul Unraid.",
+  "s_conn": "Conexiune",
+  "s_conn_sub": "unde răspunde BombVault-ul tău",
+  "s_url": "URL BombVault",
+  "s_url_hint": "Adresa WebUI-ului BombVault, de ex. https://192.168.20.51:3443 — un certificat self-signed în LAN este în regulă.",
+  "s_token": "Token widget",
+  "s_token_hint": "Creează-l în BombVault → Settings → System → Dashboard widget. Oferă acces doar în citire la jurnalul de activitate; tokenul nu părăsește niciodată serverul.",
+  "s_show": "Afișează",
+  "s_hide": "Ascunde",
+  "s_test": "Testează conexiunea",
+  "s_testing": "Se testează…",
+  "s_ok": "conectat — BombVault %v",
+  "s_fail": "inaccesibil",
+  "s_tile": "Plăcuța de dashboard",
+  "s_tile_sub": "cum se comportă plăcuța",
+  "s_tile_hint": "Plăcuța \"BombVault Activity\" apare automat pe dashboard (coloana din mijloc). Ascunde-o, mut-o sau restrânge-o cu controalele proprii de plăcuțe ale Unraid — jurnalul rămâne întunecat pe orice temă, ca un terminal.",
+  "s_apply": "Aplică",
+  "s_done": "Gata"
+}

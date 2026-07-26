@@ -1,0 +1,20 @@
+{
+  "s_sub": "BombVaults activiteitenlog als een echte, native tegel op het Unraid-dashboard.",
+  "s_conn": "Verbinding",
+  "s_conn_sub": "waar jouw BombVault antwoordt",
+  "s_url": "BombVault-URL",
+  "s_url_hint": "Adres van je BombVault-WebUI, bijv. https://192.168.20.51:3443 — een zelfondertekend certificaat op het LAN is prima.",
+  "s_token": "Widget-token",
+  "s_token_hint": "Maak hem aan in BombVault → Settings → System → Dashboard widget. Hij geeft alleen-lezen toegang tot het activiteitenlog; de token verlaat de server nooit.",
+  "s_show": "Tonen",
+  "s_hide": "Verbergen",
+  "s_test": "Verbinding testen",
+  "s_testing": "Testen…",
+  "s_ok": "verbonden — BombVault %v",
+  "s_fail": "onbereikbaar",
+  "s_tile": "Dashboardtegel",
+  "s_tile_sub": "hoe de tegel zich gedraagt",
+  "s_tile_hint": "De tegel \"BombVault Activity\" verschijnt automatisch op het dashboard (middelste kolom). Verberg, verplaats of klap hem in met Unraids eigen tegelbediening — het log blijft op elk thema donker, als een terminal.",
+  "s_apply": "Toepassen",
+  "s_done": "Klaar"
+}

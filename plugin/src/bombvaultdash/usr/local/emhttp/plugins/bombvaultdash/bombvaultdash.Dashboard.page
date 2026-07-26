@@ -1,0 +1,55 @@
+Menu="Dashboard:0"
+Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9','>')"
+---
+<?php
+/* BombVault Activity — a REAL Unraid 7 dashboard tile (it appears in the
+ * dashboard's tile-management checkbox list like the native ones).
+ *
+ * Mechanics baked in on purpose:
+ * - Menu="Dashboard:0": the ":0" rank is MANDATORY — it makes this page sort
+ *   BEFORE DashStats, which builds the tile table; without it the tile is
+ *   silently dropped. Cond gates it to 6.12+ (the $mytiles dashboard).
+ * - The <tbody title> is the tile's IDENTITY: the dashboard shows it as the
+ *   checkbox label in tile management, and md5(title) keys the tile's
+ *   visibility + position persisted in /boot/config/dashboard_settings.json.
+ *   Keep it a STABLE, untranslated English string — renaming it orphans the
+ *   user's saved layout.
+ * - $mytiles key 'bombvaultdash' must be unique across all installed plugins;
+ *   'column2' is the default column (the user can move it, see above).
+ * - This page is evaluated on EVERY dashboard load: keep the PHP minimal (no
+ *   curl here — the tile body is a static scaffold, scripts/bombvaultdash.js
+ *   fills it from the same-origin proxy) and define NO functions (a .page can
+ *   be included more than once -> "Cannot redeclare" -> blank dashboard).
+ * - First row mirrors DashStats' native header structure (tile-header /
+ *   tile-header-left / -right), which is what Unraid 7's dashboard JS hooks
+ *   the collapse chevron and drag handling onto.
+ */
+$mytiles['bombvaultdash']['column2'] = <<<EOT
+<tbody title="BombVault Activity">
+<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>BombVault Activity</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'><a href='/Settings/bombvaultdash' title="Go to BombVault Dashboard settings"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
+<tr><td><div id='bvd-log' class='bvd-log'></div></td></tr>
+</tbody>
+EOT;
+?>
+<style>
+/* The log body brings its OWN dark background (like a terminal), so it reads
+   identically on every Unraid theme — no theme-dependent colours inside. */
+.bvd-log{height:260px;overflow-y:auto;background:#161616;color:#e0e0e0;
+  font-family:Consolas,'Cascadia Mono',Menlo,monospace;font-size:12px;line-height:1.75;
+  padding:8px 12px 10px;border-radius:4px;text-align:left;
+  scrollbar-width:thin;scrollbar-color:#393939 #161616}
+.bvd-log::-webkit-scrollbar{width:8px}
+.bvd-log::-webkit-scrollbar-thumb{background:#393939;border-radius:4px}
+.bvd-log::-webkit-scrollbar-track{background:#161616}
+.bvd-row{display:flex;gap:9px;white-space:nowrap;overflow:hidden}
+.bvd-ts{color:#8d8d8d;flex:0 0 auto}
+.bvd-g{width:12px;text-align:center;flex:0 0 auto}
+.bvd-msg{overflow:hidden;text-overflow:ellipsis}
+.bvd-ok{color:#6fdc8c}
+.bvd-fail{color:#ff8389}
+.bvd-info{color:#78a9ff}
+.bvd-idle{color:#f1c21b}
+@keyframes bvd-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.bvd-live .bvd-g{animation:bvd-pulse 2s ease-in-out infinite}
+</style>
+<script src="<?autov('/plugins/bombvaultdash/scripts/bombvaultdash.js')?>"></script>

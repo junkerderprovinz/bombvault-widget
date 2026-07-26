@@ -1,0 +1,20 @@
+{
+  "s_sub": "A BombVault tevékenységnaplója valódi, natív csempeként az Unraid irányítópultján.",
+  "s_conn": "Kapcsolat",
+  "s_conn_sub": "ahol a BombVault válaszol",
+  "s_url": "BombVault URL",
+  "s_url_hint": "A BombVault WebUI címe, pl. https://192.168.20.51:3443 — önaláírt tanúsítvány a LAN-on rendben van.",
+  "s_token": "Widget-token",
+  "s_token_hint": "Hozd létre itt: BombVault → Settings → System → Dashboard widget. Csak olvasási hozzáférést ad a tevékenységnaplóhoz; a token soha nem hagyja el a szervert.",
+  "s_show": "Mutat",
+  "s_hide": "Elrejt",
+  "s_test": "Kapcsolat tesztelése",
+  "s_testing": "Tesztelés…",
+  "s_ok": "kapcsolódva — BombVault %v",
+  "s_fail": "nem érhető el",
+  "s_tile": "Irányítópult-csempe",
+  "s_tile_sub": "hogyan viselkedik a csempe",
+  "s_tile_hint": "A \"BombVault Activity\" csempe automatikusan megjelenik az irányítópulton (középső oszlop). Elrejteni, áthelyezni vagy összecsukni az Unraid saját csempevezérlőivel lehet — a napló minden témán sötét marad, mint egy terminál.",
+  "s_apply": "Alkalmaz",
+  "s_done": "Kész"
+}
