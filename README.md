@@ -44,9 +44,17 @@ A small Unraid plugin (no daemon, no container) that registers a native dashboar
 
 ## 2. Screenshots
 
-<!-- TODO: add .github/assets/screenshots/tile.png + settings.png once the
-     plugin has run on a live box. -->
-*Screenshots follow with the first release.*
+<p align="center">
+  <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/screenshots/tile.png" alt="BombVault Activity tile on the Unraid dashboard" width="90%">
+  <br><em>The BombVault Activity tile on the Unraid dashboard — every backup, restore and verify scrolls by in the dark terminal-style log, with the pulsing "next: …" line at the bottom.</em>
+</p>
+
+<br>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/screenshots/settings.png" alt="BombVault Widget settings page" width="90%">
+  <br><em>Settings under Utilities: BombVault URL + widget token with a one-click connection test, and a short note on how the tile behaves.</em>
+</p>
 
 ## 3. Requirements
 
