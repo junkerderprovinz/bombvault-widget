@@ -140,3 +140,18 @@ for (const t of THEMES) {
   writeFileSync(join(__dir, `bombvault-widget-banner${t.suffix}.png`), png);
   console.log(`banner${t.suffix} ok: ${W}x${H}, name ${nameSize}px, claim ${claimSize}px, png ${png.length} bytes`);
 }
+
+// Logo-only banner (house rule: always regenerated in the same run) — used by
+// support threads, never the wordmark banner: the logo alone, centred on white.
+{
+  const lx = (W - LW) / 2, ly = H / 2 - OPT_CY * (LH / LOGO_H);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="BombVault Widget">
+  <rect width="${W}" height="${H}" fill="#ffffff"/>
+  ${embedLogo("icon.svg", lx, ly, LW, LH)}
+</svg>
+`;
+  writeFileSync(join(__dir, "bombvault-widget-banner-logo.svg"), svg);
+  const png = new Resvg(svg, { background: "#ffffff", fitTo: { mode: "width", value: W } }).render().asPng();
+  writeFileSync(join(__dir, "bombvault-widget-banner-logo.png"), png);
+  console.log(`banner-logo ok: ${W}x${H}, png ${png.length} bytes`);
+}
