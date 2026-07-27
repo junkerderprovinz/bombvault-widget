@@ -93,7 +93,3 @@ The widget token stays server-side: the browser only ever talks to the Unraid we
 ## 8. License
 
 MIT — see [LICENSE](LICENSE).
-
----
-
-<sub>Part of a family of self-hosted Unraid apps + plugins by <b>junkerderprovinz</b> — see them all at <a href="https://github.com/junkerderprovinz">github.com/junkerderprovinz</a>, or install from <a href="https://unraid.net/community/apps">Community Applications</a>.</sub>
