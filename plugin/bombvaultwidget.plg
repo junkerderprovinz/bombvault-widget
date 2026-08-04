@@ -74,10 +74,14 @@ requires BombVault &gt;= 6.9.0 and a widget token.
      Keeping &txz; on the flash lets the boot reinstall from cache with no
      network at all. The reinstalling upgradepkg step below already removes
      files the old package had and the new one drops, so no manual orphan wipe
-     is needed. The .cfg on the flash is untouched. Webgui-only plugin: no daemon. -->
+     is needed. The .cfg on the flash is untouched. Webgui-only plugin: no daemon.
+     mkdir -p first so a FRESH install (the plugin dir does not exist yet) does
+     not make find exit 1 and abort the whole install (#4); the trailing || true
+     keeps this block non-fatal. -->
 <FILE Run="/bin/bash">
 <INLINE>
-find &plgPath; -maxdepth 1 -name '*.txz' ! -name '&txz;' -delete 2>/dev/null
+mkdir -p &plgPath;
+find &plgPath; -maxdepth 1 -name '*.txz' ! -name '&txz;' -delete 2>/dev/null || true
 </INLINE>
 </FILE>
 
