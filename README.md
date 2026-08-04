@@ -9,7 +9,7 @@
   <a href="https://github.com/junkerderprovinz/bombvault-widget/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/junkerderprovinz/bombvault-widget/release.yml?label=Release&style=for-the-badge&logo=githubactions&logoColor=white" alt="Release" height="36"></a>&nbsp;
   <a href="https://unraid.net"><img src="https://img.shields.io/badge/Unraid-Plugin-f15a2c?style=for-the-badge&logo=unraid&logoColor=white" alt="Unraid" height="36"></a>&nbsp;
   <a href="https://github.com/junkerderprovinz/bombvault"><img src="https://img.shields.io/badge/Requires-BombVault%20%E2%89%A5%206.9.0-161616?style=for-the-badge" alt="Requires BombVault 6.9.0+" height="36"></a>&nbsp;
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="License" height="36"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL--3.0-blue?style=for-the-badge&logo=gnu&logoColor=white" alt="License: AGPL-3.0" height="36"></a>
 </p>
 
 <br>
@@ -92,4 +92,4 @@ The widget token stays server-side: the browser only ever talks to the Unraid we
 
 ## 8. License
 
-MIT — see [LICENSE](LICENSE).
+AGPL-3.0. See [LICENSE](LICENSE).
