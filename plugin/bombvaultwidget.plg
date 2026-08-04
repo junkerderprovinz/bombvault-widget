@@ -37,6 +37,13 @@ drill as it happens, plus the next scheduled run — in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
+### 1.1.2
+#1 Fresh install no longer fails. The 1.1.1 pre-install step pruned old cached
+   packages with `find` over the plugin directory, which does not exist yet on
+   a first install, so `find` exited non-zero and Unraid aborted the install
+   with "'/bin/bash' returned 1". It now creates the directory first, so a first
+   install and an upgrade both proceed.
+
 ### 1.1.1
 #1 The tile survives a reboot with no network. The pre-install step used to
    wipe the installed files and delete the cached package before downloading
