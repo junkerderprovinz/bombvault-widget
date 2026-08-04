@@ -47,17 +47,17 @@ const NAME = "BombVault Widget";
 const CLAIM = "Watch it tick.";
 const W = 1600, H = 500;
 const THEMES = [
-  { suffix: "",      bg: "#ffffff", name: "#242626", claim: "#5a5d5e" },
+  { suffix: "",      bg: "#ffffff", name: "#1f2328", claim: "#5a5d5e" },
   { suffix: "-dark", bg: "#0d1117", name: "#e6edf3", claim: "#9aa4ad" },
 ];
-const LH = 410;                    // logo height
+const LH = 300;                    // logo height (house standard)
 // BombVault logo 2.0 geometry (viewBox 898.34 x 865.1) + designer-marked
 // optical centre (see bombvault/.github/assets/gen-banner.mjs).
 const LOGO_W = 898.34, LOGO_H = 865.1;
 const OPT_CY = 461.2;
 const LW = LH * (LOGO_W / LOGO_H); // keep logo aspect
-const gap = 64, lineGap = 22;
-const MAX_NAME_SIZE = 148, MAX_CLAIM_SIZE = 42;
+const gap = 70, lineGap = 8;       // house standard
+const MAX_NAME_SIZE = 132, MAX_CLAIM_SIZE = 44;   // house standard
 const margin = 120;                // min space left of logo / right of text
 // ---------------------------------------------------------------------------
 
@@ -77,8 +77,9 @@ const bree = await font("BVW-BreeSerif-Regular.ttf",
 const lato = await font("BVW-Lato-Regular.ttf",
   "https://github.com/google/fonts/raw/main/ofl/lato/Lato-Regular.ttf");
 
-// Width-fit start size: the text column must fit next to the logo.
-const maxTextW = W - LW - gap - 2 * margin;
+// Width-fit start size: the text column must fit next to the left-anchored logo.
+const startX = 165;                          // left-anchor (house standard)
+const maxTextW = W - (startX + LW + gap) - margin;
 const startNameSize = Math.min(MAX_NAME_SIZE,
   Math.floor(100 * maxTextW / bree.getAdvanceWidth(NAME, 100)));
 
@@ -91,8 +92,6 @@ function layout() {
     for (let claimSize = MAX_CLAIM_SIZE; claimSize > 14; claimSize--) {
       const nameW = bree.getAdvanceWidth(NAME, nameSize);
       const claimW = lato.getAdvanceWidth(CLAIM, claimSize);
-      const groupW = LW + gap + Math.max(nameW, claimW);
-      const startX = (W - groupW) / 2;
       const LX = startX, LY = H / 2 - OPT_CY * (LH / LOGO_H);
       const textX = startX + LW + gap;
 
