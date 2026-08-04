@@ -50,7 +50,7 @@ const THEMES = [
   { suffix: "",      bg: "#ffffff", name: "#1f2328", claim: "#5a5d5e" },
   { suffix: "-dark", bg: "#0d1117", name: "#e6edf3", claim: "#9aa4ad" },
 ];
-const LH = 300;                    // logo height (house standard)
+const LH = 386;                    // logo height (house standard)
 // BombVault logo 2.0 geometry (viewBox 898.34 x 865.1) + designer-marked
 // optical centre (see bombvault/.github/assets/gen-banner.mjs).
 const LOGO_W = 898.34, LOGO_H = 865.1;
