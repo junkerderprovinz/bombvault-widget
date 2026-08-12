@@ -50,8 +50,16 @@ EOT;
    and clips — rows keep their single-line nowrap+ellipsis. */
 .bvd-td{max-width:0}
 /* The log body brings its OWN dark background (like a terminal), so it reads
-   identically on every Unraid theme — no theme-dependent colours inside. */
-.bvd-log{width:100%;overflow-x:hidden;height:260px;overflow-y:auto;background:#161616;color:#e0e0e0;
+   identically on every Unraid theme — no theme-dependent colours inside.
+   box-sizing:border-box is load-bearing, not tidiness: width:100% on the
+   default content-box model sizes to the PARENT's content width and then
+   adds this rule's own left+right padding on top - 12px+12px, rendering
+   24px wider than the already-tight .bvd-td the max-width:0 rule above
+   just fit to the column. Invisible in a wide column with slack next to
+   it; a hard overlap into the neighbour tile in a narrower one (#137) -
+   border-box folds the padding back inside the 100%, so the box is never
+   wider than its parent regardless of column width. */
+.bvd-log{box-sizing:border-box;width:100%;overflow-x:hidden;height:260px;overflow-y:auto;background:#161616;color:#e0e0e0;
   font-family:Consolas,'Cascadia Mono',Menlo,monospace;font-size:12px;line-height:1.75;
   padding:8px 12px 10px;border-radius:4px;text-align:left;
   scrollbar-width:thin;scrollbar-color:#393939 #161616}
