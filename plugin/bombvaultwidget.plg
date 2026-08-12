@@ -37,6 +37,14 @@ drill as it happens, plus the next scheduled run — in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
+### 1.1.3
+#1 The log tile no longer bleeds past its own column into the neighbour tile.
+   The log box used width:100% plus left/right padding without
+   box-sizing:border-box, so it rendered about 24px wider than its own tile -
+   invisible in a wide column with slack next to it, an outright overlap once
+   the column got narrower. box-sizing:border-box keeps it inside its own
+   width regardless of column size.
+
 ### 1.1.2
 #1 Fresh install no longer fails. The 1.1.1 pre-install step pruned old cached
    packages with `find` over the plugin directory, which does not exist yet on
