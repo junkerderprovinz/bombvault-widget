@@ -23,6 +23,12 @@
 <br>
 
 <p align="center">
+A solo, free-time project. Bugs and ideas via <a href="https://github.com/junkerderprovinz/bombvault-widget/issues">GitHub issues</a>; if it's useful to you, a coffee is always welcome.
+</p>
+
+<br>
+
+<p align="center">
   <a href="https://buymeacoffee.com/junkerderprovinz">
     <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/button-buy-me-a-coffee.svg" alt="Buy me a coffee" width="220">
   </a>
@@ -40,6 +46,7 @@
 6. [How it works](#6-how-it-works)
 7. [Security](#7-security)
 8. [License](#8-license)
+9. [Support this project](#9-support-this-project)
 
 ## 1. What is this?
 
@@ -93,3 +100,15 @@ The widget token stays server-side: the browser only ever talks to the Unraid we
 ## 8. License
 
 AGPL-3.0. See [LICENSE](LICENSE).
+
+## 9. Support this project
+
+BombVault Widget is a one-person project. I write, test, and support it myself, in whatever free time is left after work. Found a bug or have an idea? Please [open a GitHub issue](https://github.com/junkerderprovinz/bombvault-widget/issues) so it doesn't get lost.
+
+If you'd like to support the time that goes into it, you're welcome to buy me a coffee. Genuinely appreciated either way.
+
+<p align="center">
+  <a href="https://buymeacoffee.com/junkerderprovinz">
+    <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/button-buy-me-a-coffee.svg" alt="Buy me a coffee" width="220">
+  </a>
+</p>
