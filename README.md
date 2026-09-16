@@ -52,7 +52,8 @@ If it has earned a place on your server or computer, toss a coin to your knight:
 6. [How it works](#6-how-it-works)
 7. [Security](#7-security)
 8. [License](#8-license)
-9. [Support this project](#9-support-this-project)
+9. [How AI is used here](#9-how-ai-is-used-here)
+10. [Support this project](#10-support-this-project)
 
 ## 1. What is this?
 
@@ -107,7 +108,15 @@ The widget token stays server-side: the browser only ever talks to the Unraid we
 
 AGPL-3.0. See [LICENSE](LICENSE).
 
-## 9. Support this project
+## 9. How AI is used here
+
+One knight builds this, and AI is one of the tools I work with, the same way I work with an editor or a compiler. It helps me write code and documentation and it checks my work, and that saves me a good many evenings. It does not make the decisions, though. I read and understand everything before it ships, and if something here breaks, that is on me and not on the tool.
+
+You do not have to take my word for it. The code is open and every release note is written by hand. The issue tracker shows how problems actually get handled, including the ones I got wrong the first time. If you find something that is not right, open an issue and I will look at it.
+
+<br>
+
+## 10. Support this project
 
 Questions, bugs, ideas or feature requests? Please [open a GitHub issue](https://github.com/junkerderprovinz/bombvault-widget/issues).
 
