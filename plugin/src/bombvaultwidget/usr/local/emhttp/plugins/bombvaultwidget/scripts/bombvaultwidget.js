@@ -1,34 +1,30 @@
-/* BombVault Activity — dashboard tile filler.
+/* Fills the BombVault Activity dashboard tile.
  *
- * Polls the same-origin proxy (server/status.php -> BombVault's
- * GET /api/widget/data) and renders the activity log into #bvd-log. The line
- * composition deliberately MIRRORS BombVault's own embeddable widget
- * (internal/api/widget.html), so the tile shows the exact same English lines
- * as the app's widget: same label tables, same finished-line templates, same
- * glyphs and colour buckets. Only the timestamp differs by design — the
- * locale-default short date via Intl (e.g. "26/07 05:02:19").
+ * Polls the same-origin proxy (server/status.php, which calls BombVault's
+ * GET /api/widget/data) and renders the activity log into #bvd-log. The lines
+ * mirror BombVault's embeddable widget (internal/api/widget.html): same label
+ * tables, line templates, glyphs and colour buckets. Only the timestamp
+ * differs, a locale-default short date via Intl (e.g. "26/07 05:02:19").
  *
- * Safety: every value from the feed (names, errors) is written via
- * textContent — no HTML injection path. The token never reaches this browser
- * code; it stays server-side in the proxy.
+ * Every value from the feed is written via textContent, and the token stays
+ * in the proxy on the server.
  */
 (function () {
   "use strict";
 
   var POLL_MS = 10000;    // matches the widget's own 10s cadence
-  var MIN_POLL_MS = 2000; // hard floor — never poll the proxy faster than 2s
-  // Auto-follow slack: mirrors the widget's BOTTOM_THRESHOLD_PX — within this
-  // many px of the bottom counts as "following", so a user who scrolled up to
-  // read history is never yanked back down.
+  var MIN_POLL_MS = 2000;
+  // As the widget's BOTTOM_THRESHOLD_PX: within this many px of the bottom
+  // counts as following, so a user who scrolled up to read history stays there.
   var FOLLOW_SLACK = 24;
   var PROXY = "/plugins/bombvaultwidget/server/status.php";
 
   var logEl = null;
-  var lastData = null;   // last good feed — kept on outages so history stays
+  var lastData = null;   // last good feed, kept through outages so history stays
   var offlineMsg = "";   // non-empty = proxy/feed error to show as live line
   var firstRender = true;
 
-  // ---- English label tables (mirrors widget.html / activityLog.ts) ---------
+  // English label tables, as in widget.html and activityLog.ts.
   var DOMAIN_LABELS = {
     containers: "Containers", vms: "VMs", flash: "Flash",
     config: "Self-Backup", files: "Folders"
@@ -41,12 +37,11 @@
 
   function domainLabel(d) { return DOMAIN_LABELS[d] || d; }
 
-  // ---- tiny formatters -----------------------------------------------------
   function pad(n) { return (n < 10 ? "0" : "") + n; }
 
   // Locale-default short date + 24h time, e.g. "26/07 05:02:19" (en-GB),
-  // "26.07. 05:02:19" (de). Falls back to DD/MM like the widget if Intl is
-  // unavailable for any reason.
+  // "26.07. 05:02:19" (de). Falls back to DD/MM, as the widget does, when Intl
+  // is unavailable.
   var dayFmt = null, timeFmt = null;
   try {
     dayFmt = new Intl.DateTimeFormat(undefined, { day: "2-digit", month: "2-digit" });
@@ -80,7 +75,8 @@
     return (i === 0 ? v : v.toFixed(1)) + " " + units[i];
   }
 
-  // ---- line composition (mirrors widget.html finishedLineText) -------------
+  // Line composition, as in widget.html's finishedLineText. The line texts
+  // match the widget's own, dashes included.
   function bucket(r) {
     if (r.status === "success") return r.kind === "offsite" ? "offsite" : "ok";
     if (r.status === "failed") return "fail";
@@ -134,14 +130,13 @@
     }
   }
 
-  // ---- rendering -----------------------------------------------------------
   function row(ts, g, c, text, live) {
     var div = document.createElement("div");
     div.className = "bvd-row" + (live ? " bvd-live" : "");
     var t = document.createElement("span"); t.className = "bvd-ts"; t.textContent = ts;
     var gl = document.createElement("span"); gl.className = "bvd-g " + c; gl.textContent = g;
     var m = document.createElement("span"); m.className = "bvd-msg " + c; m.textContent = text;
-    m.title = text; // full text on hover — lines are single-row ellipsized
+    m.title = text; // lines are ellipsized to one row, so the full text goes on hover
     div.appendChild(t); div.appendChild(gl); div.appendChild(m);
     return div;
   }
@@ -154,7 +149,7 @@
     var follow = firstRender || isAtBottom();
     var frag = document.createDocumentFragment();
 
-    // Finished runs only, oldest first — newest ends up at the BOTTOM.
+    // Finished runs only, oldest first, so the newest ends up at the bottom.
     var runs = ((lastData && lastData.runs) || []).filter(function (r) {
       return r.finishedAt != null;
     });
@@ -166,8 +161,8 @@
       frag.appendChild(row(fmtTs(r.finishedAt), glyph(b), cls(b), lineText(r)));
     }
 
-    // Trailing LIVE line (pulsing): an outage/config problem wins; otherwise
-    // the soonest scheduled fire ("next: …"); otherwise "nothing yet".
+    // The pulsing live line: an outage or config problem wins, then the
+    // soonest scheduled run ("next: …"), then "nothing yet".
     var nowSec = Date.now() / 1000;
     if (offlineMsg) {
       frag.appendChild(row(fmtTs(nowSec), "✗", "bvd-fail", offlineMsg, true));
@@ -190,7 +185,6 @@
     firstRender = false;
   }
 
-  // ---- polling -------------------------------------------------------------
   function poll() {
     fetch(PROXY, { cache: "no-store", headers: { Accept: "application/json" } })
       .then(function (res) {
@@ -201,20 +195,20 @@
           lastData = r.d;
           offlineMsg = "";
         } else {
-          // proxy 503 / BombVault refusal — keep the history, flag the outage
+          // A proxy 503 or a BombVault refusal keeps the history and flags the outage.
           offlineMsg = (r.d && r.d.error) ? r.d.error : "BombVault unreachable (HTTP " + r.status + ")";
         }
         render();
       })
       .catch(function () {
-        offlineMsg = "BombVault unreachable — retrying";
+        offlineMsg = "BombVault unreachable, retrying";
         render();
       });
   }
 
   function start() {
     logEl = document.getElementById("bvd-log");
-    if (!logEl) return; // tile unchecked in tile management — nothing to do
+    if (!logEl) return; // the tile is unchecked in tile management
     poll();
     setInterval(poll, Math.max(MIN_POLL_MS, POLL_MS));
   }

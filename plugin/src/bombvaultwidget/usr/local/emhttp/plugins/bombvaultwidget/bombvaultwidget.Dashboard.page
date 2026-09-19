@@ -2,33 +2,30 @@ Menu="Dashboard:0"
 Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9','>')"
 ---
 <?php
-/* BombVault Activity — a REAL Unraid 7 dashboard tile (it appears in the
- * dashboard's tile-management checkbox list like the native ones).
+/* BombVault Activity: a native Unraid 7 dashboard tile, listed in tile
+ * management like the built-in ones.
  *
- * Mechanics baked in on purpose:
- * - Menu="Dashboard:0": the ":0" rank is MANDATORY — it makes this page sort
- *   BEFORE DashStats, which builds the tile table; without it the tile is
- *   silently dropped. Cond gates it to 6.12+ (the $mytiles dashboard).
- * - The <tbody title> is the tile's IDENTITY: the dashboard shows it as the
- *   checkbox label in tile management, and md5(title) keys the tile's
- *   visibility + position persisted in /boot/config/dashboard_settings.json.
- *   Keep it a STABLE, untranslated English string — renaming it orphans the
- *   user's saved layout.
- * - $mytiles key 'bombvaultwidget' must be unique across all installed plugins;
- *   'column2' is the default column (the user can move it, see above).
- * - This page is evaluated on EVERY dashboard load: keep the PHP minimal (no
- *   curl here — the tile body is a static scaffold, scripts/bombvaultwidget.js
- *   fills it from the same-origin proxy) and define NO functions (a .page can
- *   be included more than once -> "Cannot redeclare" -> blank dashboard).
- * - First row mirrors DashStats' native header structure (tile-header /
- *   tile-header-left / -right), which is what Unraid 7's dashboard JS hooks
- *   the collapse chevron and drag handling onto.
+ * - The ":0" rank in Menu="Dashboard:0" sorts this page before DashStats,
+ *   which builds the tile table; without it the tile is silently dropped.
+ *   Cond limits it to 6.12+, the $mytiles dashboard.
+ * - The <tbody title> is the tile's identity: tile management shows it as the
+ *   label, and md5(title) keys the visibility and position saved in
+ *   /boot/config/dashboard_settings.json. Renaming or translating it orphans
+ *   the user's saved layout.
+ * - The $mytiles key 'bombvaultwidget' must be unique across installed
+ *   plugins; 'column2' is only the default column.
+ * - This page runs on every dashboard load, so the PHP stays minimal: no curl,
+ *   since scripts/bombvaultwidget.js fills the tile from the same-origin proxy,
+ *   and no functions, since a .page can be included more than once and a
+ *   redeclaration blanks the dashboard.
+ * - The first row copies DashStats' header structure (tile-header,
+ *   tile-header-left, -right), which Unraid 7's dashboard JS hooks the
+ *   collapse chevron and dragging onto.
  */
-/* "Open BombVault" header control: rendered server-side from the flash cfg
- * (parse_plugin_cfg is a cheap ini read — no network). Omitted entirely while
- * BV_URL is unset/invalid, so the tile never shows a dead link. Static markup
- * order matches native tiles: action controls first, cog last — the dashboard
- * JS appends its collapse chevron AFTER these. */
+/* The "Open BombVault" control comes from the flash cfg, a cheap ini read, and
+ * is left out while BV_URL is unset or invalid so the tile never shows a dead
+ * link. Action controls come first and the cog last, as on native tiles; the
+ * dashboard JS appends its chevron after them. */
 $bvd_cfg  = parse_plugin_cfg('bombvaultwidget');
 $bvd_url  = isset($bvd_cfg['BV_URL']) ? trim($bvd_cfg['BV_URL']) : '';
 $bvd_open = '';
@@ -43,22 +40,14 @@ $mytiles['bombvaultwidget']['column2'] = <<<EOT
 EOT;
 ?>
 <style>
-/* Width containment: every dashboard tile is a <tbody> in ONE shared table, so
-   a cell's min-content width (inflated here by the nowrap log lines) would
-   widen the whole COLUMN and blow up the dashboard layout. max-width:0 makes
-   this cell defer to the column width entirely; the log then fills the cell
-   and clips — rows keep their single-line nowrap+ellipsis. */
+/* Every dashboard tile is a <tbody> in one shared table, so the nowrap log
+   lines would widen the whole column. max-width:0 makes this cell defer to the
+   column width; the log fills it and rows keep their one-line ellipsis. */
 .bvd-td{max-width:0}
-/* The log body brings its OWN dark background (like a terminal), so it reads
-   identically on every Unraid theme — no theme-dependent colours inside.
-   box-sizing:border-box is load-bearing, not tidiness: width:100% on the
-   default content-box model sizes to the PARENT's content width and then
-   adds this rule's own left+right padding on top - 12px+12px, rendering
-   24px wider than the already-tight .bvd-td the max-width:0 rule above
-   just fit to the column. Invisible in a wide column with slack next to
-   it; a hard overlap into the neighbour tile in a narrower one (#137) -
-   border-box folds the padding back inside the 100%, so the box is never
-   wider than its parent regardless of column width. */
+/* The log brings its own dark background, like a terminal, so it reads the
+   same on every Unraid theme. box-sizing:border-box keeps the padding inside
+   width:100%; with content-box the box renders 24px wider than .bvd-td and
+   overlaps the neighbour tile in a narrow column (#137). */
 .bvd-log{box-sizing:border-box;width:100%;overflow-x:hidden;height:260px;overflow-y:auto;background:#161616;color:#e0e0e0;
   font-family:Consolas,'Cascadia Mono',Menlo,monospace;font-size:12px;line-height:1.75;
   padding:8px 12px 10px;border-radius:4px;text-align:left;

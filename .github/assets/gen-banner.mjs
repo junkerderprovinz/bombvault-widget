@@ -1,31 +1,27 @@
 /**
- * Generates the BombVault Widget README banner pair (1600x500):
+ * Generates the BombVault Widget README banners, a 1600x500 pair the README
+ * picks between with <picture> and prefers-color-scheme:
  *
- *   bombvault-widget-banner.svg / .png       : light (white bg, dark text)
- *   bombvault-widget-banner-dark.svg / .png  : dark (GitHub #0d1117 bg)
+ *   bombvault-widget-banner.svg / .png       : light (white ground, dark text)
+ *   bombvault-widget-banner-dark.svg / .png  : dark (GitHub #0d1117 ground)
  *
- * Theme-adaptive pair (house rule, ShipLog/BombVault reference): the README
- * serves the dark variant via <picture> prefers-color-scheme. The BombVault
- * logo 2.0 master reads on both backgrounds by itself, so both themes embed
- * the SAME logo (exactly like bombvault's own generator).
+ * The BombVault logo 2.0 master reads on both grounds, so both embed the same
+ * logo, as bombvault's own generator does. The long name stays on one line at
+ * a reduced size with about 120px side margins, so the logo never sits crammed
+ * against the edge. Text is converted to SVG paths with opentype.js, so the SVG
+ * needs no font and renders the same in resvg and a browser.
  *
- * Layout follows the CannonadeCommand precedent for long names: the name stays
- * on ONE line at a reduced size, with generous side margins (~120px) instead
- * of letting the text fill the full canvas — the logo must never sit crammed
- * against the edge. Text is converted to SVG paths (opentype.js) so the SVG
- * needs NO font and renders identically with resvg or a browser.
+ * Vertical centring uses the optical centre the designer marked in the source
+ * file rather than the bounding box, since the sparks at the top right carry
+ * little visual weight.
  *
- * The logo's OPTICAL centre — marked by the designer in the source file — is
- * NOT the geometric centre (the sparks at the top right add ignorable visual
- * weight), so vertical centring uses that point, not the bounding box.
+ * opentype.js emits NaN points for some size and glyph combinations at the
+ * real pen position, truncating a glyph mid-word. Each size therefore steps
+ * down to the next one whose path is NaN-free, and the final SVG is checked
+ * before writing.
  *
- * NaN guard (house lesson): opentype.js emits NaN points for SOME size/glyph
- * combinations at the REAL pen position — a truncated glyph mid-word. Every
- * fixed font size therefore steps DOWN to the next size whose generated path
- * is NaN-free, and the final SVG is asserted NaN-free before writing.
- *
- * Deps (global): opentype.js, @resvg/resvg-js. Bree Serif + Lato (both OFL)
- * are fetched at runtime to the OS temp dir — NOT committed.
+ * Deps (global): opentype.js, @resvg/resvg-js. Bree Serif and Lato (both OFL)
+ * are fetched to the OS temp dir at runtime and are not committed.
  * Run: node .github/assets/gen-banner.mjs
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -42,7 +38,6 @@ const { Resvg } = require(`${groot}/@resvg/resvg-js`);
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 
-// ---- content + styling -----------------------------------------------------
 const NAME = "BombVault Widget";
 const CLAIM = "Watch it tick.";
 const W = 1600, H = 500;
@@ -59,7 +54,6 @@ const LW = LH * (LOGO_W / LOGO_H); // keep logo aspect
 const gap = 70, lineGap = 8;       // house standard
 const MAX_NAME_SIZE = 132, MAX_CLAIM_SIZE = 44;   // house standard
 const margin = 120;                // min space left of logo / right of text
-// ---------------------------------------------------------------------------
 
 async function font(file, url) {
   const p = join(tmpdir(), file);
@@ -83,10 +77,9 @@ const maxTextW = W - (startX + LW + gap) - margin;
 const startNameSize = Math.min(MAX_NAME_SIZE,
   Math.floor(100 * maxTextW / bree.getAdvanceWidth(NAME, 100)));
 
-// NaN-safe layout: the NaN depends on the REAL pen position, so the loop lays
-// out the whole group for each candidate size, generates the actual paths and
-// only accepts a combination whose output is NaN-free — stepping DOWN instead
-// of shipping a glyph-truncated word.
+// The NaN depends on the real pen position, so each candidate size lays out
+// the whole group and generates the actual paths, stepping down until the
+// output is NaN-free.
 function layout() {
   for (let nameSize = startNameSize; nameSize > 40; nameSize--) {
     for (let claimSize = MAX_CLAIM_SIZE; claimSize > 14; claimSize--) {
@@ -113,8 +106,7 @@ function layout() {
 }
 const { nameSize, claimSize, LX, LY, namePath, claimPath } = layout();
 
-// Embed the logo master VERBATIM at (x,y,w,h): drop the XML decl, reposition
-// its <svg>. viewBox-agnostic — reads the file's own viewBox and preserves it.
+// Embeds the logo master verbatim at (x,y,w,h), keeping the file's own viewBox.
 function embedLogo(logoFile, x, y, w, h) {
   const raw = readFileSync(join(__dir, logoFile), "utf8").replace(/<\?xml[^>]*\?>\s*/, "");
   const vb = (raw.match(/viewBox="([^"]+)"/) || [, `0 0 ${LOGO_W} ${LOGO_H}`])[1];
@@ -133,15 +125,14 @@ for (const t of THEMES) {
   <path d="${claimPath}" fill="${t.claim}"/>
 </svg>
 `;
-  if (svg.includes("NaN")) throw new Error("banner SVG contains NaN — aborting");
+  if (svg.includes("NaN")) throw new Error("banner SVG contains NaN, aborting");
   writeFileSync(join(__dir, `bombvault-widget-banner${t.suffix}.svg`), svg);
   const png = new Resvg(svg, { background: t.bg, fitTo: { mode: "width", value: W } }).render().asPng();
   writeFileSync(join(__dir, `bombvault-widget-banner${t.suffix}.png`), png);
   console.log(`banner${t.suffix} ok: ${W}x${H}, name ${nameSize}px, claim ${claimSize}px, png ${png.length} bytes`);
 }
 
-// Logo-only banner (house rule: always regenerated in the same run) — used by
-// support threads, never the wordmark banner: the logo alone, centred on white.
+// The logo alone, centred on white, for support threads.
 {
   const lx = (W - LW) / 2, ly = H / 2 - OPT_CY * (LH / LOGO_H);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="BombVault Widget">

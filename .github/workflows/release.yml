@@ -1,24 +1,21 @@
 name: Release
 
-# Cuts a BombVault Widget plugin release from a v* tag. CI is the single
-# source of truth for the package AND for what main advertises, so a release
-# never depends on a local (Windows) build and main never points at a version
-# whose asset/SHA are not live yet.
+# Cuts a plugin release from a v* tag. CI builds the package and updates what
+# main advertises, so a release never depends on a local build and main never
+# points at a version whose asset and SHA are not live yet.
 #
-# Order (the important part): build -> publish the GitHub release (asset goes
-# live) -> confirm the asset is reachable -> ONLY THEN flip <!ENTITY version> +
-# <SHA256> in plugin/bombvaultwidget.plg on main. Unraid reads that .plg from raw
-# main and verifies the .txz against <SHA256>, so main must flip last. If any
-# step before the flip fails, main still advertises the previous version ->
-# zero user impact, re-running the tag heals it.
+# Order: build, publish the GitHub release, confirm the asset is reachable, and
+# only then write <!ENTITY version> and <SHA256> into plugin/bombvaultwidget.plg
+# on main. Unraid reads that .plg from raw main and checks the .txz against its
+# <SHA256>, so main has to change last; if anything earlier fails, main still
+# advertises the previous version and re-running the tag heals it.
 #
-# MAINTAINER FLOW: add a "### X.Y.Z" block to plugin/bombvaultwidget.plg
-# <CHANGES> and `git tag vX.Y.Z` on main. You do NOT need to bump
-# <!ENTITY version> by hand — CI flips it (bumping it early is harmless but
-# reopens the advertise-before-live window, so prefer to leave it).
+# To release, add a "### X.Y.Z" block to the .plg's <CHANGES> and tag vX.Y.Z on
+# main. CI sets <!ENTITY version>; bumping it by hand early reopens the window
+# in which main advertises an asset that is not live.
 #
-# workflow_dispatch = build-only dry run: builds the .txz and uploads it as an
-# artifact, creates no release and touches nothing on main.
+# workflow_dispatch is a dry run: it builds the .txz and uploads it as an
+# artifact, with no release and no change to main.
 
 on:
   push:
@@ -62,7 +59,7 @@ jobs:
           name: bombvaultwidget-txz
           path: plugin/out/*
 
-      # ---- tag-only from here ----
+      # The steps below run for tags only.
       - name: Extract release notes from .plg CHANGES
         if: startsWith(github.ref, 'refs/tags/')
         run: |
@@ -70,7 +67,7 @@ jobs:
           awk -v v="### $ver" '$0==v{grab=1;next} grab&&/^### /{exit} grab{print}' \
             plugin/bombvaultwidget.plg > release-notes.md
           if [ ! -s release-notes.md ]; then
-            echo "::error::no '### $ver' block in plugin/bombvaultwidget.plg <CHANGES> — add it before tagging"
+            echo "::error::no '### $ver' block in plugin/bombvaultwidget.plg <CHANGES>; add it before tagging"
             exit 1
           fi
           echo "---- release notes ----"; cat release-notes.md
@@ -113,10 +110,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if git diff --quiet -- plugin/bombvaultwidget.plg; then
-            echo "bombvaultwidget.plg already current — nothing to commit"
+            echo "bombvaultwidget.plg already current, nothing to commit"
           else
             git add plugin/bombvaultwidget.plg
-            git commit -m "ci: release v${ver} — pin version + package SHA256 [skip ci]"
+            git commit -m "ci: release v${ver}, pin version and package SHA256 [skip ci]"
             git pull --rebase origin main
             git push origin HEAD:main
           fi

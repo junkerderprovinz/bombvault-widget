@@ -21,11 +21,10 @@
         min="6.12.0"
         support="https://github.com/junkerderprovinz/bombvault-widget/issues">
 
-<!-- FanCtrlPlus convention: name is the lowercase slug so Unraid resolves the
-     logo (plugins/<slug>/images/<slug>.png) AND the Plugins-tab description
-     (plugins/<slug>/README.md). The pretty "BombVault Widget" name comes
-     from README.md.
-     TODO before publishing: replace the support link with the real forum topic. -->
+<!-- The name is the lowercase slug so Unraid finds the logo
+     (plugins/<slug>/images/<slug>.png) and the Plugins-tab description
+     (plugins/<slug>/README.md); the display name comes from README.md.
+     TODO: point the support link at the forum topic once there is one. -->
 <ICON>
 /usr/local/emhttp/plugins/&slug;/images/&slug;.png
 </ICON>
@@ -81,18 +80,14 @@ requires BombVault &gt;= 6.9.0 and a widget token.
    Test-connection button, localised across the 26 supported languages.
 </CHANGES>
 
-<!-- Pre-install: prune ONLY stale-version packages, keep the CURRENT one cached.
-     Do NOT wipe the installed dir here and do NOT delete the current .txz: on a
-     reboot Unraid reinstalls each .plg, and if the boot happens before the
-     network is up, a re-download fails — leaving the plugin GONE if we already
-     removed the working files and the cached package (real incident 2026-07-26).
-     Keeping &txz; on the flash lets the boot reinstall from cache with no
-     network at all. The reinstalling upgradepkg step below already removes
-     files the old package had and the new one drops, so no manual orphan wipe
-     is needed. The .cfg on the flash is untouched. Webgui-only plugin: no daemon.
-     mkdir -p first so a FRESH install (the plugin dir does not exist yet) does
-     not make find exit 1 and abort the whole install (#4); the trailing || true
-     keeps this block non-fatal. -->
+<!-- Pre-install: prune stale-version packages only and keep the current one
+     cached. On a reboot Unraid reinstalls each .plg, and before the network is
+     up the download fails, so wiping the installed files or the current .txz
+     here would leave the plugin gone; with &txz; on the flash the reinstall
+     works offline. upgradepkg below already removes files the new package
+     drops, and the .cfg on the flash is left alone. mkdir -p first, because on
+     a fresh install the directory does not exist yet and find would abort the
+     install (#4). -->
 <FILE Run="/bin/bash">
 <INLINE>
 mkdir -p &plgPath;
@@ -111,9 +106,9 @@ find &plgPath; -maxdepth 1 -name '*.txz' ! -name '&txz;' -delete 2>/dev/null || 
   <SHA256>62ce0018a1bdc3164ba4e86e0a746b017d0e89fe41ac2f7187a33be252e29c8e</SHA256>
 </FILE>
 
-<!-- Post-install: sane read perms (a Windows/CI build can bake odd modes; the
-     webgui must be able to read every page/script), then the house ceremony.
-     Nothing needs restarting — the dashboard picks the tile up on next load. -->
+<!-- Post-install: read permissions, since a Windows or CI build can bake odd
+     modes and the webgui has to read every page and script, then the banner.
+     Nothing needs restarting; the dashboard picks the tile up on its next load. -->
 <FILE Run="/bin/bash">
 <INLINE>
 chmod -R u+rwX,go+rX &emhttp; 2>/dev/null
@@ -124,15 +119,13 @@ echo "BOMBVAULT WIDGET IS READY"
 </INLINE>
 </FILE>
 
-<!-- Remove. MUST be a <FILE ... Method="remove"> block: Unraid's plugin manager
-     only runs <FILE> elements, so a bare <REMOVE> tag is silently IGNORED and
-     the cleanup never runs. MUST end with exit 0, or Unraid leaves the .plg on
-     the flash and it reinstalls on boot. Webgui-only plugin: no daemon to stop
-     — drop the exact package + files + cached .txz; keep the flash .cfg so a
-     reinstall keeps the URL + token. -->
+<!-- Remove. This has to be a <FILE Method="remove"> block: the plugin manager
+     runs only <FILE> elements and silently ignores a bare <REMOVE>. It has to
+     end with exit 0, or Unraid leaves the .plg on the flash and it reinstalls
+     on boot. The flash .cfg stays so a reinstall keeps the URL and token. -->
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
-# goodbye ceremony FIRST, while the files still exist
+# The banner first, while the files still exist.
 cat &emhttp;/banner.txt 2>/dev/null
 echo ""
 echo "Bye!"
@@ -141,7 +134,7 @@ pkg=$(ls /var/log/packages/ 2>/dev/null | grep -E "^&slug;(-[^-]+-[^-]+-[^-]+)?$
 if [ -n "$pkg" ]; then removepkg "$pkg" 2>/dev/null; fi
 rm -rf &emhttp;
 rm -f &plgPath;/*.txz
-echo "BombVault Widget removed. Settings (flash .cfg) were kept — delete"
+echo "BombVault Widget removed. Settings (flash .cfg) were kept; delete"
 echo "&plgPath; manually if you don't plan to reinstall."
 exit 0
 </INLINE>

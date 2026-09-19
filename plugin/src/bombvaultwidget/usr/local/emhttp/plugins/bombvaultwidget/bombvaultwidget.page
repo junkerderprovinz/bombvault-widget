@@ -3,16 +3,15 @@ Title="BombVault Widget"
 Icon="bombvaultwidget.png"
 ---
 <?php
-/* BombVault Widget settings → writes /boot/config/plugins/bombvaultwidget/
-   bombvaultwidget.cfg via Unraid's /update.php. NB: no functions defined in a
-   .page (Unraid may include it more than once → "Cannot redeclare" → blank
-   page). */
+/* Settings page; writes /boot/config/plugins/bombvaultwidget/bombvaultwidget.cfg
+   through Unraid's /update.php. No functions here: Unraid may include a .page
+   more than once, and a redeclaration blanks the page. */
 $cfg   = parse_plugin_cfg("bombvaultwidget");
 $bvurl = isset($cfg['BV_URL'])       ? $cfg['BV_URL']       : '';
 $wtok  = isset($cfg['WIDGET_TOKEN']) ? $cfg['WIDGET_TOKEN'] : '';
 
-/* UI text follows Unraid's language — load this plugin's locale file (English
-   base, then overlay the active language; missing keys fall back to English). */
+/* UI text follows Unraid's language: English first, overlaid with the active
+   language, so missing keys fall back to English. */
 $lang = strtolower(substr((string)(isset($_SESSION['locale']) ? $_SESSION['locale'] : ''), 0, 2));
 $langdir = '/usr/local/emhttp/plugins/bombvaultwidget/lang';
 $L = json_decode(@file_get_contents("$langdir/en.json"), true) ?: array();
@@ -23,9 +22,8 @@ if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
 ?>
 
 <style>
-  /* House look (ShipLog/CC convention): no dark backing sheet — the content
-     sits on Unraid's own surface. Borderless flat header, borderless cards set
-     apart by a lighter fill + a soft shadow, not a frame. */
+  /* No dark backing sheet: the content sits on Unraid's own surface, with
+     borderless cards set apart by a lighter fill and a soft shadow. */
   .bvd-cfg{--card:#242424;--txt:#e6e6e6;--dim:#b4b4b4;--dim2:#8a8a8a;
     --line:#333;--line2:#3a3a3a;--inp:#1b1b1b;
     max-width:820px;margin:6px auto 0;color:var(--txt);
@@ -58,9 +56,9 @@ if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
   .bvd-hint{color:var(--dim2);font-size:12px}
   .bvd-note{color:var(--dim2);font-size:12.5px;line-height:1.5;margin:4px 2px 8px;max-width:640px}
 
-  /* Info icon (house convention): each field's help text hides behind a small
-     ⓘ next to its label; the script at the end moves the help HTML into a
-     hover/focus bubble. If JS is off the original .bvd-help text stays visible. */
+  /* Each field's help text hides behind a small ⓘ next to its label; the
+     script at the end moves it into a hover and focus bubble. Without JS the
+     .bvd-help text stays visible. */
   .bvd-info{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;
     color:var(--dim2);opacity:.7;cursor:help;flex:none;padding:0;background:none;border:none}
   .bvd-info:hover,.bvd-info:focus{opacity:1;outline:none;color:var(--dim)}
@@ -71,13 +69,11 @@ if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
     font:12px/1.5 "Segoe UI",system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.5)}
   .bvd-info-pop code{background:rgba(255,255,255,.08);padding:1px 4px;border-radius:4px;font-size:11.5px}
 
-  /* Buttons follow the HOUSE palette, hard-set (style guide): primary action =
-     BombVault gold (#f4c63d family, dark text — same accent as BV's own UI),
-     secondary = Carbon dark surface with light text. Deliberately NOT Unraid's
-     --button/--border theme vars and !important throughout: themes/box-side
-     scripts restyle generic buttons (that's where the off-palette green/teal
-     came from) and must not win. Green/red stay reserved for the test RESULT
-     (status), never for action buttons. */
+  /* Fixed button colours: BombVault gold with dark text for the primary
+     action, as in BombVault's own UI, and a dark surface for the rest. Unraid's
+     --button and --border theme vars are avoided and !important used because
+     themes and scripts on the box restyle generic buttons. Green and red are
+     kept for the test result. */
   .bvd-btn{background:#393939 !important;border:none !important;border-radius:6px;color:#e6e6e6 !important;
     padding:8px 15px;font:13px/1.2 inherit;cursor:pointer}
   .bvd-btn:hover{background:#4c4c4c !important}
@@ -137,11 +133,10 @@ function bvdToggle(id, btn) {
   if (i.type === 'password') { i.type = 'text'; btn.textContent = BVDT.s_hide; }
   else { i.type = 'password'; btn.textContent = BVDT.s_show; }
 }
-/* Token field UX: people paste BombVault's full widget URL
-   (http://host:port/widget?token=abc…) instead of the bare token — accept
-   both. Normalized at SAVE time, before the form POSTs to /update.php, so the
-   cfg only ever stores the token itself (status.php also strips defensively
-   for values saved before this existed or edited by hand on the flash). */
+/* People paste BombVault's full widget URL (http://host:port/widget?token=abc…)
+   instead of the bare token. It is normalized before the form posts, so the cfg
+   stores only the token; status.php strips it as well for older or hand-edited
+   values. */
 function bvdNormalizeToken(v) {
   v = (v || '').trim();
   var m = /[?&#]token=([^&#\s]+)/i.exec(v);
@@ -152,9 +147,8 @@ document.forms['bombvaultwidget_settings'].addEventListener('submit', function (
   var i = document.getElementById('bvd-WIDGET_TOKEN');
   if (i) i.value = bvdNormalizeToken(i.value);
 });
-/* Test connection — calls the same proxy the tile uses, against the SAVED
-   settings (Apply first, then Test). Shows the BombVault version on success,
-   the proxy's error text on failure. */
+/* Calls the proxy the tile uses, against the saved settings (Apply first, then
+   Test), and shows the BombVault version or the proxy's error. */
 function bvdTest() {
   var out = document.getElementById('bvd-test-result');
   out.className = 'bvd-res run'; out.textContent = BVDT.s_testing;
@@ -171,10 +165,9 @@ function bvdTest() {
     })
     .catch(function () { out.className = 'bvd-res err'; out.textContent = '✗ ' + BVDT.s_fail; });
 }
-/* Info icons (house convention): move each field's help text (.bvd-help) into
-   a small ⓘ next to its label; the bubble renders the original HTML and stays
-   open while the pointer is over it. Graceful: if this never runs, the help
-   text remains visible. */
+/* Moves each field's help text (.bvd-help) into a small ⓘ next to its label;
+   the bubble renders the original HTML and stays open while the pointer is over
+   it. If this never runs, the help text stays visible. */
 (function () {
   var ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.1" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="4.7" r="1.05" fill="currentColor"/><rect x="7.05" y="6.8" width="1.9" height="5" rx=".95" fill="currentColor"/></svg>';
   var pop = null, hideT = null;
