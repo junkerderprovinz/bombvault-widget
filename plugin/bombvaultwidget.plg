@@ -19,7 +19,7 @@
         launch="&launch;"
         pluginURL="&pluginURL;"
         min="6.12.0"
-        support="https://github.com/junkerderprovinz/bombvault-widget/issues">
+        support="https://forums.unraid.net/topic/199509-support-junkerderprovinz-bombvault/">
 
 <!-- The name is the lowercase slug so Unraid finds the logo
      (plugins/<slug>/images/<slug>.png) and the Plugins-tab description
