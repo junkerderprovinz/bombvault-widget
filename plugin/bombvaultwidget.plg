@@ -3,7 +3,7 @@
   <!ENTITY name      "bombvaultwidget">
   <!ENTITY slug      "bombvaultwidget">
   <!ENTITY author    "Junker der Provinz">
-  <!ENTITY version   "1.1.3">
+  <!ENTITY version   "1.2.0">
   <!ENTITY launch    "Settings/bombvaultwidget">
   <!ENTITY gitURL    "https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/plugin">
   <!ENTITY pluginURL "&gitURL;/&slug;.plg">
@@ -94,7 +94,7 @@ find &plgPath; -maxdepth 1 -name '*.txz' ! -name '&txz;' -delete 2>/dev/null || 
 -->
 <FILE Name="&plgPath;/&txz;" Run="/sbin/upgradepkg --install-new --reinstall">
   <URL>&pkgURL;/&txz;</URL>
-  <SHA256>62ce0018a1bdc3164ba4e86e0a746b017d0e89fe41ac2f7187a33be252e29c8e</SHA256>
+  <SHA256>e1516a2025ddca5302b3e22b55333bef9bfa3cb946e2231fcee99ee2f3284b20</SHA256>
 </FILE>
 
 <!-- Post-install: read permissions, since a Windows or CI build can bake odd
