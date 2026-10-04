@@ -102,7 +102,11 @@ const bree = dataUrl(
   "font/ttf",
 );
 const lato = dataUrl(await cached("Lato-Regular.ttf", "https://github.com/google/fonts/raw/main/ofl/lato/Lato-Regular.ttf"), "font/ttf");
-const logo = dataUrl(readFileSync(join(root, ".github", "assets", "icon.svg")), "image/svg+xml");
+const icon = readFileSync(join(root, ".github", "assets", "icon.svg"), "utf8");
+const logo = dataUrl(Buffer.from(icon), "image/svg+xml");
+// The logo's greys all darken alike in the wall, which leaves loose bars, so
+// the relief draws every shape in one light grey and keeps its outline.
+const relief = dataUrl(Buffer.from(icon.replace(/fill: #[0-9a-f]{6};/g, "fill: #c6c6c6;")), "image/svg+xml");
 
 const strings = JSON.parse(readFileSync(join(plugin, "lang", "en.json"), "utf8"));
 
@@ -308,7 +312,8 @@ body { width: ${W}px; height: ${H}px; overflow: hidden; position: relative; font
 .backdrop, .backdrop * { position: absolute; }
 .backdrop { inset: 0; overflow: hidden; }
 .wall { inset: 0; background: radial-gradient(55% 60% at 62% 35%, #26231d, #0f0e0c 72%); }
-.mark { left: -9%; top: -4%; width: 46%; transform: rotate(-10deg); opacity: .32;
+/* Further in and smaller than the store pictures, so the whole open logo shows. */
+.mark { left: -3%; top: 6%; width: 40%; transform: rotate(-10deg); opacity: .32;
   filter: grayscale(1) brightness(.36) contrast(1.2) drop-shadow(-2px -2px 0 rgba(255,255,255,.16)) drop-shadow(12px 18px 26px rgba(0,0,0,.85)); }
 .vignette { inset: 0; box-shadow: inset 0 0 200px rgba(0,0,0,.6); }
 .copy { position: absolute; left: 80px; top: 0; bottom: 0; width: 330px; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
@@ -329,7 +334,7 @@ h1 em { font-style: normal; color: #FCC419; }
 .more { color: #7c7c7c; font-size: 18px; }
 .view img { display: block; border-radius: 0 0 12px 12px; }
 </style></head><body>
-<div class="backdrop"><div class="wall"></div><img class="mark" src="${logo}"><div class="vignette"></div></div>
+<div class="backdrop"><div class="wall"></div><img class="mark" src="${relief}"><div class="vignette"></div></div>
 <div class="copy"><img src="${logo}"><h1>${shot.caption}</h1><p>${SUB}</p></div>
 <div class="stage">
   <div class="floor"></div>
