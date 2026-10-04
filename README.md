@@ -70,7 +70,7 @@ A small Unraid plugin (no daemon, no container) that registers a native dashboar
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/junkerderprovinz/bombvault-widget/main/.github/assets/screenshots/settings.png" alt="BombVault Widget settings page" width="90%">
-  <br><em>Settings under Utilities: BombVault URL + widget token with a one-click connection test, and a short note on how the tile behaves.</em>
+  <br><em>Settings under Utilities: the BombVault URL and the widget token, a one-click connection test, and a short note on how the tile behaves.</em>
 </p>
 
 ## 3. Requirements

@@ -5,15 +5,14 @@
  *   bombvault-widget-banner.svg / .png       : light (white ground, dark text)
  *   bombvault-widget-banner-dark.svg / .png  : dark (GitHub #0d1117 ground)
  *
- * The BombVault logo 2.0 master reads on both grounds, so both embed the same
- * logo, as bombvault's own generator does. The long name stays on one line at
- * a reduced size with about 120px side margins, so the logo never sits crammed
- * against the edge. Text is converted to SVG paths with opentype.js, so the SVG
- * needs no font and renders the same in resvg and a browser.
+ * The widget logo reads on both grounds, so both embed the same file. The long
+ * name stays on one line at a reduced size with about 120px side margins, so the
+ * logo never sits crammed against the edge. Text is converted to SVG paths with
+ * opentype.js, so the SVG needs no font and renders the same in resvg and a
+ * browser.
  *
- * Vertical centring uses the optical centre the designer marked in the source
- * file rather than the bounding box, since the sparks at the top right carry
- * little visual weight.
+ * The logo is centred vertically by its own viewBox, which the generator reads
+ * from icon.svg, so a redrawn logo needs no change here.
  *
  * opentype.js emits NaN points for some size and glyph combinations at the
  * real pen position, truncating a glyph mid-word. Each size therefore steps
@@ -46,10 +45,9 @@ const THEMES = [
   { suffix: "-dark", bg: "#0d1117", name: "#e6edf3", claim: "#9aa4ad" },
 ];
 const LH = 386;                    // logo height (house standard)
-// BombVault logo 2.0 geometry (viewBox 898.34 x 865.1) + designer-marked
-// optical centre (see bombvault/.github/assets/gen-banner.mjs).
-const LOGO_W = 898.34, LOGO_H = 865.1;
-const OPT_CY = 461.2;
+const [, , LOGO_W, LOGO_H] = readFileSync(join(__dir, "icon.svg"), "utf8")
+  .match(/viewBox="([^"]+)"/)[1].split(/[\s,]+/).map(Number);
+const OPT_CY = LOGO_H / 2;
 const LW = LH * (LOGO_W / LOGO_H); // keep logo aspect
 const gap = 70, lineGap = 8;       // house standard
 const MAX_NAME_SIZE = 132, MAX_CLAIM_SIZE = 44;   // house standard

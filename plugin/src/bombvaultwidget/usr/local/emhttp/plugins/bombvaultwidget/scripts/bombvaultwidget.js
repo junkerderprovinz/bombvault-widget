@@ -87,7 +87,7 @@
       b === "offsite" ? "↗" : "ⓘ";
   }
   function cls(b) { return b === "ok" ? "bvd-ok" : b === "fail" ? "bvd-fail" : "bvd-info"; }
-  function other(name, r) { return name + " " + r.kind + " — " + r.status; }
+  function other(name, r) { return name + " " + r.kind + ": " + r.status; }
   function lineText(r) {
     var dur = fmtDur(((r.finishedAt != null ? r.finishedAt : r.startedAt) - r.startedAt));
     var dom = domainLabel(r.domain);
@@ -95,37 +95,37 @@
     var ok = r.status === "success", failed = r.status === "failed";
     switch (r.kind) {
       case "prune":
-        return ok ? "Retention prune done — " + dom :
-          failed ? "Prune failed — " + dom + ": " + r.error : other(dom, r);
+        return ok ? "Retention prune done: " + dom :
+          failed ? "Prune failed (" + dom + "): " + r.error : other(dom, r);
       case "verify":
-        return ok ? "Verify passed — " + dom :
-          failed ? "Verify failed — " + dom + ": " + r.error : other(dom, r);
+        return ok ? "Verify passed: " + dom :
+          failed ? "Verify failed (" + dom + "): " + r.error : other(dom, r);
       case "offsite":
-        return ok ? "Off-site replication done — " + dom + " (" + dur + ")" :
-          failed ? "Off-site replication failed — " + dom + ": " + r.error : other(dom, r);
+        return ok ? "Off-site replication done: " + dom + " (" + dur + ")" :
+          failed ? "Off-site replication failed (" + dom + "): " + r.error : other(dom, r);
       case "drill":
-        return ok ? "Restore check passed — " + dom :
-          failed ? "Restore check failed — " + dom + ": " + r.error : other(dom, r);
+        return ok ? "Restore check passed: " + dom :
+          failed ? "Restore check failed (" + dom + "): " + r.error : other(dom, r);
       case "drdrill":
-        return ok ? "Off-site DR restore verified — " + dom :
-          failed ? "Off-site DR restore FAILED — " + dom + ": " + r.error : other(dom, r);
+        return ok ? "Off-site DR restore verified: " + dom :
+          failed ? "Off-site DR restore FAILED (" + dom + "): " + r.error : other(dom, r);
       case "tamper":
-        return ok ? "Tamper test passed — " + dom + " (delete refused)" :
-          failed ? "Tamper test FAILED — " + dom + " is not append-only: " + r.error :
-          r.status === "skipped" ? "Tamper test skipped — " + dom + ": " + r.error : other(dom, r);
+        return ok ? "Tamper test passed: " + dom + " (delete refused)" :
+          failed ? "Tamper test FAILED. " + dom + " is not append-only: " + r.error :
+          r.status === "skipped" ? "Tamper test skipped (" + dom + "): " + r.error : other(dom, r);
       case "export":
-        return ok ? "Flash ZIP export done — " + fmtBytes(r.bytes) + " (" + dur + ")" :
-          failed ? "Flash ZIP export failed — " + r.error : other(dom, r);
+        return ok ? "Flash ZIP export done: " + fmtBytes(r.bytes) + " (" + dur + ")" :
+          failed ? "Flash ZIP export failed: " + r.error : other(dom, r);
       case "restore":
-        return ok ? name + " restored — " + dur :
-          failed ? name + " restore failed — " + r.error : other(name, r);
+        return ok ? name + " restored: " + dur :
+          failed ? name + " restore failed: " + r.error : other(name, r);
       case "update":
-        return ok ? name + " updated — " + dur :
-          failed ? name + " update failed — " + r.error : other(name, r);
+        return ok ? name + " updated: " + dur :
+          failed ? name + " update failed: " + r.error : other(name, r);
       default: // backup (and any future kind falls back to the same shape)
-        if (ok) return name + " backed up — " + fmtBytes(r.bytes) + " in " + dur;
-        if (failed) return name + " backup failed — " + r.error;
-        if (r.status === "skipped") return name + " backup skipped — " + r.error;
+        if (ok) return name + " backed up: " + fmtBytes(r.bytes) + " in " + dur;
+        if (failed) return name + " backup failed: " + r.error;
+        if (r.status === "skipped") return name + " backup skipped: " + r.error;
         return other(name, r);
     }
   }
