@@ -24,15 +24,25 @@
   var offlineMsg = "";   // non-empty = proxy/feed error to show as live line
   var firstRender = true;
 
-  // English label tables, as in widget.html and activityLog.ts.
+  // English label tables, as in widget.html and activityLog.ts. Items carry
+  // the singular domain, domain-wide runs the plural one.
   var DOMAIN_LABELS = {
-    containers: "Containers", vms: "VMs", flash: "Flash",
-    config: "Self-Backup", files: "Folders"
+    containers: "Containers", container: "Containers", vms: "VMs", vm: "VMs",
+    flash: "Flash", config: "Self-backup", files: "Folders", zfs: "ZFS",
+    everything: "Full backup"
   };
   var JOB_LABELS = {
     backup: "backup", offsite: "off-site replication",
     drill: "restore-verification drill", tamper: "tamper test",
-    digest: "weekly digest"
+    digest: "weekly digest", watchdog: "overdue-backup check",
+    receiver: "received-repo check", fleet: "instance check",
+    pull: "pull from sources", replica: "ZFS replica"
+  };
+  // What happens to the key of the backups is recorded as a run of its own.
+  var KEY_EVENTS = {
+    keyread: "Key tried", keyadopt: "Key taken over",
+    keysignins: "Sign-ins taken over", keysettings: "Settings taken over",
+    keyundo: "Takeover undone"
   };
 
   function domainLabel(d) { return DOMAIN_LABELS[d] || d; }
@@ -86,13 +96,24 @@
     return b === "ok" ? "✓" : b === "fail" ? "✗" :
       b === "offsite" ? "↗" : "ⓘ";
   }
-  function cls(b) { return b === "ok" ? "bvd-ok" : b === "fail" ? "bvd-fail" : "bvd-info"; }
+  function cls(b) {
+    return b === "ok" ? "bvd-ok" : b === "fail" ? "bvd-fail" :
+      b === "offsite" ? "bvd-offsite" : "bvd-info";
+  }
   function other(name, r) { return name + " " + r.kind + ": " + r.status; }
+  // The stored reason repeats what the line already says.
+  function dumpReason(msg) {
+    var head = "database dump failed: ";
+    return msg.indexOf(head) === 0 ? msg.slice(head.length) : msg;
+  }
   function lineText(r) {
     var dur = fmtDur(((r.finishedAt != null ? r.finishedAt : r.startedAt) - r.startedAt));
     var dom = domainLabel(r.domain);
     var name = r.target || dom;
     var ok = r.status === "success", failed = r.status === "failed";
+    if (KEY_EVENTS[r.kind]) {
+      return failed ? KEY_EVENTS[r.kind] + " refused: " + r.error : KEY_EVENTS[r.kind];
+    }
     switch (r.kind) {
       case "prune":
         return ok ? "Retention prune done: " + dom :
@@ -108,14 +129,30 @@
           failed ? "Restore check failed (" + dom + "): " + r.error : other(dom, r);
       case "drdrill":
         return ok ? "Off-site DR restore verified: " + dom :
-          failed ? "Off-site DR restore FAILED (" + dom + "): " + r.error : other(dom, r);
+          failed ? "Off-site DR restore failed (" + dom + "): " + r.error : other(dom, r);
       case "tamper":
         return ok ? "Tamper test passed: " + dom + " (delete refused)" :
-          failed ? "Tamper test FAILED. " + dom + " is not append-only: " + r.error :
+          failed ? "Tamper test failed. " + dom + " is not append-only: " + r.error :
           r.status === "skipped" ? "Tamper test skipped (" + dom + "): " + r.error : other(dom, r);
       case "export":
         return ok ? "Flash ZIP export done: " + fmtBytes(r.bytes) + " (" + dur + ")" :
           failed ? "Flash ZIP export failed: " + r.error : other(dom, r);
+      case "dbdump":
+        if (ok) return r.error ? name + " database dumped (one database only)" :
+          name + " database dumped - " + fmtBytes(r.bytes);
+        return failed ? name + " database dump failed: " + dumpReason(r.error) : other(name, r);
+      case "dbdumpsave":
+        return ok ? name + " database dump saved - " + fmtBytes(r.bytes) :
+          failed ? name + " database dump save failed: " + r.error : other(name, r);
+      case "dbimport":
+        return ok ? name + " database imported" :
+          failed ? name + " database import failed: " + r.error : other(name, r);
+      case "import":
+        return ok ? name + ": Appdata.Backup archive imported (" + fmtBytes(r.bytes) + ", " + dur + ")" :
+          failed ? name + ": Appdata.Backup import failed: " + r.error : other(name, r);
+      case "replica":
+        return ok ? name + " replicated: " + fmtBytes(r.bytes) + " in " + dur :
+          failed ? name + " replica failed: " + r.error : other(name, r);
       case "restore":
         return ok ? name + " restored: " + dur :
           failed ? name + " restore failed: " + r.error : other(name, r);
@@ -130,14 +167,21 @@
     }
   }
 
-  function row(ts, g, c, text, live) {
+  // A container and a folder set can share a name, so a run's line names its
+  // domain, as BombVault's own log does.
+  function row(ts, g, c, text, live, dom) {
     var div = document.createElement("div");
     div.className = "bvd-row" + (live ? " bvd-live" : "");
     var t = document.createElement("span"); t.className = "bvd-ts"; t.textContent = ts;
     var gl = document.createElement("span"); gl.className = "bvd-g " + c; gl.textContent = g;
     var m = document.createElement("span"); m.className = "bvd-msg " + c; m.textContent = text;
     m.title = text; // lines are ellipsized to one row, so the full text goes on hover
-    div.appendChild(t); div.appendChild(gl); div.appendChild(m);
+    div.appendChild(t); div.appendChild(gl);
+    if (dom) {
+      var d = document.createElement("span"); d.className = "bvd-dom"; d.textContent = dom;
+      div.appendChild(d);
+    }
+    div.appendChild(m);
     return div;
   }
 
@@ -158,7 +202,7 @@
     });
     for (var i = 0; i < runs.length; i++) {
       var r = runs[i], b = bucket(r);
-      frag.appendChild(row(fmtTs(r.finishedAt), glyph(b), cls(b), lineText(r)));
+      frag.appendChild(row(fmtTs(r.finishedAt), glyph(b), cls(b), lineText(r), false, domainLabel(r.domain)));
     }
 
     // The pulsing live line: an outage or config problem wins, then the

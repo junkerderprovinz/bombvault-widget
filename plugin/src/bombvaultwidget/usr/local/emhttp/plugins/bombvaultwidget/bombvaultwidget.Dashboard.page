@@ -58,10 +58,12 @@ EOT;
 .bvd-row{display:flex;gap:9px;white-space:nowrap;overflow:hidden}
 .bvd-ts{color:#8d8d8d;flex:0 0 auto}
 .bvd-g{width:12px;text-align:center;flex:0 0 auto}
+.bvd-dom{color:#8d8d8d;flex:0 0 auto}
 .bvd-msg{overflow:hidden;text-overflow:ellipsis}
 .bvd-ok{color:#6fdc8c}
 .bvd-fail{color:#ff8389}
-.bvd-info{color:#78a9ff}
+.bvd-offsite{color:#78a9ff}
+.bvd-info{color:#f1c21b}
 .bvd-idle{color:#f1c21b}
 @keyframes bvd-pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .bvd-live .bvd-g{animation:bvd-pulse 2s ease-in-out infinite}
