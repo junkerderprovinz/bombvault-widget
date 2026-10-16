@@ -116,18 +116,30 @@ function pageBody(name) {
   return text.slice(text.indexOf("\n---\n") + 5);
 }
 
-// The tile as Unraid's dashboard prints it: the $mytiles heredoc with the
-// "Open BombVault" link filled in, then the page's own style and script.
+// The tile as Unraid's dashboard prints it in English: the $mytiles heredoc
+// with the "Open BombVault" link and the strings filled in, then the page's own
+// style and script.
 function tileMarkup() {
   const body = pageBody("bombvaultwidget.Dashboard.page");
-  const open = /\$bvd_open = "(.*)";/.exec(body)?.[1].replace(/" \. htmlspecialchars\(\$bvd_url, ENT_QUOTES\) \. "/, BV_URL);
+  const open = /\$bvd_open = "(.*)";/
+    .exec(body)?.[1]
+    .replace(/" \. htmlspecialchars\(\$bvd_url, ENT_QUOTES\) \. "/, BV_URL)
+    .replace(/" \. htmlspecialchars\(\$bvd_L\['t_open'\], ENT_QUOTES\) \. "/, strings.t_open);
   const tile = /<<<EOT\n([\s\S]*?)\nEOT;/.exec(body)?.[1];
   if (!open || !tile) throw new Error("bombvaultwidget.Dashboard.page: tile markup not found");
-  const tail = body.slice(body.indexOf("\n?>") + 3).replace(/<\?autov\('([^']+)'\)\?>/g, "$1");
+  const tileStrings = Object.fromEntries(Object.entries(strings).filter(([key]) => !key.startsWith("s_")));
+  const tail = body
+    .slice(body.indexOf("\n?>") + 3)
+    .replace(/<\?=json_encode\(\$bvd_js[^?]*\?>/, JSON.stringify(tileStrings))
+    .replace(/<\?autov\('([^']+)'\)\?>/g, "$1");
   // DashStats adds the collapse chevron to every tile header after load.
   const chevron = "<i class='fa fa-fw fa-chevron-up control openclose' title=\"Show/Hide Content\"></i>";
   return {
-    tile: tile.replace("{$bvd_open}", open).replace(/(<\/i><\/a>)(<\/span><\/span><\/span>)/, `$1${chevron}$2`),
+    tile: tile
+      .replace("{$bvd_open}", open)
+      .replace("{$bvd_title}", strings.t_title)
+      .replace("{$bvd_settings}", strings.t_settings)
+      .replace(/(<\/i><\/a>)(<\/span><\/span><\/span>)/, `$1${chevron}$2`),
     tail,
   };
 }
