@@ -22,6 +22,22 @@ Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9',
  *   tile-header-left, -right), which Unraid 7's dashboard JS hooks the
  *   collapse chevron and dragging onto.
  */
+/* The tile speaks Unraid's language like the settings page: English first,
+ * overlaid with the active language, so a missing key falls back to English.
+ * Only the <tbody title> stays English, since it keys the saved layout. */
+$bvd_lang = strtolower(substr((string)(isset($_SESSION['locale']) ? $_SESSION['locale'] : ''), 0, 2));
+$bvd_dir  = '/usr/local/emhttp/plugins/bombvaultwidget/lang';
+$bvd_L    = json_decode(@file_get_contents("$bvd_dir/en.json"), true) ?: array();
+if ($bvd_lang !== '' && $bvd_lang !== 'en' && is_file("$bvd_dir/$bvd_lang.json")) {
+  $bvd_tr = json_decode(@file_get_contents("$bvd_dir/$bvd_lang.json"), true);
+  if (is_array($bvd_tr)) $bvd_L = array_merge($bvd_L, $bvd_tr);
+}
+$bvd_title    = htmlspecialchars($bvd_L['t_title'], ENT_QUOTES);
+$bvd_settings = htmlspecialchars($bvd_L['t_settings'], ENT_QUOTES);
+$bvd_js = array();
+foreach ($bvd_L as $bvd_k => $bvd_v) {
+  if (strncmp($bvd_k, 's_', 2) !== 0) $bvd_js[$bvd_k] = $bvd_v;
+}
 /* The "Open BombVault" control comes from the flash cfg, a cheap ini read, and
  * is left out while BV_URL is unset or invalid so the tile never shows a dead
  * link. Action controls come first and the cog last, as on native tiles; the
@@ -30,11 +46,11 @@ $bvd_cfg  = parse_plugin_cfg('bombvaultwidget');
 $bvd_url  = isset($bvd_cfg['BV_URL']) ? trim($bvd_cfg['BV_URL']) : '';
 $bvd_open = '';
 if ($bvd_url !== '' && preg_match('#^https?://#i', $bvd_url)) {
-  $bvd_open = "<a href='" . htmlspecialchars($bvd_url, ENT_QUOTES) . "' target='_blank' rel='noopener' title='Open BombVault'><i class='fa fa-fw fa-external-link control'></i></a>";
+  $bvd_open = "<a href='" . htmlspecialchars($bvd_url, ENT_QUOTES) . "' target='_blank' rel='noopener' title='" . htmlspecialchars($bvd_L['t_open'], ENT_QUOTES) . "'><i class='fa fa-fw fa-external-link control'></i></a>";
 }
 $mytiles['bombvaultwidget']['column2'] = <<<EOT
 <tbody title="BombVault Activity">
-<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>BombVault Activity</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'>{$bvd_open}<a href='/Settings/bombvaultwidget' title="Go to BombVault Widget settings"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
+<tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>{$bvd_title}</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'>{$bvd_open}<a href='/Settings/bombvaultwidget' title="{$bvd_settings}"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
 <tr><td class='bvd-td'><div id='bvd-log' class='bvd-log'></div></td></tr>
 </tbody>
 EOT;
@@ -68,4 +84,5 @@ EOT;
 @keyframes bvd-pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .bvd-live .bvd-g{animation:bvd-pulse 2s ease-in-out infinite}
 </style>
+<script>window.BVD_T = <?=json_encode($bvd_js, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP)?>;</script>
 <script src="<?autov('/plugins/bombvaultwidget/scripts/bombvaultwidget.js')?>"></script>

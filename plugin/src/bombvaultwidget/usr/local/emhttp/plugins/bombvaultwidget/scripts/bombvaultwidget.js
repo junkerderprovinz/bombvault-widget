@@ -2,9 +2,9 @@
  *
  * Polls the same-origin proxy (server/status.php, which calls BombVault's
  * GET /api/widget/data) and renders the activity log into #bvd-log. The lines
- * mirror BombVault's embeddable widget (internal/api/widget.html): same label
- * tables, line templates, glyphs and colour buckets. Only the timestamp
- * differs, a locale-default short date via Intl (e.g. "26/07 05:02:19").
+ * read as BombVault's own activity log does in Unraid's language, with the
+ * glyphs and colour buckets of BombVault's embeddable widget. The timestamp is
+ * a locale-default short date via Intl (e.g. "26/07 05:02:19").
  *
  * Every value from the feed is written via textContent, and the token stays
  * in the proxy on the server.
@@ -24,28 +24,34 @@
   var offlineMsg = "";   // non-empty = proxy/feed error to show as live line
   var firstRender = true;
 
-  // English label tables, as in widget.html and activityLog.ts. Items carry
-  // the singular domain, domain-wide runs the plural one.
-  var DOMAIN_LABELS = {
+  // The lines are BombVault's own log lines in Unraid's language. The page
+  // hands over the strings, copied from BombVault's translations by
+  // plugin/lang_from_bombvault.mjs.
+  var T = window.BVD_T || {};
+  function t(key, params) {
+    var s = T[key] || key;
+    for (var p in params) s = s.split("{" + p + "}").join(params[p]);
+    return s;
+  }
+
+  // Items carry the singular domain, domain-wide runs the plural one.
+  var DOMAINS = {
     containers: "Containers", container: "Containers", vms: "VMs", vm: "VMs",
-    flash: "Flash", config: "Self-backup", files: "Folders", zfs: "ZFS",
-    everything: "Full backup"
+    flash: "Flash", config: "Config", files: "Files", zfs: "ZFS", everything: "Everything"
   };
-  var JOB_LABELS = {
-    backup: "backup", offsite: "off-site replication",
-    drill: "restore-verification drill", tamper: "tamper test",
-    digest: "weekly digest", watchdog: "overdue-backup check",
-    receiver: "received-repo check", fleet: "instance check",
-    pull: "pull from sources", replica: "ZFS replica"
+  var JOBS = {
+    backup: "Backup", offsite: "Offsite", drill: "Drill", tamper: "Tamper",
+    digest: "Digest", watchdog: "Watchdog", receiver: "Receiver", fleet: "Fleet",
+    pull: "Pull", replica: "Replica"
   };
   // What happens to the key of the backups is recorded as a run of its own.
   var KEY_EVENTS = {
-    keyread: "Key tried", keyadopt: "Key taken over",
-    keysignins: "Sign-ins taken over", keysettings: "Settings taken over",
-    keyundo: "Takeover undone"
+    keyread: "Read", keyadopt: "Adopt", keysignins: "SignIns",
+    keysettings: "Settings", keyundo: "Undo"
   };
 
-  function domainLabel(d) { return DOMAIN_LABELS[d] || d; }
+  function domainLabel(d) { return DOMAINS[d] ? t("activityLog.domain" + DOMAINS[d]) : d; }
+  function jobLabel(j) { return JOBS[j] ? t("activityLog.job" + JOBS[j]) : j; }
 
   function pad(n) { return (n < 10 ? "0" : "") + n; }
 
@@ -85,8 +91,6 @@
     return (i === 0 ? v : v.toFixed(1)) + " " + units[i];
   }
 
-  // Line composition, as in widget.html's finishedLineText. The line texts
-  // match the widget's own, dashes included.
   function bucket(r) {
     if (r.status === "success") return r.kind === "offsite" ? "offsite" : "ok";
     if (r.status === "failed") return "fail";
@@ -100,71 +104,52 @@
     return b === "ok" ? "bvd-ok" : b === "fail" ? "bvd-fail" :
       b === "offsite" ? "bvd-offsite" : "bvd-info";
   }
-  function other(name, r) { return name + " " + r.kind + ": " + r.status; }
+  function other(name, r) { return t("activityLog.lineOther", { name: name, kind: r.kind, status: r.status }); }
   // The stored reason repeats what the line already says.
   function dumpReason(msg) {
     var head = "database dump failed: ";
     return msg.indexOf(head) === 0 ? msg.slice(head.length) : msg;
   }
+  // The success or failure line of a kind, null for any other status.
+  function outcome(r, ok, failed, name) {
+    return r.status === "success" ? t("activityLog.line" + ok, name) :
+      r.status === "failed" ? t("activityLog.line" + failed, name) : null;
+  }
   function lineText(r) {
-    var dur = fmtDur(((r.finishedAt != null ? r.finishedAt : r.startedAt) - r.startedAt));
+    var duration = fmtDur(((r.finishedAt != null ? r.finishedAt : r.startedAt) - r.startedAt));
     var dom = domainLabel(r.domain);
     var name = r.target || dom;
-    var ok = r.status === "success", failed = r.status === "failed";
+    var p = { domain: dom, name: name, duration: duration, bytes: fmtBytes(r.bytes), error: r.error };
     if (KEY_EVENTS[r.kind]) {
-      return failed ? KEY_EVENTS[r.kind] + " refused: " + r.error : KEY_EVENTS[r.kind];
+      var what = t("run.kindKey" + KEY_EVENTS[r.kind]);
+      return r.status === "failed" ? t("activityLog.lineKeyRefused", { what: what, error: r.error }) : what;
     }
+    var line;
     switch (r.kind) {
-      case "prune":
-        return ok ? "Retention prune done: " + dom :
-          failed ? "Prune failed (" + dom + "): " + r.error : other(dom, r);
-      case "verify":
-        return ok ? "Verify passed: " + dom :
-          failed ? "Verify failed (" + dom + "): " + r.error : other(dom, r);
-      case "offsite":
-        return ok ? "Off-site replication done: " + dom + " (" + dur + ")" :
-          failed ? "Off-site replication failed (" + dom + "): " + r.error : other(dom, r);
-      case "drill":
-        return ok ? "Restore check passed: " + dom :
-          failed ? "Restore check failed (" + dom + "): " + r.error : other(dom, r);
-      case "drdrill":
-        return ok ? "Off-site DR restore verified: " + dom :
-          failed ? "Off-site DR restore failed (" + dom + "): " + r.error : other(dom, r);
+      case "prune": line = outcome(r, "PruneSuccess", "PruneFailed", p); break;
+      case "verify": line = outcome(r, "VerifySuccess", "VerifyFailed", p); break;
+      case "offsite": line = outcome(r, "OffsiteSuccess", "OffsiteFailed", p); break;
+      case "drill": line = outcome(r, "DrillSuccess", "DrillFailed", p); break;
+      case "drdrill": line = outcome(r, "DRDrillSuccess", "DRDrillFailed", p); break;
       case "tamper":
-        return ok ? "Tamper test passed: " + dom + " (delete refused)" :
-          failed ? "Tamper test failed. " + dom + " is not append-only: " + r.error :
-          r.status === "skipped" ? "Tamper test skipped (" + dom + "): " + r.error : other(dom, r);
-      case "export":
-        return ok ? "Flash ZIP export done: " + fmtBytes(r.bytes) + " (" + dur + ")" :
-          failed ? "Flash ZIP export failed: " + r.error : other(dom, r);
+        line = r.status === "skipped" ? t("activityLog.lineTamperSkipped", p) : outcome(r, "TamperSuccess", "TamperFailed", p);
+        break;
+      case "export": line = outcome(r, "ExportSuccess", "ExportFailed", p); break;
       case "dbdump":
-        if (ok) return r.error ? name + " database dumped (one database only)" :
-          name + " database dumped - " + fmtBytes(r.bytes);
-        return failed ? name + " database dump failed: " + dumpReason(r.error) : other(name, r);
-      case "dbdumpsave":
-        return ok ? name + " database dump saved - " + fmtBytes(r.bytes) :
-          failed ? name + " database dump save failed: " + r.error : other(name, r);
-      case "dbimport":
-        return ok ? name + " database imported" :
-          failed ? name + " database import failed: " + r.error : other(name, r);
-      case "import":
-        return ok ? name + ": Appdata.Backup archive imported (" + fmtBytes(r.bytes) + ", " + dur + ")" :
-          failed ? name + ": Appdata.Backup import failed: " + r.error : other(name, r);
-      case "replica":
-        return ok ? name + " replicated: " + fmtBytes(r.bytes) + " in " + dur :
-          failed ? name + " replica failed: " + r.error : other(name, r);
-      case "restore":
-        return ok ? name + " restored: " + dur :
-          failed ? name + " restore failed: " + r.error : other(name, r);
-      case "update":
-        return ok ? name + " updated: " + dur :
-          failed ? name + " update failed: " + r.error : other(name, r);
-      default: // backup (and any future kind falls back to the same shape)
-        if (ok) return name + " backed up: " + fmtBytes(r.bytes) + " in " + dur;
-        if (failed) return name + " backup failed: " + r.error;
-        if (r.status === "skipped") return name + " backup skipped: " + r.error;
-        return other(name, r);
+        if (r.status === "success" && r.error) { p.note = r.error; return t("activityLog.lineDbDumpNote", p); }
+        p.error = dumpReason(r.error || "");
+        line = outcome(r, "DbDumpSuccess", "DbDumpFailed", p);
+        break;
+      case "dbdumpsave": line = outcome(r, "DbDumpSaved", "DbDumpSaveFailed", p); break;
+      case "dbimport": line = outcome(r, "DbImported", "DbImportFailed", p); break;
+      case "import": line = outcome(r, "ImportSuccess", "ImportFailed", p); break;
+      case "replica": line = outcome(r, "ReplicaSuccess", "ReplicaFailed", p); break;
+      case "restore": line = outcome(r, "RestoreSuccess", "RestoreFailed", p); break;
+      case "update": line = outcome(r, "UpdateSuccess", "UpdateFailed", p); break;
+      default: // backup, and any kind this tile does not know yet
+        line = r.status === "skipped" ? t("activityLog.lineBackupSkipped", p) : outcome(r, "BackupSuccess", "BackupFailed", p);
     }
+    return line || other(r.kind in { prune: 1, verify: 1, offsite: 1, drill: 1, drdrill: 1, tamper: 1, export: 1 } ? dom : name, r);
   }
 
   // A container and a folder set can share a name, so a run's line names its
@@ -214,12 +199,12 @@
       var next = ((lastData && lastData.next) || [])[0];
       if (next) {
         var at = new Date(next.next).getTime();
-        var text = "next: " + (JOB_LABELS[next.job] || next.job) +
-          (next.domain ? " (" + domainLabel(next.domain) + ")" : "") +
-          " at " + fmtClock(at) + " (in " + fmtDur((at - Date.now()) / 1000) + ")";
+        var q = { job: jobLabel(next.job), time: fmtClock(at), countdown: fmtDur((at - Date.now()) / 1000) };
+        if (next.domain) q.domain = domainLabel(next.domain);
+        var text = t(next.domain ? "activityLog.lineNextWithDomain" : "activityLog.lineNextNoDomain", q);
         frag.appendChild(row(fmtTs(nowSec), "▶", "bvd-idle", text, true));
       } else if (runs.length === 0) {
-        frag.appendChild(row(fmtTs(nowSec), "▶", "bvd-idle", "nothing yet", true));
+        frag.appendChild(row(fmtTs(nowSec), "▶", "bvd-idle", t("activityLog.lineEmpty"), true));
       }
     }
 
@@ -240,12 +225,12 @@
           offlineMsg = "";
         } else {
           // A proxy 503 or a BombVault refusal keeps the history and flags the outage.
-          offlineMsg = (r.d && r.d.error) ? r.d.error : "BombVault unreachable (HTTP " + r.status + ")";
+          offlineMsg = (r.d && r.d.error) ? r.d.error : t("t_unreachable", { status: r.status });
         }
         render();
       })
       .catch(function () {
-        offlineMsg = "BombVault unreachable, retrying";
+        offlineMsg = t("t_retrying");
         render();
       });
   }
