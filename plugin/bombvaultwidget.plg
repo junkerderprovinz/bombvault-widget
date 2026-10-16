@@ -35,6 +35,15 @@ drill as it happens, plus the next scheduled run, in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
+### 1.2.1
+✨ **Added**
+- The tile follows Unraid's language. Its title and every line read the way BombVault's own activity log does in that language, in all 26 languages of the plugin.
+
+🐛 **Fixed**
+- A ZFS replica shows as replicated instead of backed up, and every line names its section, as BombVault's own activity log does. ([#355](https://github.com/junkerderprovinz/bombvault/issues/355))
+- ZFS, Full backup, database dumps, Appdata.Backup imports and the events of the backup key read the way BombVault's log puts them, instead of as a backup line or a bare word.
+- A skipped run is yellow like a warning instead of the blue of an off-site copy.
+
 ### 1.2.0
 🎨 **Design**
 - A logo of its own. The settings header, the Plugins tab and Community Apps show the widget's own logo instead of BombVault's.
