@@ -17,6 +17,9 @@
   "s_tile_hint": "تظهر بلاطة \"BombVault Activity\" تلقائيًا على لوحة المعلومات (العمود الأوسط). يمكن إخفاؤها أو نقلها أو طيّها بعناصر تحكم Unraid نفسها. يبقى السجل داكنًا في كل سمة، مثل الطرفية.",
   "s_apply": "تطبيق",
   "s_done": "تم",
+  "s_succ_title": "الخليفة",
+  "s_succ_sub": "ما الذي يأتي بعد هذه البلاطة",
+  "s_succ_text": "شكرًا لاستخدامك BombVault Widget! هذا هو إصداره الأخير. يتولّى TollRoll المهمة ببلاطة واحدة لـ BombVault وتطبيقاتك الأخرى، ويأخذ العنوان والرمز اللذين ضبطتهما هنا.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "فتح BombVault",
   "t_settings": "إعدادات ودجت BombVault",
   "t_unreachable": "تعذّر الوصول إلى BombVault (HTTP {status})",
-  "t_retrying": "تعذّر الوصول إلى BombVault، جارٍ إعادة المحاولة"
+  "t_retrying": "تعذّر الوصول إلى BombVault، جارٍ إعادة المحاولة",
+  "t_successor": "لهذه البلاطة خليفة: يعرض TollRoll تطبيق BombVault وتطبيقاتك الأخرى في بلاطة واحدة.",
+  "t_successor_link": "ابحث عن TollRoll في Community Apps"
 }

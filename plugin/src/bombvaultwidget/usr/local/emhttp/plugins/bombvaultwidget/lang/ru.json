@@ -17,6 +17,9 @@
   "s_tile_hint": "Плитка \"BombVault Activity\" появляется на дашборде автоматически (средняя колонка). Скрыть, переместить или свернуть её можно штатными элементами управления плитками Unraid — журнал остаётся тёмным в любой теме, как терминал.",
   "s_apply": "Применить",
   "s_done": "Готово",
+  "s_succ_title": "Преемник",
+  "s_succ_sub": "что дальше с плиткой",
+  "s_succ_text": "Спасибо, что пользуешься BombVault Widget! Это его последняя версия. Дальше работу берёт TollRoll: одна плитка для BombVault и других твоих приложений, и он подхватит адрес и токен, которые ты указал здесь.",
   "activityLog.domainContainers": "Контейнеры",
   "activityLog.domainVMs": "Виртуальные машины",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Открыть BombVault",
   "t_settings": "Настройки виджета BombVault",
   "t_unreachable": "BombVault недоступен (HTTP {status})",
-  "t_retrying": "BombVault недоступен, повторная попытка"
+  "t_retrying": "BombVault недоступен, повторная попытка",
+  "t_successor": "У этой плитки есть преемник: TollRoll показывает BombVault и другие твои приложения в одной плитке.",
+  "t_successor_link": "Найти TollRoll в Community Apps"
 }

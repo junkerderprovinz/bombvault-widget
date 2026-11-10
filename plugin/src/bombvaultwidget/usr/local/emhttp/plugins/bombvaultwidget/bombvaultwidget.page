@@ -85,6 +85,8 @@ if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
   .bvd-res.err{color:#d9534f}
   .bvd-res.run{color:var(--dim)}
   .bvd-actions{display:flex;gap:10px;margin:4px 2px 4px}
+  .bvd-claim{font-style:italic}
+  .bvd-link{text-decoration:none;display:inline-block}
 </style>
 
 <div class="bvd-cfg">
@@ -95,6 +97,13 @@ if ($lang !== '' && $lang !== 'en' && is_file("$langdir/$lang.json")) {
       <div class="bvd-ttl"><b>BombVault</b> Widget</div>
       <div class="bvd-sub"><?=$L['s_sub']?></div>
     </div>
+  </div>
+
+  <div class="bvd-card">
+    <h3><?=$L['s_succ_title']?> <small><?=$L['s_succ_sub']?></small></h3>
+    <div class="bvd-note"><?=$L['s_succ_text']?></div>
+    <div class="bvd-note bvd-claim">TollRoll: Your apps report in. You just unroll.</div>
+    <div class="bvd-actions"><a class="bvd-btn bvd-primary bvd-link" href="https://ca.unraid.net/apps?q=TollRoll" target="_blank" rel="noopener"><?=$L['t_successor_link']?></a></div>
   </div>
 
   <form name="bombvaultwidget_settings" method="POST" action="/update.php" target="progressFrame">

@@ -35,6 +35,10 @@ drill as it happens, plus the next scheduled run, in the same dark
 terminal-style log as BombVault's own widget. Read-only by construction;
 requires BombVault &gt;= 6.9.0 and a widget token.
 
+### Unreleased
+✨ **Added**
+- This is the last version of the BombVault Widget, and thanks to everyone who used it! The tile and the settings page point to its successor, TollRoll: one tile for BombVault and your other apps, which picks up the address and token you set here. The link opens a Community Apps search for TollRoll.
+
 ### 1.2.1
 ✨ **Added**
 - The tile follows Unraid's language. Its title and every line read the way BombVault's own activity log does in that language, in all 26 languages of the plugin.

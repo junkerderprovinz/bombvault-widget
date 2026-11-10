@@ -17,6 +17,9 @@
   "s_tile_hint": "\"BombVault Activity\" kutucuğu panoda otomatik olarak görünür (orta sütun). Unraid'in kendi kutucuk denetimleriyle gizleyin, taşıyın veya daraltın. Günlük her temada terminal gibi koyu kalır.",
   "s_apply": "Uygula",
   "s_done": "Bitti",
+  "s_succ_title": "Halef",
+  "s_succ_sub": "kutucuğun yolu buradan devam ediyor",
+  "s_succ_text": "BombVault Widget'ı kullandığın için teşekkürler! Bu onun son sürümü. TollRoll, BombVault ve diğer uygulamaların için tek bir kutucukla devralıyor ve burada girdiğin adresi ve token'ı alıyor.",
   "activityLog.domainContainers": "Konteynerler",
   "activityLog.domainVMs": "VM'ler",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "BombVault'u aç",
   "t_settings": "BombVault Widget ayarları",
   "t_unreachable": "BombVault'a ulaşılamıyor (HTTP {status})",
-  "t_retrying": "BombVault'a ulaşılamıyor, yeniden deneniyor"
+  "t_retrying": "BombVault'a ulaşılamıyor, yeniden deneniyor",
+  "t_successor": "Bu kutucuğun bir halefi var: TollRoll, BombVault'u ve diğer uygulamalarını tek bir kutucukta gösterir.",
+  "t_successor_link": "TollRoll'u Community Apps'te bul"
 }

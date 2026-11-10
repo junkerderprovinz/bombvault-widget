@@ -17,6 +17,9 @@
   "s_tile_hint": "\"BombVault Activity\" 磁贴会自动出现在仪表板上(中间一列)。可用 Unraid 自带的磁贴控件隐藏、移动或折叠它。日志区域在任何主题下都保持深色,就像终端一样。",
   "s_apply": "应用",
   "s_done": "完成",
+  "s_succ_title": "继任者",
+  "s_succ_sub": "这个磁贴的下一步",
+  "s_succ_text": "感谢你使用 BombVault Widget！这是它的最后一个版本。接下来由 TollRoll 接手，用一个磁贴显示 BombVault 和你的其他应用，并沿用你在这里设置的地址和令牌。",
   "activityLog.domainContainers": "容器",
   "activityLog.domainVMs": "虚拟机",
   "activityLog.domainFlash": "闪存",
@@ -81,5 +84,7 @@
   "t_open": "打开 BombVault",
   "t_settings": "BombVault 小组件设置",
   "t_unreachable": "无法连接 BombVault (HTTP {status})",
-  "t_retrying": "无法连接 BombVault，正在重试"
+  "t_retrying": "无法连接 BombVault，正在重试",
+  "t_successor": "这个磁贴有了继任者：TollRoll 在一个磁贴中显示 BombVault 和你的其他应用。",
+  "t_successor_link": "在 Community Apps 中查找 TollRoll"
 }

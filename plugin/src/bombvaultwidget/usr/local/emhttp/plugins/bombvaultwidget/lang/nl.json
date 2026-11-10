@@ -17,6 +17,9 @@
   "s_tile_hint": "De tegel \"BombVault Activity\" verschijnt automatisch op het dashboard (middelste kolom). Verberg, verplaats of klap hem in met Unraids eigen tegelbediening. Het log blijft op elk thema donker, als een terminal.",
   "s_apply": "Toepassen",
   "s_done": "Klaar",
+  "s_succ_title": "Opvolger",
+  "s_succ_sub": "hoe het verder gaat met de tegel",
+  "s_succ_text": "Bedankt dat je de BombVault Widget gebruikt! Dit is de laatste versie. TollRoll neemt het over met één tegel voor BombVault en je andere apps, en neemt het adres en de token mee die je hier hebt ingesteld.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VM's",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "BombVault openen",
   "t_settings": "Instellingen van de BombVault-widget",
   "t_unreachable": "BombVault niet bereikbaar (HTTP {status})",
-  "t_retrying": "BombVault niet bereikbaar, opnieuw proberen"
+  "t_retrying": "BombVault niet bereikbaar, opnieuw proberen",
+  "t_successor": "Deze tegel heeft een opvolger: TollRoll toont BombVault en je andere apps in één tegel.",
+  "t_successor_link": "TollRoll vinden in Community Apps"
 }

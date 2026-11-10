@@ -17,6 +17,9 @@
   "s_tile_hint": "O mosaico \"BombVault Activity\" aparece automaticamente no dashboard (coluna central). Oculte, mova ou recolha-o com os controlos de mosaicos do Unraid. O registo permanece escuro em todos os temas, como um terminal.",
   "s_apply": "Aplicar",
   "s_done": "Concluído",
+  "s_succ_title": "Sucessor",
+  "s_succ_sub": "o que vem a seguir para o mosaico",
+  "s_succ_text": "Obrigado por usares o widget do BombVault! Esta é a sua última versão. O TollRoll assume com um só mosaico para o BombVault e as tuas outras apps, e aproveita o endereço e o token que definiste aqui.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Abrir o BombVault",
   "t_settings": "Definições do widget do BombVault",
   "t_unreachable": "BombVault inacessível (HTTP {status})",
-  "t_retrying": "BombVault inacessível, a tentar novamente"
+  "t_retrying": "BombVault inacessível, a tentar novamente",
+  "t_successor": "Este mosaico tem um sucessor: o TollRoll mostra o BombVault e as tuas outras apps num só mosaico.",
+  "t_successor_link": "Procurar o TollRoll nas Community Apps"
 }

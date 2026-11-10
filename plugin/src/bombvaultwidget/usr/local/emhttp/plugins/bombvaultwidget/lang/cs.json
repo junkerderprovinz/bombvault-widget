@@ -17,6 +17,9 @@
   "s_tile_hint": "Dlaždice \"BombVault Activity\" se na dashboardu objeví automaticky (prostřední sloupec). Skrýt, přesunout nebo sbalit ji lze vlastními ovládacími prvky Unraidu. Log zůstává na každém motivu tmavý, jako terminál.",
   "s_apply": "Použít",
   "s_done": "Hotovo",
+  "s_succ_title": "Nástupce",
+  "s_succ_sub": "co bude s dlaždicí dál",
+  "s_succ_text": "Díky, že používáš BombVault Widget! Tohle je jeho poslední verze. TollRoll přebírá štafetu s jednou dlaždicí pro BombVault a tvoje další aplikace a převezme adresu a token, které jsi tu nastavil.",
   "activityLog.domainContainers": "Kontejnery",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Otevřít BombVault",
   "t_settings": "Nastavení widgetu BombVault",
   "t_unreachable": "BombVault je nedostupný (HTTP {status})",
-  "t_retrying": "BombVault je nedostupný, zkouším znovu"
+  "t_retrying": "BombVault je nedostupný, zkouším znovu",
+  "t_successor": "Tato dlaždice má nástupce: TollRoll ukazuje BombVault a tvoje další aplikace v jedné dlaždici.",
+  "t_successor_link": "Najít TollRoll v Community Apps"
 }

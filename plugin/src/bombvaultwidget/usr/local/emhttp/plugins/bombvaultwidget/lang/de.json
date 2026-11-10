@@ -17,6 +17,9 @@
   "s_tile_hint": "Die Kachel \"BombVault Activity\" erscheint automatisch auf dem Dashboard (mittlere Spalte). Ausblenden, verschieben oder einklappen geht mit Unraids eigenen Kachel-Bedienelementen. Das Log bleibt auf jedem Theme dunkel, wie ein Terminal.",
   "s_apply": "Anwenden",
   "s_done": "Fertig",
+  "s_succ_title": "Nachfolger",
+  "s_succ_sub": "wie es mit der Kachel weitergeht",
+  "s_succ_text": "Danke, dass du das BombVault-Widget benutzt! Das ist seine letzte Version. TollRoll übernimmt mit einer Kachel für BombVault und deine anderen Apps und holt sich die Adresse und den Token, die du hier eingetragen hast.",
   "activityLog.domainContainers": "Container",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "BombVault öffnen",
   "t_settings": "Einstellungen des BombVault-Widgets",
   "t_unreachable": "BombVault nicht erreichbar (HTTP {status})",
-  "t_retrying": "BombVault nicht erreichbar, neuer Versuch"
+  "t_retrying": "BombVault nicht erreichbar, neuer Versuch",
+  "t_successor": "Diese Kachel hat einen Nachfolger: TollRoll zeigt BombVault und deine anderen Apps in einer Kachel.",
+  "t_successor_link": "TollRoll in Community Apps finden"
 }

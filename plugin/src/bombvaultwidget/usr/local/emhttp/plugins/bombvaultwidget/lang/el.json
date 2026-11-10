@@ -17,6 +17,9 @@
   "s_tile_hint": "Το πλακίδιο \"BombVault Activity\" εμφανίζεται αυτόματα στο dashboard (μεσαία στήλη). Απόκρυψη, μετακίνηση ή σύμπτυξη με τα χειριστήρια πλακιδίων του Unraid. Το log παραμένει σκούρο σε κάθε θέμα, σαν τερματικό.",
   "s_apply": "Εφαρμογή",
   "s_done": "Τέλος",
+  "s_succ_title": "Διάδοχος",
+  "s_succ_sub": "πώς συνεχίζει το πλακίδιο",
+  "s_succ_text": "Ευχαριστούμε που χρησιμοποιείς το BombVault Widget! Αυτή είναι η τελευταία του έκδοση. Το TollRoll αναλαμβάνει με ένα πλακίδιο για το BombVault και τις άλλες εφαρμογές σου και παίρνει τη διεύθυνση και το token που όρισες εδώ.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Άνοιγμα του BombVault",
   "t_settings": "Ρυθμίσεις του widget BombVault",
   "t_unreachable": "Το BombVault δεν είναι προσβάσιμο (HTTP {status})",
-  "t_retrying": "Το BombVault δεν είναι προσβάσιμο, γίνεται νέα προσπάθεια"
+  "t_retrying": "Το BombVault δεν είναι προσβάσιμο, γίνεται νέα προσπάθεια",
+  "t_successor": "Αυτό το πλακίδιο έχει διάδοχο: το TollRoll δείχνει το BombVault και τις άλλες εφαρμογές σου σε ένα πλακίδιο.",
+  "t_successor_link": "Βρες το TollRoll στις Community Apps"
 }

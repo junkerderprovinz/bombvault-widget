@@ -17,6 +17,9 @@
   "s_tile_hint": "Flisen \"BombVault Activity\" vises automatisk på dashboardet (midterste kolonne). Skjul, flyt eller fold den sammen med Unraids egne flisekontroller. Loggen forbliver mørk på alle temaer, som en terminal.",
   "s_apply": "Anvend",
   "s_done": "Færdig",
+  "s_succ_title": "Efterfølger",
+  "s_succ_sub": "sådan går det videre med flisen",
+  "s_succ_text": "Tak, fordi du bruger BombVault Widget! Dette er dens sidste version. TollRoll tager over med én flise til BombVault og dine andre apps og henter adressen og tokenet, du har angivet her.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Åbn BombVault",
   "t_settings": "Indstillinger for BombVault-widget",
   "t_unreachable": "BombVault kan ikke nås (HTTP {status})",
-  "t_retrying": "BombVault kan ikke nås, prøver igen"
+  "t_retrying": "BombVault kan ikke nås, prøver igen",
+  "t_successor": "Denne flise har en efterfølger: TollRoll viser BombVault og dine andre apps i én flise.",
+  "t_successor_link": "Find TollRoll i Community Apps"
 }

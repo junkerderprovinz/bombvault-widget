@@ -17,6 +17,9 @@
   "s_tile_hint": "The \"BombVault Activity\" tile appears on the Dashboard automatically (middle column). Hide, move or collapse it with Unraid's own tile controls. The log body stays dark on every theme, like a terminal.",
   "s_apply": "Apply",
   "s_done": "Done",
+  "s_succ_title": "Successor",
+  "s_succ_sub": "where the tile goes next",
+  "s_succ_text": "Thanks for using the BombVault Widget! This is its last version. TollRoll takes over with one tile for BombVault and your other apps, and it picks up the address and token you set here.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Open BombVault",
   "t_settings": "BombVault Widget settings",
   "t_unreachable": "BombVault unreachable (HTTP {status})",
-  "t_retrying": "BombVault unreachable, retrying"
+  "t_retrying": "BombVault unreachable, retrying",
+  "t_successor": "This tile has a successor: TollRoll shows BombVault and your other apps in one tile.",
+  "t_successor_link": "Find TollRoll in Community Apps"
 }

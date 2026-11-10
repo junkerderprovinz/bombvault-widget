@@ -17,6 +17,9 @@
   "s_tile_hint": "Il riquadro \"BombVault Activity\" appare automaticamente sulla dashboard (colonna centrale). Nascondilo, spostalo o comprimilo con i controlli dei riquadri di Unraid. Il registro resta scuro con ogni tema, come un terminale.",
   "s_apply": "Applica",
   "s_done": "Fatto",
+  "s_succ_title": "Successore",
+  "s_succ_sub": "come prosegue il riquadro",
+  "s_succ_text": "Grazie per aver usato il widget di BombVault! Questa è la sua ultima versione. TollRoll prende il suo posto con un solo riquadro per BombVault e le tue altre app, e riprende l’indirizzo e il token che hai inserito qui.",
   "activityLog.domainContainers": "Container",
   "activityLog.domainVMs": "VM",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Apri BombVault",
   "t_settings": "Impostazioni del widget BombVault",
   "t_unreachable": "BombVault non raggiungibile (HTTP {status})",
-  "t_retrying": "BombVault non raggiungibile, nuovo tentativo"
+  "t_retrying": "BombVault non raggiungibile, nuovo tentativo",
+  "t_successor": "Questo riquadro ha un successore: TollRoll mostra BombVault e le tue altre app in un solo riquadro.",
+  "t_successor_link": "Trova TollRoll in Community Apps"
 }

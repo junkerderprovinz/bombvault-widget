@@ -17,6 +17,9 @@
   "s_tile_hint": "La tuile \"BombVault Activity\" apparaît automatiquement sur le tableau de bord (colonne centrale). Masquez-la, déplacez-la ou repliez-la avec les commandes de tuiles d'Unraid. Le journal reste sombre sur tous les thèmes, comme un terminal.",
   "s_apply": "Appliquer",
   "s_done": "Terminé",
+  "s_succ_title": "Successeur",
+  "s_succ_sub": "la suite pour cette tuile",
+  "s_succ_text": "Merci d’utiliser le widget BombVault ! C’est sa dernière version. TollRoll prend le relais avec une seule tuile pour BombVault et tes autres apps, et reprend l’adresse et le jeton que tu as saisis ici.",
   "activityLog.domainContainers": "Conteneurs",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Ouvrir BombVault",
   "t_settings": "Paramètres du widget BombVault",
   "t_unreachable": "BombVault injoignable (HTTP {status})",
-  "t_retrying": "BombVault injoignable, nouvelle tentative"
+  "t_retrying": "BombVault injoignable, nouvelle tentative",
+  "t_successor": "Cette tuile a un successeur : TollRoll affiche BombVault et tes autres apps dans une seule tuile.",
+  "t_successor_link": "Trouver TollRoll dans Community Apps"
 }

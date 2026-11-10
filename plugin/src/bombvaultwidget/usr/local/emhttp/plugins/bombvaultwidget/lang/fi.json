@@ -17,6 +17,9 @@
   "s_tile_hint": "Ruutu \"BombVault Activity\" ilmestyy ohjausnäkymään automaattisesti (keskimmäinen sarake). Piilota, siirrä tai supista se Unraidin omilla ruutusäätimillä. Loki pysyy tummana kaikissa teemoissa, kuin pääte.",
   "s_apply": "Käytä",
   "s_done": "Valmis",
+  "s_succ_title": "Seuraaja",
+  "s_succ_sub": "miten ruutu jatkaa",
+  "s_succ_text": "Kiitos, että käytät BombVault Widgetiä! Tämä on sen viimeinen versio. TollRoll jatkaa yhdellä ruudulla BombVaultille ja muille sovelluksillesi, ja se ottaa käyttöön tähän asettamasi osoitteen ja tunnuksen.",
   "activityLog.domainContainers": "Kontit",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Avaa BombVault",
   "t_settings": "BombVault-widgetin asetukset",
   "t_unreachable": "BombVault ei vastaa (HTTP {status})",
-  "t_retrying": "BombVault ei vastaa, yritetään uudelleen"
+  "t_retrying": "BombVault ei vastaa, yritetään uudelleen",
+  "t_successor": "Tällä ruudulla on seuraaja: TollRoll näyttää BombVaultin ja muut sovelluksesi yhdessä ruudussa.",
+  "t_successor_link": "Etsi TollRoll Community Appsista"
 }

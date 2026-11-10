@@ -17,6 +17,9 @@
   "s_tile_hint": "Kafelek \"BombVault Activity\" pojawia się na pulpicie automatycznie (środkowa kolumna). Ukryj, przenieś lub zwiń go własnymi kontrolkami kafelków Unraida. Dziennik pozostaje ciemny w każdym motywie, jak terminal.",
   "s_apply": "Zastosuj",
   "s_done": "Gotowe",
+  "s_succ_title": "Następca",
+  "s_succ_sub": "co dalej z kafelkiem",
+  "s_succ_text": "Dzięki, że korzystasz z BombVault Widget! To jego ostatnia wersja. TollRoll przejmuje pałeczkę z jednym kafelkiem dla BombVault i twoich innych aplikacji i przejmuje adres oraz token, które tu ustawiłeś.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "Maszyny wirtualne",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Otwórz BombVault",
   "t_settings": "Ustawienia widżetu BombVault",
   "t_unreachable": "BombVault jest niedostępny (HTTP {status})",
-  "t_retrying": "BombVault jest niedostępny, ponawiam próbę"
+  "t_retrying": "BombVault jest niedostępny, ponawiam próbę",
+  "t_successor": "Ten kafelek ma następcę: TollRoll pokazuje BombVault i twoje inne aplikacje w jednym kafelku.",
+  "t_successor_link": "Znajdź TollRoll w Community Apps"
 }

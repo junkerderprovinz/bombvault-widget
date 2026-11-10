@@ -17,6 +17,9 @@
   "s_tile_hint": "A \"BombVault Activity\" csempe automatikusan megjelenik az irányítópulton (középső oszlop). Elrejteni, áthelyezni vagy összecsukni az Unraid saját csempevezérlőivel lehet. A napló minden témán sötét marad, mint egy terminál.",
   "s_apply": "Alkalmaz",
   "s_done": "Kész",
+  "s_succ_title": "Utód",
+  "s_succ_sub": "így megy tovább a csempe",
+  "s_succ_text": "Köszönjük, hogy a BombVault Widgetet használod! Ez az utolsó verziója. A TollRoll veszi át egyetlen csempével a BombVaulthoz és a többi alkalmazásodhoz, és átveszi az itt megadott címet és tokent.",
   "activityLog.domainContainers": "Konténerek",
   "activityLog.domainVMs": "VM-ek",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "BombVault megnyitása",
   "t_settings": "BombVault-widget beállításai",
   "t_unreachable": "A BombVault nem érhető el (HTTP {status})",
-  "t_retrying": "A BombVault nem érhető el, újrapróbálkozás"
+  "t_retrying": "A BombVault nem érhető el, újrapróbálkozás",
+  "t_successor": "Ennek a csempének utódja van: a TollRoll egyetlen csempén mutatja a BombVaultot és a többi alkalmazásodat.",
+  "t_successor_link": "TollRoll keresése a Community Appsban"
 }

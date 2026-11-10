@@ -20,6 +20,10 @@
 <b>Read-only</b>: the tile is fed through a same-origin proxy; the widget token never reaches the browser.
 </p>
 
+<p align="center">
+<b>The tile has a successor.</b> This is the last version of the BombVault Widget, and thanks to everyone who used it! <b>TollRoll</b> takes over with one tile for BombVault and your other apps, and it picks up the address and token you set here. <a href="https://ca.unraid.net/apps?q=TollRoll">Find TollRoll in Community Apps</a>.
+</p>
+
 <br>
 
 <p><a id="table-of-contents" href="#table-of-contents"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/sections/table-of-contents-dark.svg"><img src=".github/assets/sections/table-of-contents.svg" alt="Table of Contents" width="100%"></picture></a></p>

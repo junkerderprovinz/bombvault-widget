@@ -17,6 +17,9 @@
   "s_tile_hint": "Rutan \"BombVault Activity\" dyker upp automatiskt på instrumentpanelen (mittkolumnen). Dölj, flytta eller fäll ihop den med Unraids egna rutkontroller. Loggen förblir mörk i alla teman, som en terminal.",
   "s_apply": "Verkställ",
   "s_done": "Klar",
+  "s_succ_title": "Efterträdare",
+  "s_succ_sub": "så går det vidare med rutan",
+  "s_succ_text": "Tack för att du använder BombVault Widget! Det här är dess sista version. TollRoll tar över med en ruta för BombVault och dina andra appar, och hämtar adressen och token som du har angett här.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Öppna BombVault",
   "t_settings": "Inställningar för BombVault-widget",
   "t_unreachable": "BombVault går inte att nå (HTTP {status})",
-  "t_retrying": "BombVault går inte att nå, försöker igen"
+  "t_retrying": "BombVault går inte att nå, försöker igen",
+  "t_successor": "Den här rutan har en efterträdare: TollRoll visar BombVault och dina andra appar i en enda ruta.",
+  "t_successor_link": "Hitta TollRoll i Community Apps"
 }

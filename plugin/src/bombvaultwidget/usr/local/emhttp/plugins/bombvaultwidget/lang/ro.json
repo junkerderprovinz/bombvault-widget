@@ -17,6 +17,9 @@
   "s_tile_hint": "Plăcuța \"BombVault Activity\" apare automat pe dashboard (coloana din mijloc). Ascunde-o, mut-o sau restrânge-o cu controalele proprii de plăcuțe ale Unraid. Jurnalul rămâne întunecat pe orice temă, ca un terminal.",
   "s_apply": "Aplică",
   "s_done": "Gata",
+  "s_succ_title": "Succesor",
+  "s_succ_sub": "ce urmează pentru plăcuță",
+  "s_succ_text": "Mulțumim că folosești BombVault Widget! Aceasta este ultima lui versiune. TollRoll preia ștafeta cu o singură plăcuță pentru BombVault și celelalte aplicații ale tale și preia adresa și tokenul setate aici.",
   "activityLog.domainContainers": "Containere",
   "activityLog.domainVMs": "VM-uri",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Deschide BombVault",
   "t_settings": "Setările widgetului BombVault",
   "t_unreachable": "BombVault nu răspunde (HTTP {status})",
-  "t_retrying": "BombVault nu răspunde, se reîncearcă"
+  "t_retrying": "BombVault nu răspunde, se reîncearcă",
+  "t_successor": "Această plăcuță are un succesor: TollRoll arată BombVault și celelalte aplicații ale tale într-o singură plăcuță.",
+  "t_successor_link": "Găsește TollRoll în Community Apps"
 }

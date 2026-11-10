@@ -17,6 +17,9 @@
   "s_tile_hint": "\"BombVault Activity\" タイルはダッシュボード(中央の列)に自動的に表示されます。Unraid 標準のタイル操作で非表示・移動・折りたたみができます。ログ部分はどのテーマでもターミナルのように暗いままです。",
   "s_apply": "適用",
   "s_done": "完了",
+  "s_succ_title": "後継",
+  "s_succ_sub": "このタイルのこれから",
+  "s_succ_text": "BombVault Widget を使ってくれてありがとう! これが最後のバージョンです。これからは TollRoll が BombVault とほかのアプリを 1 つのタイルで引き継ぎ、ここで設定したアドレスとトークンもそのまま使います。",
   "activityLog.domainContainers": "コンテナ",
   "activityLog.domainVMs": "VM",
   "activityLog.domainFlash": "フラッシュ",
@@ -81,5 +84,7 @@
   "t_open": "BombVault を開く",
   "t_settings": "BombVault ウィジェットの設定",
   "t_unreachable": "BombVault に接続できません (HTTP {status})",
-  "t_retrying": "BombVault に接続できません。再試行しています"
+  "t_retrying": "BombVault に接続できません。再試行しています",
+  "t_successor": "このタイルには後継があります: TollRoll は BombVault とほかのアプリを 1 つのタイルに表示します。",
+  "t_successor_link": "Community Apps で TollRoll を探す"
 }

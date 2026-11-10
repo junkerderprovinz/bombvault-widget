@@ -17,6 +17,9 @@
   "s_tile_hint": "Ô \"BombVault Activity\" tự động xuất hiện trên bảng điều khiển (cột giữa). Ẩn, di chuyển hoặc thu gọn nó bằng chính các điều khiển ô của Unraid. Phần nhật ký luôn tối trên mọi chủ đề, như một terminal.",
   "s_apply": "Áp dụng",
   "s_done": "Xong",
+  "s_succ_title": "Người kế nhiệm",
+  "s_succ_sub": "chặng tiếp theo của ô này",
+  "s_succ_text": "Cảm ơn bạn đã dùng BombVault Widget! Đây là phiên bản cuối cùng. TollRoll tiếp quản với một ô cho BombVault và các ứng dụng khác của bạn, và dùng lại địa chỉ cùng token bạn đã đặt ở đây.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "Mở BombVault",
   "t_settings": "Cài đặt widget BombVault",
   "t_unreachable": "Không thể kết nối BombVault (HTTP {status})",
-  "t_retrying": "Không thể kết nối BombVault, đang thử lại"
+  "t_retrying": "Không thể kết nối BombVault, đang thử lại",
+  "t_successor": "Ô này đã có người kế nhiệm: TollRoll hiển thị BombVault và các ứng dụng khác của bạn trong một ô.",
+  "t_successor_link": "Tìm TollRoll trong Community Apps"
 }

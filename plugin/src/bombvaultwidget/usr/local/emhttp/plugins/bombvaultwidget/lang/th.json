@@ -17,6 +17,9 @@
   "s_tile_hint": "ไทล์ \"BombVault Activity\" จะปรากฏบนแดชบอร์ดโดยอัตโนมัติ (คอลัมน์กลาง) ซ่อน ย้าย หรือย่อได้ด้วยตัวควบคุมไทล์ของ Unraid เอง ส่วนบันทึกจะมืดเสมอในทุกธีม เหมือนเทอร์มินัล",
   "s_apply": "นำไปใช้",
   "s_done": "เสร็จสิ้น",
+  "s_succ_title": "ตัวต่อ",
+  "s_succ_sub": "ก้าวต่อไปของไทล์นี้",
+  "s_succ_text": "ขอบคุณที่ใช้ BombVault Widget! นี่คือเวอร์ชันสุดท้าย TollRoll จะรับช่วงต่อด้วยไทล์เดียวสำหรับ BombVault และแอปอื่นของคุณ และนำที่อยู่กับโทเค็นที่คุณตั้งไว้ที่นี่ไปใช้ต่อ",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "เปิด BombVault",
   "t_settings": "การตั้งค่าวิดเจ็ต BombVault",
   "t_unreachable": "เข้าถึง BombVault ไม่ได้ (HTTP {status})",
-  "t_retrying": "เข้าถึง BombVault ไม่ได้ กำลังลองใหม่"
+  "t_retrying": "เข้าถึง BombVault ไม่ได้ กำลังลองใหม่",
+  "t_successor": "ไทล์นี้มีตัวต่อแล้ว: TollRoll แสดง BombVault และแอปอื่นของคุณในไทล์เดียว",
+  "t_successor_link": "ค้นหา TollRoll ใน Community Apps"
 }

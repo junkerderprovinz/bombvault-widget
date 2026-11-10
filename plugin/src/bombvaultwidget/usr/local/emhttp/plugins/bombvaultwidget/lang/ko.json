@@ -17,6 +17,9 @@
   "s_tile_hint": "\"BombVault Activity\" 타일은 대시보드(가운데 열)에 자동으로 나타납니다. Unraid의 타일 컨트롤로 숨기거나 이동하거나 접을 수 있으며, 로그 영역은 어떤 테마에서도 터미널처럼 어둡게 유지됩니다.",
   "s_apply": "적용",
   "s_done": "완료",
+  "s_succ_title": "후속 제품",
+  "s_succ_sub": "이 타일의 다음 단계",
+  "s_succ_text": "BombVault Widget을 써 주셔서 고맙습니다! 이번이 마지막 버전입니다. 이제 TollRoll이 BombVault와 다른 앱을 한 타일로 이어받고, 여기에서 설정한 주소와 토큰도 가져갑니다.",
   "activityLog.domainContainers": "컨테이너",
   "activityLog.domainVMs": "VM",
   "activityLog.domainFlash": "플래시",
@@ -81,5 +84,7 @@
   "t_open": "BombVault 열기",
   "t_settings": "BombVault 위젯 설정",
   "t_unreachable": "BombVault에 연결할 수 없음 (HTTP {status})",
-  "t_retrying": "BombVault에 연결할 수 없음, 다시 시도하는 중"
+  "t_retrying": "BombVault에 연결할 수 없음, 다시 시도하는 중",
+  "t_successor": "이 타일에는 후속 제품이 있습니다: TollRoll은 BombVault와 다른 앱을 한 타일에 보여 줍니다.",
+  "t_successor_link": "Community Apps에서 TollRoll 찾기"
 }

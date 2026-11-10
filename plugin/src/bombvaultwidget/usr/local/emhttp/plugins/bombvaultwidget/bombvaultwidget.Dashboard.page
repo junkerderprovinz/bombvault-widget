@@ -34,6 +34,8 @@ if ($bvd_lang !== '' && $bvd_lang !== 'en' && is_file("$bvd_dir/$bvd_lang.json")
 }
 $bvd_title    = htmlspecialchars($bvd_L['t_title'], ENT_QUOTES);
 $bvd_settings = htmlspecialchars($bvd_L['t_settings'], ENT_QUOTES);
+$bvd_next     = htmlspecialchars($bvd_L['t_successor'], ENT_QUOTES);
+$bvd_next_go  = htmlspecialchars($bvd_L['t_successor_link'], ENT_QUOTES);
 $bvd_js = array();
 foreach ($bvd_L as $bvd_k => $bvd_v) {
   if (strncmp($bvd_k, 's_', 2) !== 0) $bvd_js[$bvd_k] = $bvd_v;
@@ -51,6 +53,7 @@ if ($bvd_url !== '' && preg_match('#^https?://#i', $bvd_url)) {
 $mytiles['bombvaultwidget']['column2'] = <<<EOT
 <tbody title="BombVault Activity">
 <tr><td><span class='tile-header'><span class='tile-header-left'><i class='icon-log f32'></i><div class='section'><h3 class='tile-header-main'>{$bvd_title}</h3></div></span><span class='tile-header-right'><span class='tile-header-right-controls'>{$bvd_open}<a href='/Settings/bombvaultwidget' title="{$bvd_settings}"><i class='fa fa-fw fa-cog control'></i></a></span></span></span></td></tr>
+<tr><td class='bvd-td'><div class='bvd-next'>{$bvd_next} <a href='https://ca.unraid.net/apps?q=TollRoll' target='_blank' rel='noopener'>{$bvd_next_go} <i class='fa fa-external-link'></i></a></div></td></tr>
 <tr><td class='bvd-td'><div id='bvd-log' class='bvd-log'></div></td></tr>
 </tbody>
 EOT;
@@ -60,6 +63,8 @@ EOT;
    lines would widen the whole column. max-width:0 makes this cell defer to the
    column width; the log fills it and rows keep their one-line ellipsis. */
 .bvd-td{max-width:0}
+.bvd-next{font-size:12px;line-height:1.5;margin:0 0 6px;white-space:normal}
+.bvd-next a{white-space:nowrap}
 /* The log brings its own dark background, like a terminal, so it reads the
    same on every Unraid theme. box-sizing:border-box keeps the padding inside
    width:100%; with content-box the box renders 24px wider than .bvd-td and

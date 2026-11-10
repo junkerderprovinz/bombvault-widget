@@ -17,6 +17,9 @@
   "s_tile_hint": "האריח \"BombVault Activity\" מופיע אוטומטית בלוח המחוונים (העמודה האמצעית). הסתר, הזז או כווץ אותו עם פקדי האריחים של Unraid. היומן נשאר כהה בכל ערכת נושא, כמו טרמינל.",
   "s_apply": "החל",
   "s_done": "סיום",
+  "s_succ_title": "ממשיך",
+  "s_succ_sub": "איך האריח ממשיך מכאן",
+  "s_succ_text": "תודה שאתה משתמש ב-BombVault Widget! זו הגרסה האחרונה שלו. TollRoll ממשיך מכאן עם אריח אחד ל-BombVault ולשאר האפליקציות שלך, ולוקח את הכתובת והטוקן שהגדרת כאן.",
   "activityLog.domainContainers": "Containers",
   "activityLog.domainVMs": "VMs",
   "activityLog.domainFlash": "Flash",
@@ -81,5 +84,7 @@
   "t_open": "פתיחת BombVault",
   "t_settings": "הגדרות הווידג'ט של BombVault",
   "t_unreachable": "BombVault אינו זמין (HTTP {status})",
-  "t_retrying": "BombVault אינו זמין, מנסה שוב"
+  "t_retrying": "BombVault אינו זמין, מנסה שוב",
+  "t_successor": "לאריח הזה יש ממשיך: TollRoll מציג את BombVault ואת שאר האפליקציות שלך באריח אחד.",
+  "t_successor_link": "למצוא את TollRoll ב-Community Apps"
 }
