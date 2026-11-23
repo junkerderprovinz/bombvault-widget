@@ -19,11 +19,14 @@
  * down to the next one whose path is NaN-free, and the final SVG is checked
  * before writing.
  *
- * Deps (global): opentype.js, @resvg/resvg-js. Bree Serif and Lato (both OFL)
- * are fetched to the OS temp dir at runtime and are not committed.
+ * The name is set in Bree Serif Light and the claim in Bree Light. Both are
+ * licensed and never committed, so HOUSE_FONTS (default
+ * %LOCALAPPDATA%\halleluja-fonts) must hold them as TTF.
+ *
+ * Deps (global): opentype.js, @resvg/resvg-js.
  * Run: node .github/assets/gen-banner.mjs
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
@@ -53,27 +56,15 @@ const gap = 70, lineGap = 8;       // house standard
 const MAX_NAME_SIZE = 132, MAX_CLAIM_SIZE = 44;   // house standard
 const margin = 120;                // min space left of logo / right of text
 
-async function font(file, url) {
-  const p = join(tmpdir(), file);
-  if (!existsSync(p)) {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`${file} fetch ${r.status}`);
-    writeFileSync(p, Buffer.from(await r.arrayBuffer()));
-  }
-  return opentype.parse(readFileSync(p).buffer.slice(
-    readFileSync(p).byteOffset, readFileSync(p).byteOffset + readFileSync(p).byteLength));
-}
-
-const bree = await font("BVW-BreeSerif-Regular.ttf",
-  "https://github.com/google/fonts/raw/main/ofl/breeserif/BreeSerif-Regular.ttf");
-const lato = await font("BVW-Lato-Regular.ttf",
-  "https://github.com/google/fonts/raw/main/ofl/lato/Lato-Regular.ttf");
+const fonts = process.env.HOUSE_FONTS ?? join(process.env.LOCALAPPDATA ?? tmpdir(), "halleluja-fonts");
+const nameFont = opentype.parse(readFileSync(join(fonts, "bree-serif-light.ttf")).buffer);
+const claimFont = opentype.parse(readFileSync(join(fonts, "bree-light.ttf")).buffer);
 
 // Width-fit start size: the text column must fit next to the left-anchored logo.
 const startX = 165;                          // left-anchor (house standard)
 const maxTextW = W - (startX + LW + gap) - margin;
 const startNameSize = Math.min(MAX_NAME_SIZE,
-  Math.floor(100 * maxTextW / bree.getAdvanceWidth(NAME, 100)));
+  Math.floor(100 * maxTextW / nameFont.getAdvanceWidth(NAME, 100)));
 
 // The NaN depends on the real pen position, so each candidate size lays out
 // the whole group and generates the actual paths, stepping down until the
@@ -81,21 +72,21 @@ const startNameSize = Math.min(MAX_NAME_SIZE,
 function layout() {
   for (let nameSize = startNameSize; nameSize > 40; nameSize--) {
     for (let claimSize = MAX_CLAIM_SIZE; claimSize > 14; claimSize--) {
-      const nameW = bree.getAdvanceWidth(NAME, nameSize);
-      const claimW = lato.getAdvanceWidth(CLAIM, claimSize);
+      const nameW = nameFont.getAdvanceWidth(NAME, nameSize);
+      const claimW = claimFont.getAdvanceWidth(CLAIM, claimSize);
       const LX = startX, LY = H / 2 - OPT_CY * (LH / LOGO_H);
       const textX = startX + LW + gap;
 
-      const nameAsc = bree.ascender * (nameSize / bree.unitsPerEm);
-      const nameDesc = -bree.descender * (nameSize / bree.unitsPerEm);
-      const claimAsc = lato.ascender * (claimSize / lato.unitsPerEm);
+      const nameAsc = nameFont.ascender * (nameSize / nameFont.unitsPerEm);
+      const nameDesc = -nameFont.descender * (nameSize / nameFont.unitsPerEm);
+      const claimAsc = claimFont.ascender * (claimSize / claimFont.unitsPerEm);
       const blockH = nameAsc + nameDesc + lineGap + claimAsc;
       const nameBaseline = H / 2 - blockH / 2 + nameAsc;
       const claimBaseline = nameBaseline + nameDesc + lineGap + claimAsc;
 
-      const namePath = bree.getPath(NAME, textX, nameBaseline, nameSize).toPathData(2);
+      const namePath = nameFont.getPath(NAME, textX, nameBaseline, nameSize).toPathData(2);
       if (namePath.includes("NaN")) break; // name is the culprit -> next nameSize
-      const claimPath = lato.getPath(CLAIM, textX, claimBaseline, claimSize).toPathData(2);
+      const claimPath = claimFont.getPath(CLAIM, textX, claimBaseline, claimSize).toPathData(2);
       if (claimPath.includes("NaN")) continue; // claim culprit -> next claimSize
       return { nameSize, claimSize, LX, LY, namePath, claimPath };
     }
