@@ -19,9 +19,9 @@
  * down to the next one whose path is NaN-free, and the final SVG is checked
  * before writing.
  *
- * The name is set in Bree Serif Light and the claim in Bree Light. Both are
- * licensed and never committed, so HOUSE_FONTS (default
- * %LOCALAPPDATA%\halleluja-fonts) must hold them as TTF.
+ * The name is set in Bree Serif Regular and the claim in Bree Light. Neither
+ * is committed, so HOUSE_FONTS (default %LOCALAPPDATA%\halleluja-fonts) must
+ * hold them as TTF.
  *
  * Deps (global): opentype.js, @resvg/resvg-js.
  * Run: node .github/assets/gen-banner.mjs
@@ -57,7 +57,7 @@ const MAX_NAME_SIZE = 132, MAX_CLAIM_SIZE = 44;   // house standard
 const margin = 120;                // min space left of logo / right of text
 
 const fonts = process.env.HOUSE_FONTS ?? join(process.env.LOCALAPPDATA ?? tmpdir(), "halleluja-fonts");
-const nameFont = opentype.parse(readFileSync(join(fonts, "bree-serif-light.ttf")).buffer);
+const nameFont = opentype.parse(readFileSync(join(fonts, "bree-serif-regular.ttf")).buffer);
 const claimFont = opentype.parse(readFileSync(join(fonts, "bree-light.ttf")).buffer);
 
 // Width-fit start size: the text column must fit next to the left-anchored logo.
