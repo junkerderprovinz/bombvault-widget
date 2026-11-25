@@ -120,4 +120,4 @@ You do not have to take my word for it. The code is open and every release note 
 
 <br>
 
-Questions? Check the [BombVault support thread](https://forums.unraid.net/topic/199509-support-junkerderprovinz-bombvault/). Bugs, ideas or feature requests? Please [open a GitHub issue](https://github.com/junkerderprovinz/bombvault-widget/issues).
+Questions, bugs, ideas or feature requests? Please [open a GitHub issue](https://github.com/junkerderprovinz/bombvault-widget/issues).
